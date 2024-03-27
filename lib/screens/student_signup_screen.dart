@@ -18,6 +18,7 @@ class StudentSignupScreen extends StatefulWidget {
 }
 
 class _StudentSignupScreenState extends State<StudentSignupScreen> {
+  String? _dropDownValue;
   @override
   Widget build(BuildContext context) {
     LoginController loginController = Get.put(LoginController());
@@ -74,11 +75,78 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
       padding: EdgeInsets.all(16.0.sp),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomTextField().textField(controller: loginController.emailController.value, levelText: "Email"),
-          SizedBox(
-            height: 20.h,
+          Text(
+            'Select program',
+            style: FontStyles().largeTextRed,
           ),
+          SpaceHelper().verticalSpace10,
+          Container(
+            height: 50.h,
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(
+                border: Border.all(width: 1, color: Colors.grey.shade300),
+                borderRadius: BorderRadius.circular(5)),
+            child: DropdownButton(
+              underline: const SizedBox(),
+              hint: _dropDownValue == null
+                  ? const Text('Select Program')
+                  : Text(
+                      _dropDownValue!,
+                      style: FontStyles().normalTextBlack,
+                    ),
+              isExpanded: true,
+              iconSize: 30.0,
+              style: const TextStyle(color: Colors.blue),
+              items: ['Program 1', 'Program 1', 'Program 1'].map(
+                (val) {
+                  return DropdownMenuItem<String>(
+                    value: val,
+                    child: Text(
+                      val,
+                      style: FontStyles().normalTextBlack,
+                    ),
+                  );
+                },
+              ).toList(),
+              onChanged: (val) {
+                setState(
+                  () {
+                    _dropDownValue = val;
+                  },
+                );
+              },
+            ),
+          ),
+          SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller: loginController.registrationForController.value,
+              levelText: "Registration For", suffixIcon: Icons.app_registration),
+          SpaceHelper().verticalSpace20,
+          Text(
+            'Student Profile',
+            style: FontStyles().largeTextRed,
+          ),
+           SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller: loginController.nameController.value,
+              levelText: "Student Name",
+              suffixIcon: Icons.person_2_outlined
+              ),
+              SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller: loginController.sdcoController.value,
+              levelText: "S/D/C/o",
+              suffixIcon: Icons.person_2_outlined
+              ),
+          SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller: loginController.emailController.value,
+              levelText: "Email",
+              suffixIcon: Icons.mail_outline
+              ),
+          SpaceHelper().verticalSpace10,
           SizedBox(
             height: 50.h,
             child: TextFormField(
@@ -155,7 +223,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
               SpaceHelper().horizoantalSpace5,
               InkWell(
                 onTap: () {
-                  Get.off(()=>const LoginScreen());
+                  Get.off(() => const LoginScreen());
                 },
                 child: Text(
                   'Sign In',

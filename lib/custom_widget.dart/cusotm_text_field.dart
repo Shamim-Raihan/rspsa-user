@@ -5,7 +5,9 @@ import '../utils/color_helper.dart';
 
 class CustomTextField {
   Widget textField(
-      {required TextEditingController controller, required String levelText}) {
+      {required TextEditingController controller,
+      required String levelText,
+      required IconData suffixIcon}) {
     return SizedBox(
       height: 50.h,
       child: TextField(
@@ -14,8 +16,7 @@ class CustomTextField {
           focusedBorder: const OutlineInputBorder(
               borderSide:
                   BorderSide(color: ColorHelper.primaryColor, width: 1.2)),
-          suffixIcon:
-              const Icon(Icons.mail_outline, color: ColorHelper.primaryColor),
+          suffixIcon: Icon(suffixIcon, color: ColorHelper.primaryColor),
           labelText: levelText,
           labelStyle: const TextStyle(color: Colors.black),
           enabledBorder: OutlineInputBorder(
