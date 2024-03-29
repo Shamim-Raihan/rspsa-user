@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:rspsa_user/controller/login_controller.dart';
+import 'package:rspsa_user/screens/home_screen.dart';
 import 'package:rspsa_user/screens/student_signup_screen.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 import 'package:rspsa_user/utils/space_helper.dart';
@@ -168,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               onPressed: () {
-                // Get.offAll(() => AdminLandingScreen());
+                Get.offAll(() => HomeScreen());
               },
               child: Text(
                 'SIGN IN',
@@ -211,16 +212,16 @@ class _LoginScreenState extends State<LoginScreen> {
               InkWell(
                 onTap: () {
                   if (loginController.selectedOption.value == 1) {
-                    Get.off(()=>const StudentSignupScreen());
+                    Get.off(() => const StudentSignupScreen());
                   }
                   if (loginController.selectedOption.value == 2) {
-                   Get.off(()=>const StudentSignupScreen());
+                    Get.off(() => const StudentSignupScreen());
                   }
                   if (loginController.selectedOption.value == 3) {
-                   Get.off(()=>const StudentSignupScreen());
+                    Get.off(() => const StudentSignupScreen());
                   }
                   if (loginController.selectedOption.value == 4) {
-                    Get.off(()=>const StudentSignupScreen());
+                    Get.off(() => const StudentSignupScreen());
                   }
                 },
                 child: Text(
