@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_screenutil: ^5.9.0
   get: ^4.6.6
+  url_launcher:
+  image_picker:
 
 dev_dependencies:
   flutter_test:

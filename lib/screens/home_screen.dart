@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:rspsa_user/custom_widget.dart/appbar.dart';
 import 'package:rspsa_user/custom_widget.dart/card.dart';
+import 'package:rspsa_user/screens/contactUs_page.dart';
+import 'package:rspsa_user/screens/edit_profile_screen.dart';
+import 'package:rspsa_user/screens/gallery_screen.dart';
+import 'package:rspsa_user/screens/programdetails_screen.dart';
+import 'package:rspsa_user/screens/support_screen.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,9 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorHelper.primaryColor,
-      // drawer: SafeArea(
-      //   child: MyDrawer(),
-      // ),
       appBar: appBar(),
       body: SafeArea(
           child: Stack(
@@ -86,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       TextButton(
                           onPressed: () {
-                            // Get.to(ProfileEdit());
+                            Get.to(ProfileEdit());
                           },
                           child: Text(
                             'Edit Profile',
@@ -125,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         InkWell(
                           onTap: () {
-                            // Get.to(ProgramsScreen());
+                            Get.to(ProgramDetailsScreen());
                           },
                           child: CommonCard(
                             icon: Icons.menu,
@@ -134,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         InkWell(
                           onTap: () {
-                            // Get.to(AdminDashboardScreen());
+                            Get.to(GalleryScreen());
                           },
                           child: CommonCard(
                             icon: Icons.photo_library_sharp,
@@ -165,13 +168,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        CommonCard(
-                          icon: Icons.edit_outlined,
-                          title: 'About Us',
+                        InkWell(
+                          onTap: () {
+                            Get.to(ContactUsPage());
+                          },
+                          child: CommonCard(
+                            icon: Icons.edit_outlined,
+                            title: 'About Us',
+                          ),
                         ),
-                        CommonCard(
-                          icon: Icons.people,
-                          title: 'Support',
+                        InkWell(
+                          onTap: () {
+                            Get.to(SupportScreen());
+                          },
+                          child: CommonCard(
+                            icon: Icons.people,
+                            title: 'Support',
+                          ),
                         ),
                       ],
                     ),
