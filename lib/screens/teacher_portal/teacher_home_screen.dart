@@ -1,28 +1,31 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:rspsa_user/custom_widget.dart/appbarForStudent.dart';
+import 'package:rspsa_user/custom_widget.dart/appbarForTeacher.dart';
 import 'package:rspsa_user/custom_widget.dart/card.dart';
 import 'package:rspsa_user/screens/contactUs_page.dart';
 import 'package:rspsa_user/screens/edit_profile_screen.dart';
 import 'package:rspsa_user/screens/gallery_screen.dart';
 import 'package:rspsa_user/screens/programdetails_screen.dart';
-import 'package:rspsa_user/screens/support_screen.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+import '../support_screen.dart';
+
+class TeacherHomeScreen extends StatefulWidget {
+  const TeacherHomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<TeacherHomeScreen> createState() => _TeacherHomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorHelper.primaryColor,
-      appBar: appBar(),
+      appBar: appBarTeacher(),
       body: SafeArea(
           child: Stack(
         children: [
@@ -43,14 +46,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "Student's Name",
+                        "Teacher's Name",
                         style: TextStyle(
                             fontSize: 18.sp,
                             color: Colors.white,
                             fontWeight: FontWeight.w600),
                       ),
                       Text(
-                        "Emial: student@gmail.com",
+                        "Emial: teacher@gmail.com",
                         style: TextStyle(
                             fontSize: 16.sp,
                             color: Colors.white,
@@ -154,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         CommonCard(
                           icon: Icons.quiz_outlined,
-                          title: 'My Result',
+                          title: 'My Payouts',
                         ),
                         CommonCard(
                           icon: Icons.file_download_outlined,
@@ -173,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Get.to(ContactUsPage());
                           },
                           child: CommonCard(
-                            icon: Icons.edit_outlined,
+                            icon: Icons.remove_from_queue_sharp,
                             title: 'About Us',
                           ),
                         ),
@@ -190,6 +193,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SizedBox(
                       height: 10.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Get.to(ContactUsPage());
+                          },
+                          child: CommonCard(
+                            icon: Icons.edit_outlined,
+                            title: 'Refers Us',
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

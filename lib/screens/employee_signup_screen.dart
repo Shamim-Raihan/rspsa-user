@@ -5,28 +5,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
 import 'package:intl/intl.dart';
-import 'package:rspsa_user/controller/login_controller.dart';
+import 'package:rspsa_user/controller/employee_controller.dart';
 import 'package:rspsa_user/custom_widget.dart/cusotm_text_field.dart';
-import 'package:rspsa_user/screens/login_screen.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 import 'package:rspsa_user/utils/space_helper.dart';
 import 'package:rspsa_user/utils/text_style.dart';
 
-class StudentSignupScreen extends StatefulWidget {
-  const StudentSignupScreen({super.key});
+class EmployeeSignUpScreen extends StatefulWidget {
+  const EmployeeSignUpScreen({super.key});
 
   @override
-  State<StudentSignupScreen> createState() => _StudentSignupScreenState();
+  State<EmployeeSignUpScreen> createState() => _EmployeeSignUpScreenState();
 }
 
-class _StudentSignupScreenState extends State<StudentSignupScreen> {
+class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
   final sDateFormate = "dd/MM/yyyy";
   DateTime _dateTime = DateTime.now();
   bool isDateSelected = false;
-  bool agreeToTerms = false;
   File? _file;
   PlatformFile? _platformFile;
 
@@ -64,7 +60,6 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
     }
   }
 
-  String? _dropDownValue;
   void _showCupertinoDatePicker() {
     showCupertinoModalPopup<void>(
       context: context,
@@ -116,7 +111,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    LoginController loginController = Get.put(LoginController());
+    EmployeeController employeeController = Get.put(EmployeeController());
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -153,7 +148,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    buildInputAndActionView(loginController, context),
+                    buildInputAndActionView(employeeController, context),
                   ],
                 ),
               ],
@@ -165,7 +160,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
   }
 
   Padding buildInputAndActionView(
-      LoginController loginController, BuildContext context) {
+      EmployeeController employeeController, BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(16.0.sp),
       child: Column(
@@ -173,77 +168,39 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Select program',
-            style: FontStyles().largeTextRed,
-          ),
-          SpaceHelper().verticalSpace10,
-          Container(
-            height: 50.h,
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.grey.shade300),
-                borderRadius: BorderRadius.circular(5)),
-            child: DropdownButton(
-              underline: const SizedBox(),
-              hint: _dropDownValue == null
-                  ? const Text('Select Program')
-                  : Text(
-                      _dropDownValue!,
-                      style: FontStyles().normalTextBlack,
-                    ),
-              isExpanded: true,
-              iconSize: 30.0,
-              style: const TextStyle(color: Colors.blue),
-              items: ['Program 1', 'Program 1', 'Program 1'].map(
-                (val) {
-                  return DropdownMenuItem<String>(
-                    value: val,
-                    child: Text(
-                      val,
-                      style: FontStyles().normalTextBlack,
-                    ),
-                  );
-                },
-              ).toList(),
-              onChanged: (val) {
-                setState(
-                  () {
-                    _dropDownValue = val;
-                  },
-                );
-              },
-            ),
-          ),
-          SpaceHelper().verticalSpace10,
-          CustomTextField().textField(
-              controller: loginController.registrationForController.value,
-              levelText: "Registration For",
-              suffixIcon: Icons.app_registration),
-          SpaceHelper().verticalSpace20,
-          Text(
-            'Student Profile',
+            'Employee Profile',
             style: FontStyles().largeTextRed,
           ),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.nameController.value,
-              levelText: "Student Name",
+              controller: employeeController.nameController.value,
+              levelText: "Employee Name",
               suffixIcon: Icons.person_2_outlined),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.sdcoController.value,
+              controller: employeeController.sdcoController.value,
               levelText: "S/D/C/o",
-              suffixIcon: Icons.person_2_outlined),
+              suffixIcon: Icons.numbers_rounded),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.emailController.value,
-              levelText: "Email",
+              controller: employeeController.emailController.value,
+              levelText: "Email ID",
               suffixIcon: Icons.mail_outline),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.mobileController.value,
+              controller: employeeController.mobileController.value,
               levelText: "Mobile",
               suffixIcon: Icons.phone),
+          SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller: employeeController.designationController.value,
+              levelText: "Designation",
+              suffixIcon: Icons.work),
+          SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller: employeeController.workingAreaController.value,
+              levelText: "Working Area",
+              suffixIcon: Icons.location_on),
           SpaceHelper().verticalSpace10,
           GestureDetector(
             onTap: _showCupertinoDatePicker,
@@ -281,20 +238,20 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
           ),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.addressController.value,
+              controller: employeeController.addressController.value,
               levelText: "Full Address",
               suffixIcon: Icons.location_on),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.aadharController.value,
+              controller: employeeController.aadharController.value,
               levelText: "Aadhar Number",
               suffixIcon: Icons.numbers),
           SpaceHelper().verticalSpace10,
           SizedBox(
             height: 50.h,
             child: TextFormField(
-              controller: loginController.passwordController.value,
-              obscureText: !loginController.visiblepass.value,
+              controller: employeeController.passwordController.value,
+              obscureText: !employeeController.visiblepass.value,
               decoration: InputDecoration(
                   focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
@@ -304,13 +261,13 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                           BorderSide(color: Colors.grey.shade300, width: 1.2)),
                   border: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black, width: 1.2)),
-                  suffixIcon: loginController.visiblepass.value
+                  suffixIcon: employeeController.visiblepass.value
                       ? IconButton(
                           onPressed: () {
                             setState(() {
-                              loginController.visiblepass.value
-                                  ? loginController.visiblepass.value = false
-                                  : loginController.visiblepass.value = true;
+                              employeeController.visiblepass.value
+                                  ? employeeController.visiblepass.value = false
+                                  : employeeController.visiblepass.value = true;
                             });
                           },
                           icon: const Icon(Icons.visibility,
@@ -318,9 +275,9 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                       : IconButton(
                           onPressed: () {
                             setState(() {
-                              loginController.visiblepass.value
-                                  ? loginController.visiblepass.value = false
-                                  : loginController.visiblepass.value = true;
+                              employeeController.visiblepass.value
+                                  ? employeeController.visiblepass.value = false
+                                  : employeeController.visiblepass.value = true;
                             });
                           },
                           icon: const Icon(
@@ -338,17 +295,17 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
           ),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.schoolNameController.value,
-              levelText: "School/Institute Name",
+              controller: employeeController.schoolNameController.value,
+              levelText: "School/Institution Name",
               suffixIcon: Icons.school),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.schoolAddressController.value,
-              levelText: "School/Institute Address",
+              controller: employeeController.addressController.value,
+              levelText: "School/Institution Addreess",
               suffixIcon: Icons.location_on),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.schoolAddressController.value,
+              controller: employeeController.appearingClassController.value,
               levelText: "Appearing Class",
               suffixIcon: Icons.class_),
           SpaceHelper().verticalSpace10,
@@ -358,14 +315,14 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
           ),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.accountNumberController.value,
+              controller: employeeController.accountNumberController.value,
               levelText: "Account Number",
-              suffixIcon: Icons.balance),
+              suffixIcon: Icons.numbers),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.ifscCodeController.value,
+              controller: employeeController.ifscCodeController.value,
               levelText: "IFSC Code",
-              suffixIcon: Icons.pin_rounded),
+              suffixIcon: Icons.table_restaurant_rounded),
           SpaceHelper().verticalSpace10,
           Text(
             'Upload Documents',
@@ -384,7 +341,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Current Education Proof'),
+                Text('Aadhar Card'),
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
@@ -443,163 +400,6 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
               ],
             ),
           ),
-          SpaceHelper().verticalSpace10,
-          Container(
-            height: 50.h,
-            padding: EdgeInsets.only(top: 4.h, left: 16.w, bottom: 4.h),
-            decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.grey.shade300, width: 1.2),
-                borderRadius: BorderRadius.circular(4.r),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Payment proof'),
-                Padding(
-                  padding: EdgeInsets.only(right: 3.w),
-                  child: ElevatedButton(
-                    onPressed: _openFileExplorer,
-                    child: Text('Upload File'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SpaceHelper().verticalSpace10,
-          Container(
-            height: 50.h,
-            padding: EdgeInsets.only(top: 4.h, left: 16.w, bottom: 4.h),
-            decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.grey.shade300, width: 1.2),
-                borderRadius: BorderRadius.circular(4.r),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('UTR Number'),
-                Padding(
-                  padding: EdgeInsets.only(right: 3.w),
-                  child: ElevatedButton(
-                    onPressed: _openFileExplorer,
-                    child: Text('Upload File'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SpaceHelper().verticalSpace10,
-          Text(
-            'Upload Documents',
-            style: FontStyles().largeTextRed,
-          ),
-          SpaceHelper().verticalSpace10,
-          Container(
-            height: 50.h,
-            padding: EdgeInsets.only(top: 4.h, left: 16.w, bottom: 4.h),
-            decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.grey.shade300, width: 1.2),
-                borderRadius: BorderRadius.circular(4.r),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Aadhar Card'),
-                Padding(
-                  padding: EdgeInsets.only(right: 3.w),
-                  child: ElevatedButton(
-                    onPressed: _openFileExplorer,
-                    child: Text('Upload File'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SpaceHelper().verticalSpace10,
-          SizedBox(
-            height: 50.h,
-            child: TextField(
-              controller: loginController.declarationController.value,
-              decoration: InputDecoration(
-                focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: ColorHelper.primaryColor, width: 1.2)),
-                suffixIcon:
-                    Icon(Icons.description, color: ColorHelper.primaryColor),
-                labelText: 'Declaration',
-                labelStyle: const TextStyle(color: Colors.black),
-                enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.grey.shade300, width: 1.2)),
-                border: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black, width: 1.2)),
-              ),
-            ),
-          ),
-          SpaceHelper().verticalSpace5,
-          Container(
-            width: 313.w,
-            height: 56.h,
-            // color: Colors.red,
-            child: Row(
-              // mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  width: 28.w,
-                  height: 28.h,
-                  padding: EdgeInsets.all(4.sp),
-                  child: Checkbox(
-                    activeColor: ColorHelper.primaryColor,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(2.r)),
-                    value: agreeToTerms,
-                    onChanged: (newValue) {
-                      setState(() {
-                        agreeToTerms = newValue ?? false;
-                      });
-                    },
-                  ),
-                ),
-                SizedBox(width: 4.w),
-                InkWell(
-                  onTap: () {},
-                  child: SizedBox(
-                    // width: 261.w,
-                    child: Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'I agree to the ',
-                            style: TextStyle(
-                              color: Color(0xFF181E29),
-                              fontSize: 14.sp,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          TextSpan(
-                            text: 'terms and conditions',
-                            style: TextStyle(
-                              color: Color(0xFF1D4ED8),
-                              fontSize: 14.sp,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
           SizedBox(
             height: 30.h,
           ),
@@ -613,9 +413,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                   borderRadius: BorderRadius.circular(100), // <-- Radius
                 ),
               ),
-              onPressed: () {
-                // Get.offAll(() => AdminLandingScreen());
-              },
+              onPressed: () {},
               child: Text(
                 'SIGN UP',
                 style: TextStyle(color: Colors.white, fontSize: 18.h),
@@ -634,9 +432,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
               const Text('Already have an account'),
               SpaceHelper().horizoantalSpace5,
               InkWell(
-                onTap: () {
-                  Get.off(() => const LoginScreen());
-                },
+                onTap: () {},
                 child: Text(
                   'Sign In',
                   style: FontStyles().normalTextRed,

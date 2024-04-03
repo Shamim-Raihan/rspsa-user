@@ -4,6 +4,7 @@ import 'package:get/get_instance/get_instance.dart';
 import 'package:get/route_manager.dart';
 import 'package:rspsa_user/controller/login_controller.dart';
 import 'package:rspsa_user/screens/login_screen.dart';
+import 'package:rspsa_user/screens/teacher_portal/teacherLoginScreen.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 import 'package:rspsa_user/utils/space_helper.dart';
 import 'package:rspsa_user/utils/text_style.dart';
@@ -39,7 +40,7 @@ class AccountSelectScreen extends StatelessWidget {
                   child: InkWell(
                     onTap: () {
                       loginController.selectedOption.value = 1;
-                       Get.to(()=>const LoginScreen());
+                      Get.to(() => const LoginScreen());
                     },
                     child: buildCard(
                         icon: Icons.people,
@@ -52,7 +53,7 @@ class AccountSelectScreen extends StatelessWidget {
                   child: InkWell(
                     onTap: () {
                       loginController.selectedOption.value = 2;
-                       Get.to(()=>const LoginScreen());
+                      Get.to(() => const TeacherLoginScreen());
                     },
                     child: buildCard(
                         icon: Icons.people,
@@ -72,7 +73,7 @@ class AccountSelectScreen extends StatelessWidget {
                   child: InkWell(
                     onTap: () {
                       loginController.selectedOption.value = 3;
-                     Get.to(()=>const LoginScreen());
+                      Get.to(() => const LoginScreen());
                     },
                     child: buildCard(
                         icon: Icons.people,
@@ -86,7 +87,7 @@ class AccountSelectScreen extends StatelessWidget {
                   child: InkWell(
                     onTap: () {
                       loginController.selectedOption.value = 4;
-                      Get.to(()=>const LoginScreen());
+                      Get.to(() => const LoginScreen());
                     },
                     child: buildCard(
                         icon: Icons.people,

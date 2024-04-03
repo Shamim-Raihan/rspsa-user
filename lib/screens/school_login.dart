@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
-import 'package:rspsa_user/controller/login_controller.dart';
-import 'package:rspsa_user/screens/home_screen.dart';
-import 'package:rspsa_user/screens/student_signup_screen.dart';
-import 'package:rspsa_user/screens/teacher_portal/teacherSignupScreen.dart';
+import 'package:rspsa_user/controller/school_login_controller.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 import 'package:rspsa_user/utils/space_helper.dart';
 import 'package:rspsa_user/utils/text_style.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SchoolLoginScreen extends StatefulWidget {
+  const SchoolLoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SchoolLoginScreen> createState() => _SchoolLoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SchoolLoginScreenState extends State<SchoolLoginScreen> {
   @override
   Widget build(BuildContext context) {
-    LoginController loginController = Get.put(LoginController());
+    SchoolLoginController schoolLoginController =
+        Get.put(SchoolLoginController());
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -74,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    buildInputAndActionView(loginController, context),
+                    buildInputAndActionView(schoolLoginController, context),
                   ],
                 ),
               ],
@@ -86,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Padding buildInputAndActionView(
-      LoginController loginController, BuildContext context) {
+      SchoolLoginController schoolLoginController, BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(16.0.sp),
       child: Column(
@@ -95,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
           SizedBox(
             height: 50.h,
             child: TextField(
-              controller: loginController.emailController.value,
+              controller: schoolLoginController.schoolEmailIdController.value,
               decoration: InputDecoration(
                 focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
@@ -118,8 +114,8 @@ class _LoginScreenState extends State<LoginScreen> {
           SizedBox(
             height: 50.h,
             child: TextFormField(
-              controller: loginController.passwordController.value,
-              obscureText: !loginController.visiblepass.value,
+              controller: schoolLoginController.passwordController.value,
+              obscureText: !schoolLoginController.visiblepass.value,
               decoration: InputDecoration(
                   focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
@@ -129,13 +125,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           BorderSide(color: Colors.grey.shade300, width: 1.2)),
                   border: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black, width: 1.2)),
-                  suffixIcon: loginController.visiblepass.value
+                  suffixIcon: schoolLoginController.visiblepass.value
                       ? IconButton(
                           onPressed: () {
                             setState(() {
-                              loginController.visiblepass.value
-                                  ? loginController.visiblepass.value = false
-                                  : loginController.visiblepass.value = true;
+                              schoolLoginController.visiblepass.value
+                                  ? schoolLoginController.visiblepass.value =
+                                      false
+                                  : schoolLoginController.visiblepass.value =
+                                      true;
                             });
                           },
                           icon: const Icon(Icons.visibility,
@@ -143,9 +141,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       : IconButton(
                           onPressed: () {
                             setState(() {
-                              loginController.visiblepass.value
-                                  ? loginController.visiblepass.value = false
-                                  : loginController.visiblepass.value = true;
+                              schoolLoginController.visiblepass.value
+                                  ? schoolLoginController.visiblepass.value =
+                                      false
+                                  : schoolLoginController.visiblepass.value =
+                                      true;
                             });
                           },
                           icon: const Icon(
@@ -169,9 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   borderRadius: BorderRadius.circular(100), // <-- Radius
                 ),
               ),
-              onPressed: () {
-                Get.offAll(() => HomeScreen());
-              },
+              onPressed: () {},
               child: Text(
                 'SIGN IN',
                 style: TextStyle(color: Colors.white, fontSize: 18.h),
@@ -212,18 +210,18 @@ class _LoginScreenState extends State<LoginScreen> {
               SpaceHelper().horizoantalSpace5,
               InkWell(
                 onTap: () {
-                  if (loginController.selectedOption.value == 1) {
-                    Get.off(() => const StudentSignupScreen());
-                  }
-                  if (loginController.selectedOption.value == 2) {
-                    Get.off(() => const TeacherSignupScreen());
-                  }
-                  if (loginController.selectedOption.value == 3) {
-                    Get.off(() => const StudentSignupScreen());
-                  }
-                  if (loginController.selectedOption.value == 4) {
-                    Get.off(() => const StudentSignupScreen());
-                  }
+                  // if (loginController.selectedOption.value == 1) {
+                  //   Get.off(() => const StudentSignupScreen());
+                  // }
+                  // if (loginController.selectedOption.value == 2) {
+                  //   Get.off(() => const TeacherSignupScreen());
+                  // }
+                  // if (loginController.selectedOption.value == 3) {
+                  //   Get.off(() => const StudentSignupScreen());
+                  // }
+                  // if (loginController.selectedOption.value == 4) {
+                  //   Get.off(() => const StudentSignupScreen());
+                  // }
                 },
                 child: Text(
                   'Sign Up',

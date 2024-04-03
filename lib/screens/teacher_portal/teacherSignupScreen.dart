@@ -5,24 +5,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
 import 'package:intl/intl.dart';
-import 'package:rspsa_user/controller/login_controller.dart';
 import 'package:rspsa_user/custom_widget.dart/cusotm_text_field.dart';
-import 'package:rspsa_user/screens/login_screen.dart';
+import 'package:rspsa_user/screens/teacher_portal/controller/teacher_controller.dart';
+import 'package:rspsa_user/screens/teacher_portal/teacherLoginScreen.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 import 'package:rspsa_user/utils/space_helper.dart';
 import 'package:rspsa_user/utils/text_style.dart';
 
-class StudentSignupScreen extends StatefulWidget {
-  const StudentSignupScreen({super.key});
+class TeacherSignupScreen extends StatefulWidget {
+  const TeacherSignupScreen({super.key});
 
   @override
-  State<StudentSignupScreen> createState() => _StudentSignupScreenState();
+  State<TeacherSignupScreen> createState() => _TeacherSignupScreenState();
 }
 
-class _StudentSignupScreenState extends State<StudentSignupScreen> {
+class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
   final sDateFormate = "dd/MM/yyyy";
   DateTime _dateTime = DateTime.now();
   bool isDateSelected = false;
@@ -116,7 +114,8 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    LoginController loginController = Get.put(LoginController());
+    TeacherLoginController teacherLoginController =
+        Get.put(TeacherLoginController());
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -153,7 +152,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    buildInputAndActionView(loginController, context),
+                    buildInputAndActionView(teacherLoginController, context),
                   ],
                 ),
               ],
@@ -165,7 +164,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
   }
 
   Padding buildInputAndActionView(
-      LoginController loginController, BuildContext context) {
+      TeacherLoginController teacherLoginController, BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(16.0.sp),
       child: Column(
@@ -173,75 +172,27 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Select program',
-            style: FontStyles().largeTextRed,
-          ),
-          SpaceHelper().verticalSpace10,
-          Container(
-            height: 50.h,
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.grey.shade300),
-                borderRadius: BorderRadius.circular(5)),
-            child: DropdownButton(
-              underline: const SizedBox(),
-              hint: _dropDownValue == null
-                  ? const Text('Select Program')
-                  : Text(
-                      _dropDownValue!,
-                      style: FontStyles().normalTextBlack,
-                    ),
-              isExpanded: true,
-              iconSize: 30.0,
-              style: const TextStyle(color: Colors.blue),
-              items: ['Program 1', 'Program 1', 'Program 1'].map(
-                (val) {
-                  return DropdownMenuItem<String>(
-                    value: val,
-                    child: Text(
-                      val,
-                      style: FontStyles().normalTextBlack,
-                    ),
-                  );
-                },
-              ).toList(),
-              onChanged: (val) {
-                setState(
-                  () {
-                    _dropDownValue = val;
-                  },
-                );
-              },
-            ),
-          ),
-          SpaceHelper().verticalSpace10,
-          CustomTextField().textField(
-              controller: loginController.registrationForController.value,
-              levelText: "Registration For",
-              suffixIcon: Icons.app_registration),
-          SpaceHelper().verticalSpace20,
-          Text(
-            'Student Profile',
+            'Teacher Profile',
             style: FontStyles().largeTextRed,
           ),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.nameController.value,
-              levelText: "Student Name",
+              controller: teacherLoginController.nameController.value,
+              levelText: "Teacher Name",
               suffixIcon: Icons.person_2_outlined),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.sdcoController.value,
-              levelText: "S/D/C/o",
+              controller: teacherLoginController.sdwoController.value,
+              levelText: "S/D/W/o",
               suffixIcon: Icons.person_2_outlined),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.emailController.value,
-              levelText: "Email",
+              controller: teacherLoginController.emailController.value,
+              levelText: "Email ID",
               suffixIcon: Icons.mail_outline),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.mobileController.value,
+              controller: teacherLoginController.mobileController.value,
               levelText: "Mobile",
               suffixIcon: Icons.phone),
           SpaceHelper().verticalSpace10,
@@ -281,20 +232,15 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
           ),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.addressController.value,
+              controller: teacherLoginController.addressController.value,
               levelText: "Full Address",
               suffixIcon: Icons.location_on),
-          SpaceHelper().verticalSpace10,
-          CustomTextField().textField(
-              controller: loginController.aadharController.value,
-              levelText: "Aadhar Number",
-              suffixIcon: Icons.numbers),
           SpaceHelper().verticalSpace10,
           SizedBox(
             height: 50.h,
             child: TextFormField(
-              controller: loginController.passwordController.value,
-              obscureText: !loginController.visiblepass.value,
+              controller: teacherLoginController.passwordController.value,
+              obscureText: !teacherLoginController.visiblepass.value,
               decoration: InputDecoration(
                   focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
@@ -304,13 +250,15 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                           BorderSide(color: Colors.grey.shade300, width: 1.2)),
                   border: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black, width: 1.2)),
-                  suffixIcon: loginController.visiblepass.value
+                  suffixIcon: teacherLoginController.visiblepass.value
                       ? IconButton(
                           onPressed: () {
                             setState(() {
-                              loginController.visiblepass.value
-                                  ? loginController.visiblepass.value = false
-                                  : loginController.visiblepass.value = true;
+                              teacherLoginController.visiblepass.value
+                                  ? teacherLoginController.visiblepass.value =
+                                      false
+                                  : teacherLoginController.visiblepass.value =
+                                      true;
                             });
                           },
                           icon: const Icon(Icons.visibility,
@@ -318,9 +266,11 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                       : IconButton(
                           onPressed: () {
                             setState(() {
-                              loginController.visiblepass.value
-                                  ? loginController.visiblepass.value = false
-                                  : loginController.visiblepass.value = true;
+                              teacherLoginController.visiblepass.value
+                                  ? teacherLoginController.visiblepass.value =
+                                      false
+                                  : teacherLoginController.visiblepass.value =
+                                      true;
                             });
                           },
                           icon: const Icon(
@@ -338,34 +288,44 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
           ),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.schoolNameController.value,
-              levelText: "School/Institute Name",
+              controller: teacherLoginController.degreeController.value,
+              levelText: "Degree",
               suffixIcon: Icons.school),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.schoolAddressController.value,
-              levelText: "School/Institute Address",
+              controller: teacherLoginController.passingYearController.value,
+              levelText: "Passing Year",
               suffixIcon: Icons.location_on),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.schoolAddressController.value,
-              levelText: "Appearing Class",
+              controller: teacherLoginController.totalMarksController.value,
+              levelText: "Total Marks",
+              suffixIcon: Icons.class_),
+          SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller: teacherLoginController.obtainedController.value,
+              levelText: "Obtained Marks",
+              suffixIcon: Icons.class_),
+          SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller: teacherLoginController.percentageController.value,
+              levelText: "Percentage",
               suffixIcon: Icons.class_),
           SpaceHelper().verticalSpace10,
           Text(
-            'Bank Details',
+            'Teaching Details',
             style: FontStyles().largeTextRed,
           ),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.accountNumberController.value,
-              levelText: "Account Number",
-              suffixIcon: Icons.balance),
+              controller: teacherLoginController.schoolNameController.value,
+              levelText: "Teaching School Name",
+              suffixIcon: Icons.school),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.ifscCodeController.value,
-              levelText: "IFSC Code",
-              suffixIcon: Icons.pin_rounded),
+              controller: teacherLoginController.experienceController.value,
+              levelText: "Write About Any Other Experience",
+              suffixIcon: Icons.table_restaurant_rounded),
           SpaceHelper().verticalSpace10,
           Text(
             'Upload Documents',
@@ -384,7 +344,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Current Education Proof'),
+                Text('Aadhar Card'),
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
@@ -443,163 +403,6 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
               ],
             ),
           ),
-          SpaceHelper().verticalSpace10,
-          Container(
-            height: 50.h,
-            padding: EdgeInsets.only(top: 4.h, left: 16.w, bottom: 4.h),
-            decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.grey.shade300, width: 1.2),
-                borderRadius: BorderRadius.circular(4.r),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Payment proof'),
-                Padding(
-                  padding: EdgeInsets.only(right: 3.w),
-                  child: ElevatedButton(
-                    onPressed: _openFileExplorer,
-                    child: Text('Upload File'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SpaceHelper().verticalSpace10,
-          Container(
-            height: 50.h,
-            padding: EdgeInsets.only(top: 4.h, left: 16.w, bottom: 4.h),
-            decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.grey.shade300, width: 1.2),
-                borderRadius: BorderRadius.circular(4.r),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('UTR Number'),
-                Padding(
-                  padding: EdgeInsets.only(right: 3.w),
-                  child: ElevatedButton(
-                    onPressed: _openFileExplorer,
-                    child: Text('Upload File'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SpaceHelper().verticalSpace10,
-          Text(
-            'Upload Documents',
-            style: FontStyles().largeTextRed,
-          ),
-          SpaceHelper().verticalSpace10,
-          Container(
-            height: 50.h,
-            padding: EdgeInsets.only(top: 4.h, left: 16.w, bottom: 4.h),
-            decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.grey.shade300, width: 1.2),
-                borderRadius: BorderRadius.circular(4.r),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Aadhar Card'),
-                Padding(
-                  padding: EdgeInsets.only(right: 3.w),
-                  child: ElevatedButton(
-                    onPressed: _openFileExplorer,
-                    child: Text('Upload File'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SpaceHelper().verticalSpace10,
-          SizedBox(
-            height: 50.h,
-            child: TextField(
-              controller: loginController.declarationController.value,
-              decoration: InputDecoration(
-                focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: ColorHelper.primaryColor, width: 1.2)),
-                suffixIcon:
-                    Icon(Icons.description, color: ColorHelper.primaryColor),
-                labelText: 'Declaration',
-                labelStyle: const TextStyle(color: Colors.black),
-                enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.grey.shade300, width: 1.2)),
-                border: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black, width: 1.2)),
-              ),
-            ),
-          ),
-          SpaceHelper().verticalSpace5,
-          Container(
-            width: 313.w,
-            height: 56.h,
-            // color: Colors.red,
-            child: Row(
-              // mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  width: 28.w,
-                  height: 28.h,
-                  padding: EdgeInsets.all(4.sp),
-                  child: Checkbox(
-                    activeColor: ColorHelper.primaryColor,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(2.r)),
-                    value: agreeToTerms,
-                    onChanged: (newValue) {
-                      setState(() {
-                        agreeToTerms = newValue ?? false;
-                      });
-                    },
-                  ),
-                ),
-                SizedBox(width: 4.w),
-                InkWell(
-                  onTap: () {},
-                  child: SizedBox(
-                    // width: 261.w,
-                    child: Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'I agree to the ',
-                            style: TextStyle(
-                              color: Color(0xFF181E29),
-                              fontSize: 14.sp,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          TextSpan(
-                            text: 'terms and conditions',
-                            style: TextStyle(
-                              color: Color(0xFF1D4ED8),
-                              fontSize: 14.sp,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
           SizedBox(
             height: 30.h,
           ),
@@ -614,7 +417,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                 ),
               ),
               onPressed: () {
-                // Get.offAll(() => AdminLandingScreen());
+                Get.offAll(() => TeacherLoginScreen());
               },
               child: Text(
                 'SIGN UP',
@@ -634,9 +437,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
               const Text('Already have an account'),
               SpaceHelper().horizoantalSpace5,
               InkWell(
-                onTap: () {
-                  Get.off(() => const LoginScreen());
-                },
+                onTap: () {},
                 child: Text(
                   'Sign In',
                   style: FontStyles().normalTextRed,
