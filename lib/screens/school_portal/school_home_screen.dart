@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:rspsa_user/custom_widget.dart/appbar.dart';
 import 'package:rspsa_user/custom_widget.dart/card.dart';
-import 'package:rspsa_user/screens/contactUs_page.dart';
-import 'package:rspsa_user/screens/edit_profile_screen.dart';
-import 'package:rspsa_user/screens/gallery_screen.dart';
-import 'package:rspsa_user/screens/programdetails_screen.dart';
-import 'package:rspsa_user/screens/support_screen.dart';
+import 'package:rspsa_user/screens/student_portal/contact_us_page.dart';
+import 'package:rspsa_user/screens/student_portal/edit_profile_screen.dart';
+import 'package:rspsa_user/screens/student_portal/programdetails_screen.dart';
+import 'package:rspsa_user/screens/student_portal/support_screen.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
+
+import '../../custom_widget.dart/appbarForStudent.dart';
 
 class SchoolHomeScreen extends StatefulWidget {
   const SchoolHomeScreen({super.key});
@@ -80,7 +80,7 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                             ),
                           ),
                         ),
-                        child: Padding(
+                        child: const Padding(
                           padding: EdgeInsets.all(3.0),
                           child: CircleAvatar(
                             child: Icon(Icons.person),
@@ -119,7 +119,7 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
               // width: 100,
               // height: 100,
               child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(
+                physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
                 child: Column(
                   children: [
@@ -128,7 +128,7 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.to(ProgramDetailsScreen());
+                            Get.to(const ProgramDetailsScreen());
                           },
                           child: CommonCard(
                             icon: Icons.menu,
@@ -137,7 +137,6 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                         ),
                         InkWell(
                           onTap: () {
-                            Get.to(GalleryScreen());
                           },
                           child: CommonCard(
                             icon: Icons.photo_library_sharp,
@@ -170,7 +169,7 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.to(ContactUsPage());
+                            Get.to(const AboutUsPage());
                           },
                           child: CommonCard(
                             icon: Icons.edit_outlined,
@@ -179,7 +178,7 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                         ),
                         InkWell(
                           onTap: () {
-                            Get.to(SupportScreen());
+                            Get.to(const SupportScreen());
                           },
                           child: CommonCard(
                             icon: Icons.people,
@@ -196,15 +195,14 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.to(ContactUsPage());
                           },
                           child: CommonCard(
                             icon: Icons.edit_outlined,
                             title: 'Refer Us',
                           ),
                         ),
-                        Spacer(),
-                       SizedBox(),
+                        const Spacer(),
+                       const SizedBox(),
                       ],
                     ),
                     SizedBox(

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rspsa_user/screens/login_screen.dart';
+import 'package:rspsa_user/screens/common/login_screen.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 
-AppBar appBar({required String title}) {
+AppBar appBarTeacher() {
   return AppBar(
     automaticallyImplyLeading: false,
     backgroundColor: ColorHelper.primaryColor,
     elevation: 0,
     title: Text(
-      title,
+      'Teacher Portal',
       style: TextStyle(fontSize: 16.sp, color: Colors.white),
     ),
     centerTitle: true,

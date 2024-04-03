@@ -1,28 +1,31 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:rspsa_user/custom_widget.dart/appbarForStudent.dart';
+import 'package:rspsa_user/custom_widget.dart/appbarForTeacher.dart';
 import 'package:rspsa_user/custom_widget.dart/card.dart';
 import 'package:rspsa_user/screens/student_portal/contact_us_page.dart';
 import 'package:rspsa_user/screens/student_portal/edit_profile_screen.dart';
+import 'package:rspsa_user/screens/student_portal/gallery_screen.dart';
 import 'package:rspsa_user/screens/student_portal/programdetails_screen.dart';
-import 'package:rspsa_user/screens/student_portal/support_screen.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 
-import '../../custom_widget.dart/appbarForStudent.dart';
+import '../student_portal/support_screen.dart';
 
-class EmployeeHomeScreen extends StatefulWidget {
-  const EmployeeHomeScreen({super.key});
+class TeacherHomeScreen extends StatefulWidget {
+  const TeacherHomeScreen({super.key});
 
   @override
-  State<EmployeeHomeScreen> createState() => _EmployeeHomeScreenState();
+  State<TeacherHomeScreen> createState() => _TeacherHomeScreenState();
 }
 
-class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
+class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorHelper.primaryColor,
-      appBar: appBar(title: 'Employee Portal'),
+      appBar: appBar(title: "Teacher Portal"),
       body: SafeArea(
           child: Stack(
         children: [
@@ -43,14 +46,14 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "Employee Name",
+                        "Teacher's Name",
                         style: TextStyle(
                             fontSize: 18.sp,
                             color: Colors.white,
                             fontWeight: FontWeight.w600),
                       ),
                       Text(
-                        "Emial: student@gmail.com",
+                        "Emial: teacher@gmail.com",
                         style: TextStyle(
                             fontSize: 16.sp,
                             color: Colors.white,
@@ -116,8 +119,6 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                       topLeft: Radius.circular(25.r),
                       topRight: Radius.circular(25.r))),
               padding: EdgeInsets.only(top: 10.h),
-              // width: 100,
-              // height: 100,
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
@@ -137,10 +138,11 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                         ),
                         InkWell(
                           onTap: () {
+                            Get.to(GalleryScreen());
                           },
                           child: CommonCard(
                             icon: Icons.photo_library_sharp,
-                            title: 'Our Registration',
+                            title: 'Gallery',
                           ),
                         ),
                       ],
@@ -153,7 +155,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                       children: [
                         CommonCard(
                           icon: Icons.quiz_outlined,
-                          title: 'My Payout',
+                          title: 'My Payouts',
                         ),
                         CommonCard(
                           icon: Icons.file_download_outlined,
@@ -172,7 +174,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                             Get.to(const AboutUsPage());
                           },
                           child: CommonCard(
-                            icon: Icons.edit_outlined,
+                            icon: Icons.remove_from_queue_sharp,
                             title: 'About Us',
                           ),
                         ),
@@ -195,26 +197,13 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.to(const AboutUsPage());
                           },
                           child: CommonCard(
                             icon: Icons.edit_outlined,
-                            title: 'Refer Us',
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Get.to(const AboutUsPage());
-                          },
-                          child: CommonCard(
-                            icon: Icons.edit_outlined,
-                            title: 'Our Referral',
+                            title: 'Refers Us',
                           ),
                         ),
                       ],
-                    ),
-                    SizedBox(
-                      height: 10.h,
                     ),
                   ],
                 ),

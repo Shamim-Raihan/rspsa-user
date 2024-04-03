@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 
-class LoginController extends GetxController {
+class TeacherLoginController extends GetxController {
   var emailController = TextEditingController().obs;
   var mobileController = TextEditingController().obs;
   var passwordController = TextEditingController().obs;
@@ -9,18 +9,18 @@ class LoginController extends GetxController {
   var addressController = TextEditingController().obs;
   var aadharController = TextEditingController().obs;
 
+  var degreeController = TextEditingController().obs;
+  var passingYearController = TextEditingController().obs;
+  var totalMarksController = TextEditingController().obs;
+  var obtainedController = TextEditingController().obs;
+  var percentageController = TextEditingController().obs;
   var schoolNameController = TextEditingController().obs;
-  var schoolAddressController = TextEditingController().obs;
-  var appearingClassController = TextEditingController().obs;
-  var accountNumberController = TextEditingController().obs;
-  var ifscCodeController = TextEditingController().obs;
-  var utrNumberController = TextEditingController().obs;
-  var declarationController = TextEditingController().obs;
+  var experienceController = TextEditingController().obs;
   var agree = false.obs;
 
   var registrationForController = TextEditingController().obs;
   var nameController = TextEditingController().obs;
-  var sdcoController = TextEditingController().obs;
+  var sdwoController = TextEditingController().obs;
   var visiblepass = false.obs;
   var selectedOption = 0.obs;
   var selectedValue = "Select".obs;

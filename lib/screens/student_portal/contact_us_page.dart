@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ContactUsPage extends StatelessWidget {
-  const ContactUsPage({super.key});
+class AboutUsPage extends StatelessWidget {
+  const AboutUsPage({super.key});
 
   _launchPhone() async {
     const phoneNumber = '+5234534535';

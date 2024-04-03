@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
-import 'package:rspsa_user/controller/login_controller.dart';
+import 'package:rspsa_user/controller/school_login_controller.dart';
 import 'package:rspsa_user/custom_widget.dart/cusotm_text_field.dart';
-import 'package:rspsa_user/screens/login_screen.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 import 'package:rspsa_user/utils/space_helper.dart';
 import 'package:rspsa_user/utils/text_style.dart';
 
-class StudentSignupScreen extends StatefulWidget {
-  const StudentSignupScreen({super.key});
+class SchoolSignUpScreen extends StatefulWidget {
+  const SchoolSignUpScreen({super.key});
 
   @override
-  State<StudentSignupScreen> createState() => _StudentSignupScreenState();
+  State<SchoolSignUpScreen> createState() => _SchoolSignUpScreenState();
 }
 
-class _StudentSignupScreenState extends State<StudentSignupScreen> {
-  String? _dropDownValue;
+class _SchoolSignUpScreenState extends State<SchoolSignUpScreen> {
   @override
   Widget build(BuildContext context) {
-    LoginController loginController = Get.put(LoginController());
+    SchoolLoginController schoolLoginController =
+        Get.put(SchoolLoginController());
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -58,7 +55,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    buildInputAndActionView(loginController, context),
+                    buildInputAndActionView(schoolLoginController, context),
                   ],
                 ),
               ],
@@ -70,88 +67,50 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
   }
 
   Padding buildInputAndActionView(
-      LoginController loginController, BuildContext context) {
+      SchoolLoginController schoolLoginController, BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(16.0.sp),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Select program',
-            style: FontStyles().largeTextRed,
-          ),
-          SpaceHelper().verticalSpace10,
-          Container(
-            height: 50.h,
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.grey.shade300),
-                borderRadius: BorderRadius.circular(5)),
-            child: DropdownButton(
-              underline: const SizedBox(),
-              hint: _dropDownValue == null
-                  ? const Text('Select Program')
-                  : Text(
-                      _dropDownValue!,
-                      style: FontStyles().normalTextBlack,
-                    ),
-              isExpanded: true,
-              iconSize: 30.0,
-              style: const TextStyle(color: Colors.blue),
-              items: ['Program 1', 'Program 1', 'Program 1'].map(
-                (val) {
-                  return DropdownMenuItem<String>(
-                    value: val,
-                    child: Text(
-                      val,
-                      style: FontStyles().normalTextBlack,
-                    ),
-                  );
-                },
-              ).toList(),
-              onChanged: (val) {
-                setState(
-                  () {
-                    _dropDownValue = val;
-                  },
-                );
-              },
-            ),
-          ),
+          // Text(
+          //   'Teacher Profile',
+          //   style: FontStyles().largeTextRed,
+          // ),
+          // SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller: schoolLoginController.schoolEmailIdController.value,
+              levelText: "School Name",
+              suffixIcon: Icons.person_2_outlined),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.registrationForController.value,
-              levelText: "Registration For", suffixIcon: Icons.app_registration),
-          SpaceHelper().verticalSpace20,
-          Text(
-            'Student Profile',
-            style: FontStyles().largeTextRed,
-          ),
-           SpaceHelper().verticalSpace10,
-          CustomTextField().textField(
-              controller: loginController.nameController.value,
-              levelText: "Student Name",
-              suffixIcon: Icons.person_2_outlined
-              ),
-              SpaceHelper().verticalSpace10,
-          CustomTextField().textField(
-              controller: loginController.sdcoController.value,
-              levelText: "S/D/C/o",
-              suffixIcon: Icons.person_2_outlined
-              ),
+              controller: schoolLoginController
+                  .schoolRegistrationNumberController.value,
+              levelText: "School Registration Number",
+              suffixIcon: Icons.numbers),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.emailController.value,
-              levelText: "Email",
-              suffixIcon: Icons.mail_outline
-              ),
+              controller: schoolLoginController.schoolEmailIdController.value,
+              levelText: "School Email ID",
+              suffixIcon: Icons.mail_outline),
+          SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller: schoolLoginController.schoolMobileController.value,
+              levelText: "School Mobile Number",
+              suffixIcon: Icons.phone),
+          SpaceHelper().verticalSpace10,
+
+          CustomTextField().textField(
+              controller: schoolLoginController.schooladdressController.value,
+              levelText: "School Address",
+              suffixIcon: Icons.location_on),
           SpaceHelper().verticalSpace10,
           SizedBox(
             height: 50.h,
             child: TextFormField(
-              controller: loginController.passwordController.value,
-              obscureText: !loginController.visiblepass.value,
+              controller: schoolLoginController.passwordController.value,
+              obscureText: !schoolLoginController.visiblepass.value,
               decoration: InputDecoration(
                   focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
@@ -161,13 +120,15 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                           BorderSide(color: Colors.grey.shade300, width: 1.2)),
                   border: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black, width: 1.2)),
-                  suffixIcon: loginController.visiblepass.value
+                  suffixIcon: schoolLoginController.visiblepass.value
                       ? IconButton(
                           onPressed: () {
                             setState(() {
-                              loginController.visiblepass.value
-                                  ? loginController.visiblepass.value = false
-                                  : loginController.visiblepass.value = true;
+                              schoolLoginController.visiblepass.value
+                                  ? schoolLoginController.visiblepass.value =
+                                      false
+                                  : schoolLoginController.visiblepass.value =
+                                      true;
                             });
                           },
                           icon: const Icon(Icons.visibility,
@@ -175,9 +136,11 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                       : IconButton(
                           onPressed: () {
                             setState(() {
-                              loginController.visiblepass.value
-                                  ? loginController.visiblepass.value = false
-                                  : loginController.visiblepass.value = true;
+                              schoolLoginController.visiblepass.value
+                                  ? schoolLoginController.visiblepass.value =
+                                      false
+                                  : schoolLoginController.visiblepass.value =
+                                      true;
                             });
                           },
                           icon: const Icon(
@@ -188,8 +151,32 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                   labelStyle: const TextStyle(color: Colors.black)),
             ),
           ),
+          SpaceHelper().verticalSpace10,
+
+          CustomTextField().textField(
+              controller:
+                  schoolLoginController.schooldireactorNameController.value,
+              levelText: "School Director Name",
+              suffixIcon: Icons.person),
+          SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller:
+                  schoolLoginController.direactorContactNumberController.value,
+              levelText: "Director Contact Number",
+              suffixIcon: Icons.call),
+          SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller: schoolLoginController.totalStudentController.value,
+              levelText: "Total Student",
+              suffixIcon: Icons.class_),
+          SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller: schoolLoginController.totalTeacherController.value,
+              levelText: "Total Teacher",
+              suffixIcon: Icons.class_),
+
           SizedBox(
-            height: 20.h,
+            height: 30.h,
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width,
@@ -202,7 +189,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                 ),
               ),
               onPressed: () {
-                // Get.offAll(() => AdminLandingScreen());
+                // Get.offAll(() => TeacherLoginScreen());
               },
               child: Text(
                 'SIGN UP',
@@ -222,9 +209,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
               const Text('Already have an account'),
               SpaceHelper().horizoantalSpace5,
               InkWell(
-                onTap: () {
-                  Get.off(() => const LoginScreen());
-                },
+                onTap: () {},
                 child: Text(
                   'Sign In',
                   style: FontStyles().normalTextRed,

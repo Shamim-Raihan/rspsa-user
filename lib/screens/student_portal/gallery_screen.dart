@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rspsa_user/screens/gallery_details_screen.dart';
+import 'package:rspsa_user/screens/student_portal/gallery_details_screen.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 
 class ImageDetails {
