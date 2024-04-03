@@ -10,19 +10,19 @@ import 'package:rspsa_user/screens/programdetails_screen.dart';
 import 'package:rspsa_user/screens/support_screen.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class SchoolHomeScreen extends StatefulWidget {
+  const SchoolHomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<SchoolHomeScreen> createState() => _SchoolHomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorHelper.primaryColor,
-      appBar: appBar(title: "Student Portal"),
+      appBar: appBar(title: 'School Portal'),
       body: SafeArea(
           child: Stack(
         children: [
@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "Student's Name",
+                        "School Name",
                         style: TextStyle(
                             fontSize: 18.sp,
                             color: Colors.white,
@@ -141,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                           child: CommonCard(
                             icon: Icons.photo_library_sharp,
-                            title: 'Gallery',
+                            title: 'Registration Details',
                           ),
                         ),
                       ],
@@ -154,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         CommonCard(
                           icon: Icons.quiz_outlined,
-                          title: 'My Result',
+                          title: 'My Payout',
                         ),
                         CommonCard(
                           icon: Icons.file_download_outlined,
@@ -191,6 +191,26 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: 10.h,
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Get.to(ContactUsPage());
+                          },
+                          child: CommonCard(
+                            icon: Icons.edit_outlined,
+                            title: 'Refer Us',
+                          ),
+                        ),
+                        Spacer(),
+                       SizedBox(),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    
                   ],
                 ),
               ),
