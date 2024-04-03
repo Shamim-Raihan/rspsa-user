@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:rspsa_user/custom_widget.dart/card.dart';
+import 'package:rspsa_user/screens/employee_portal/employee_profile_screen.dart';
 import 'package:rspsa_user/screens/employee_portal/employee_signup_screen.dart';
 import 'package:rspsa_user/screens/student_portal/contact_us_page.dart';
 import 'package:rspsa_user/screens/student_portal/edit_profile_screen.dart';
@@ -90,7 +91,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                       ),
                       TextButton(
                           onPressed: () {
-                            Get.to(const EmployeeSignUpScreen());
+                            Get.to(const EmployeeProfileScreen());
                           },
                           child: Text(
                             'Profile',

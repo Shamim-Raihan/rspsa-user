@@ -144,30 +144,8 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                  height: 200.h,
-                  decoration: const BoxDecoration(
-                      // color: Color.fromARGB(255, 229, 125, 118),
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(25),
-                          bottomRight: Radius.circular(25))),
-                  width: MediaQuery.of(context).size.width,
-                  child: Image.asset('images/logo.png')),
               Column(
                 children: [
-                  Text(
-                    "Create New Account",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 22.sp,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
                   buildInputAndActionView(employeeController, context),
                 ],
               ),
