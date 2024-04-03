@@ -92,11 +92,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             Get.to(const ProfileEdit());
                           },
                           child: Text(
-                            'Edit Profile',
+                            'Profile',
                             style: TextStyle(
-                                fontSize: 12.sp,
+                                fontSize: 14.sp,
                                 color: Colors.white,
-                                fontWeight: FontWeight.w400,
+                                fontWeight: FontWeight.w600,
                                 decoration: TextDecoration.underline,
                                 decorationColor: Colors.white),
                           ))

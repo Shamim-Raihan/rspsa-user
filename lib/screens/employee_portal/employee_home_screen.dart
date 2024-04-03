@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:rspsa_user/custom_widget.dart/card.dart';
+import 'package:rspsa_user/screens/employee_portal/employee_signup_screen.dart';
 import 'package:rspsa_user/screens/student_portal/contact_us_page.dart';
 import 'package:rspsa_user/screens/student_portal/edit_profile_screen.dart';
 import 'package:rspsa_user/screens/student_portal/programdetails_screen.dart';
@@ -89,14 +90,14 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                       ),
                       TextButton(
                           onPressed: () {
-                            Get.to(ProfileEdit());
+                            Get.to(const EmployeeSignUpScreen());
                           },
                           child: Text(
-                            'Edit Profile',
+                            'Profile',
                             style: TextStyle(
-                                fontSize: 12.sp,
+                                fontSize: 14.sp,
                                 color: Colors.white,
-                                fontWeight: FontWeight.w400,
+                                fontWeight: FontWeight.w600,
                                 decoration: TextDecoration.underline,
                                 decorationColor: Colors.white),
                           ))
@@ -130,15 +131,14 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                           onTap: () {
                             Get.to(const ProgramDetailsScreen());
                           },
-                          child: CommonCard(
+                          child: const CommonCard(
                             icon: Icons.menu,
                             title: 'Programs',
                           ),
                         ),
                         InkWell(
-                          onTap: () {
-                          },
-                          child: CommonCard(
+                          onTap: () {},
+                          child: const CommonCard(
                             icon: Icons.photo_library_sharp,
                             title: 'Our Registration',
                           ),
@@ -148,7 +148,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                     SizedBox(
                       height: 10.h,
                     ),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         CommonCard(
@@ -171,7 +171,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                           onTap: () {
                             Get.to(const AboutUsPage());
                           },
-                          child: CommonCard(
+                          child: const CommonCard(
                             icon: Icons.edit_outlined,
                             title: 'About Us',
                           ),
@@ -180,7 +180,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                           onTap: () {
                             Get.to(const SupportScreen());
                           },
-                          child: CommonCard(
+                          child: const CommonCard(
                             icon: Icons.people,
                             title: 'Support',
                           ),
@@ -197,7 +197,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                           onTap: () {
                             Get.to(const AboutUsPage());
                           },
-                          child: CommonCard(
+                          child: const CommonCard(
                             icon: Icons.edit_outlined,
                             title: 'Refer Us',
                           ),
@@ -206,7 +206,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                           onTap: () {
                             Get.to(const AboutUsPage());
                           },
-                          child: CommonCard(
+                          child: const CommonCard(
                             icon: Icons.edit_outlined,
                             title: 'Our Referral',
                           ),

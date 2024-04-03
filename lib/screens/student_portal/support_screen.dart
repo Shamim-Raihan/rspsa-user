@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -224,7 +225,6 @@ class SupportScreen extends StatelessWidget {
                           ),
                         ]),
                   ),
-
                 ),
                 const Spacer(),
                 Padding(

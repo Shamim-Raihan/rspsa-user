@@ -533,8 +533,8 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                 focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
                         color: ColorHelper.primaryColor, width: 1.2)),
-                suffixIcon:
-                    const Icon(Icons.description, color: ColorHelper.primaryColor),
+                suffixIcon: const Icon(Icons.description,
+                    color: ColorHelper.primaryColor),
                 labelText: 'Declaration',
                 labelStyle: const TextStyle(color: Colors.black),
                 enabledBorder: OutlineInputBorder(

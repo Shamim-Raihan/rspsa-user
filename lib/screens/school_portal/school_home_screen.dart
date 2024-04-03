@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:rspsa_user/custom_widget.dart/card.dart';
+import 'package:rspsa_user/screens/school_portal/school_profile_screen.dart';
 import 'package:rspsa_user/screens/student_portal/contact_us_page.dart';
 import 'package:rspsa_user/screens/student_portal/edit_profile_screen.dart';
 import 'package:rspsa_user/screens/student_portal/programdetails_screen.dart';
@@ -89,14 +90,14 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                       ),
                       TextButton(
                           onPressed: () {
-                            Get.to(ProfileEdit());
+                            Get.to(SchoolProfileScreen());
                           },
                           child: Text(
-                            'Edit Profile',
+                            'Profile',
                             style: TextStyle(
-                                fontSize: 12.sp,
+                                fontSize: 14.sp,
                                 color: Colors.white,
-                                fontWeight: FontWeight.w400,
+                                fontWeight: FontWeight.w600,
                                 decoration: TextDecoration.underline,
                                 decorationColor: Colors.white),
                           ))
@@ -136,8 +137,7 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                           ),
                         ),
                         InkWell(
-                          onTap: () {
-                          },
+                          onTap: () {},
                           child: const CommonCard(
                             icon: Icons.photo_library_sharp,
                             title: 'Registration Details',
@@ -194,21 +194,19 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         InkWell(
-                          onTap: () {
-                          },
+                          onTap: () {},
                           child: const CommonCard(
                             icon: Icons.edit_outlined,
                             title: 'Refer Us',
                           ),
                         ),
                         const Spacer(),
-                       const SizedBox(),
+                        const SizedBox(),
                       ],
                     ),
                     SizedBox(
                       height: 10.h,
                     ),
-                    
                   ],
                 ),
               ),
