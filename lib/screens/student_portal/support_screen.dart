@@ -24,14 +24,18 @@ class SupportScreen extends StatelessWidget {
 
     var url = params.toString();
     try {
-      print('Launching email with URL: $url');
+      if (kDebugMode) {
+        print('Launching email with URL: $url');
+      }
       if (await canLaunch(url)) {
         await launch(url);
       } else {
         throw 'Could not launch $url';
       }
     } catch (e) {
-      print('Error launching email: $e');
+      if (kDebugMode) {
+        print('Error launching email: $e');
+      }
     }
   }
 
@@ -48,7 +52,7 @@ class SupportScreen extends StatelessWidget {
             },
             child: Padding(
               padding: EdgeInsets.only(left: 10.w),
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_back_ios,
                 color: Colors.black,
               ),
@@ -91,7 +95,7 @@ class SupportScreen extends StatelessWidget {
                 Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xffDFE9EC)),
+                    border: Border.all(color: const Color(0xffDFE9EC)),
                     borderRadius: BorderRadius.circular(10.r),
                   ),
                   child: Padding(
@@ -120,13 +124,13 @@ class SupportScreen extends StatelessWidget {
                                   height: 40.h,
                                   decoration: ShapeDecoration(
                                     shape: RoundedRectangleBorder(
-                                      side: BorderSide(
+                                      side: const BorderSide(
                                           width: 1, color: Color(0xFFDCE0E6)),
                                       borderRadius:
                                           BorderRadius.circular(100.r),
                                     ),
                                   ),
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.phone_outlined,
                                     color: Color.fromARGB(255, 160, 181, 188),
                                   ),
@@ -175,13 +179,13 @@ class SupportScreen extends StatelessWidget {
                                   height: 40.h,
                                   decoration: ShapeDecoration(
                                     shape: RoundedRectangleBorder(
-                                      side: BorderSide(
+                                      side: const BorderSide(
                                           width: 1, color: Color(0xFFDCE0E6)),
                                       borderRadius:
                                           BorderRadius.circular(100.r),
                                     ),
                                   ),
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.mail_outline_rounded,
                                     color: Color.fromARGB(255, 160, 181, 188),
                                   ),
@@ -220,8 +224,9 @@ class SupportScreen extends StatelessWidget {
                           ),
                         ]),
                   ),
+
                 ),
-                Spacer(),
+                const Spacer(),
                 Padding(
                   padding: EdgeInsets.only(bottom: 70.h),
                   child: Row(

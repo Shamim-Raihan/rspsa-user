@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -52,13 +53,19 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
             _filePath = filePath;
           });
         } else {
-          print("No file selected");
+          if (kDebugMode) {
+            print("No file selected");
+          }
         }
       } else {
-        print("User canceled the file picker");
+        if (kDebugMode) {
+          print("User canceled the file picker");
+        }
       }
     } catch (e) {
-      print("Error picking file: $e");
+      if (kDebugMode) {
+        print("Error picking file: $e");
+      }
     }
   }
 
@@ -80,7 +87,7 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
                   child: Text(
                     'Done',
                     style: TextStyle(
-                      color: Color(0xFF5F8B95),
+                      color: const Color(0xFF5F8B95),
                       fontSize: 16.sp,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w400,
@@ -89,7 +96,7 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
               Expanded(
                 child: CupertinoDatePicker(
                   mode: CupertinoDatePickerMode.date,
-                  initialDateTime: _dateTime ?? DateTime.now(),
+                  initialDateTime: _dateTime,
                   minimumDate: DateTime(1900),
                   maximumDate: DateTime(2025),
                   onDateTimeChanged: (DateTime newDate) {
@@ -222,7 +229,7 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
                   ),
                   Padding(
                       padding: EdgeInsets.all(8.0.sp),
-                      child: Icon(
+                      child: const Icon(
                         Icons.calendar_month,
                         color: ColorHelper.primaryColor,
                       ))
@@ -344,12 +351,12 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Aadhar Card'),
+                const Text('Aadhar Card'),
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
                     onPressed: _openFileExplorer,
-                    child: Text('Upload File'),
+                    child: const Text('Upload File'),
                   ),
                 ),
               ],
@@ -368,12 +375,12 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Photo'),
+                const Text('Photo'),
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
                     onPressed: _openFileExplorer,
-                    child: Text('Upload File'),
+                    child: const Text('Upload File'),
                   ),
                 ),
               ],
@@ -392,12 +399,12 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Signature'),
+                const Text('Signature'),
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
                     onPressed: _openFileExplorer,
-                    child: Text('Upload File'),
+                    child: const Text('Upload File'),
                   ),
                 ),
               ],

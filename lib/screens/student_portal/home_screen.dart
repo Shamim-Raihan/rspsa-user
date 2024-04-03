@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       TextButton(
                           onPressed: () {
-                            Get.to(ProfileEdit());
+                            Get.to(const ProfileEdit());
                           },
                           child: Text(
                             'Edit Profile',
@@ -130,16 +130,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTap: () {
                             Get.to(const ProgramDetailsScreen());
                           },
-                          child: CommonCard(
+                          child: const CommonCard(
                             icon: Icons.menu,
                             title: 'Programs',
                           ),
                         ),
                         InkWell(
                           onTap: () {
-                            Get.to(GalleryScreen());
+                            Get.to(const GalleryScreen());
                           },
-                          child: CommonCard(
+                          child: const CommonCard(
                             icon: Icons.photo_library_sharp,
                             title: 'Gallery',
                           ),
@@ -149,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: 10.h,
                     ),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         CommonCard(
@@ -172,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTap: () {
                             Get.to(const AboutUsPage());
                           },
-                          child: CommonCard(
+                          child: const CommonCard(
                             icon: Icons.edit_outlined,
                             title: 'About Us',
                           ),
@@ -181,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTap: () {
                             Get.to(const SupportScreen());
                           },
-                          child: CommonCard(
+                          child: const CommonCard(
                             icon: Icons.people,
                             title: 'Support',
                           ),

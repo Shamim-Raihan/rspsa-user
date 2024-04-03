@@ -130,7 +130,7 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                           onTap: () {
                             Get.to(const ProgramDetailsScreen());
                           },
-                          child: CommonCard(
+                          child: const CommonCard(
                             icon: Icons.menu,
                             title: 'Programs',
                           ),
@@ -138,7 +138,7 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                         InkWell(
                           onTap: () {
                           },
-                          child: CommonCard(
+                          child: const CommonCard(
                             icon: Icons.photo_library_sharp,
                             title: 'Registration Details',
                           ),
@@ -148,7 +148,7 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                     SizedBox(
                       height: 10.h,
                     ),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         CommonCard(
@@ -171,7 +171,7 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                           onTap: () {
                             Get.to(const AboutUsPage());
                           },
-                          child: CommonCard(
+                          child: const CommonCard(
                             icon: Icons.edit_outlined,
                             title: 'About Us',
                           ),
@@ -180,7 +180,7 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                           onTap: () {
                             Get.to(const SupportScreen());
                           },
-                          child: CommonCard(
+                          child: const CommonCard(
                             icon: Icons.people,
                             title: 'Support',
                           ),
@@ -196,7 +196,7 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                         InkWell(
                           onTap: () {
                           },
-                          child: CommonCard(
+                          child: const CommonCard(
                             icon: Icons.edit_outlined,
                             title: 'Refer Us',
                           ),

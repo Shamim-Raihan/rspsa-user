@@ -66,7 +66,7 @@ class AboutUsPage extends StatelessWidget {
             },
             child: Padding(
               padding: EdgeInsets.only(left: 10.w),
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_back_ios,
                 color: Colors.black,
               ),
@@ -107,144 +107,14 @@ class AboutUsPage extends StatelessWidget {
                 SizedBox(
                   height: 20.h,
                 ),
-                // Container(
-                //   width: MediaQuery.of(context).size.width,
-                //   decoration: BoxDecoration(
-                //     border: Border.all(color: Color(0xffDFE9EC)),
-                //     borderRadius: BorderRadius.circular(10.r),
-                //   ),
-                //   child: Padding(
-                //     padding: EdgeInsets.only(left: 8.w, top: 8.h, bottom: 8.h),
-                //     child: Column(
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: [
-                //           Text(
-                //             'Customer Support',
-                //             textAlign: TextAlign.center,
-                //             style: TextStyle(
-                //                 color: Colors.grey.withOpacity(0.7),
-                //                 fontFamily: 'Inter',
-                //                 fontSize: 15.sp,
-                //                 fontWeight: FontWeight.w500),
-                //           ),
-                //           SizedBox(
-                //             height: 10.h,
-                //           ),
-                //           GestureDetector(
-                //             onTap: _launchPhone,
-                //             child: Row(
-                //               children: [
-                //                 Container(
-                //                   width: 40.w,
-                //                   height: 40.h,
-                //                   decoration: ShapeDecoration(
-                //                     shape: RoundedRectangleBorder(
-                //                       side: BorderSide(
-                //                           width: 1, color: Color(0xFFDCE0E6)),
-                //                       borderRadius: BorderRadius.circular(100.r),
-                //                     ),
-                //                   ),
-                //                   child: Icon(
-                //                     Icons.phone_outlined,
-                //                     color: Color.fromARGB(255, 160, 181, 188),
-                //                   ),
-                //                 ),
-                //                 SizedBox(
-                //                   width: 5.w,
-                //                 ),
-                //                 Column(
-                //                   crossAxisAlignment: CrossAxisAlignment.start,
-                //                   children: [
-                //                     Text(
-                //                       ' Contact Number',
-                //                       textAlign: TextAlign.center,
-                //                       style: TextStyle(
-                //                           color: Colors.grey.withOpacity(0.7),
-                //                           fontFamily: 'Inter',
-                //                           fontSize: 14.sp,
-                //                           fontWeight: FontWeight.w500),
-                //                     ),
-                //                     SizedBox(
-                //                       height: 2.h,
-                //                     ),
-                //                     Text(
-                //                       '+61 (03) 9028 5980',
-                //                       textAlign: TextAlign.center,
-                //                       style: TextStyle(
-                //                           color: Colors.black,
-                //                           fontFamily: 'Inter',
-                //                           fontSize: 14.sp,
-                //                           fontWeight: FontWeight.w500),
-                //                     ),
-                //                   ],
-                //                 )
-                //               ],
-                //             ),
-                //           ),
-                //           SizedBox(
-                //             height: 10.h,
-                //           ),
-                //           GestureDetector(
-                //             onTap: _launchEmail,
-                //             child: Row(
-                //               children: [
-                //                 Container(
-                //                   width: 40.w,
-                //                   height: 40.h,
-                //                   decoration: ShapeDecoration(
-                //                     shape: RoundedRectangleBorder(
-                //                       side: BorderSide(
-                //                           width: 1, color: Color(0xFFDCE0E6)),
-                //                       borderRadius: BorderRadius.circular(100.r),
-                //                     ),
-                //                   ),
-                //                   child: Icon(
-                //                     Icons.mail_outline_rounded,
-                //                     color: Color.fromARGB(255, 160, 181, 188),
-                //                   ),
-                //                 ),
-                //                 SizedBox(
-                //                   width: 5.w,
-                //                 ),
-                //                 Column(
-                //                   crossAxisAlignment: CrossAxisAlignment.start,
-                //                   children: [
-                //                     Text(
-                //                       ' Email Address',
-                //                       textAlign: TextAlign.center,
-                //                       style: TextStyle(
-                //                           color: Colors.grey.withOpacity(0.7),
-                //                           fontFamily: 'Inter',
-                //                           fontSize: 14.sp,
-                //                           fontWeight: FontWeight.w500),
-                //                     ),
-                //                     SizedBox(
-                //                       height: 2.h,
-                //                     ),
-                //                     Text(
-                //                       ' hello@fitfloapp.com',
-                //                       textAlign: TextAlign.center,
-                //                       style: TextStyle(
-                //                           color: Colors.black,
-                //                           fontFamily: 'Inter',
-                //                           fontSize: 14.sp,
-                //                           fontWeight: FontWeight.w500),
-                //                     ),
-                //                   ],
-                //                 )
-                //               ],
-                //             ),
-                //           ),
-                //         ]),
-                //   ),
-                // ),
+                
                 SizedBox(
                   height: 20.h,
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xffDFE9EC)),
+                    border: Border.all(color: const Color(0xffDFE9EC)),
                     borderRadius: BorderRadius.circular(10.r),
                   ),
                   child: Padding(
@@ -273,7 +143,7 @@ class AboutUsPage extends StatelessWidget {
                                     height: 40.h,
                                     decoration: ShapeDecoration(
                                       shape: RoundedRectangleBorder(
-                                        side: BorderSide(
+                                        side: const BorderSide(
                                             width: 1, color: Color(0xFFDCE0E6)),
                                         borderRadius:
                                             BorderRadius.circular(100.r),
@@ -324,7 +194,7 @@ class AboutUsPage extends StatelessWidget {
                                     height: 40.h,
                                     decoration: ShapeDecoration(
                                       shape: RoundedRectangleBorder(
-                                        side: BorderSide(
+                                        side: const BorderSide(
                                             width: 1, color: Color(0xFFDCE0E6)),
                                         borderRadius:
                                             BorderRadius.circular(100.r),
@@ -367,7 +237,7 @@ class AboutUsPage extends StatelessWidget {
                         ]),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Padding(
                   padding: EdgeInsets.only(bottom: 70.h),
                   child: Row(

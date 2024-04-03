@@ -12,8 +12,10 @@ class ProgramDetailsScreen extends StatefulWidget {
 class _ProgramDetailsScreenState extends State<ProgramDetailsScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
+  
   @override
   void initState() {
+    super.initState();
     _tabController = TabController(length: 2, vsync: this);
   }
 
@@ -42,7 +44,7 @@ class _ProgramDetailsScreenState extends State<ProgramDetailsScreen>
                         fontFamily: 'Inter',
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w500),
-                    labelColor: Color(0xFF11262C),
+                    labelColor: const Color(0xFF11262C),
                     unselectedLabelColor: Colors.grey,
                     // isScrollable: true,
                     controller: _tabController,
@@ -103,7 +105,7 @@ class _ProgramDetailsScreenState extends State<ProgramDetailsScreen>
                                           children: [
                                             Center(
                                                 child: Container(
-                                              constraints: BoxConstraints(),
+                                              constraints: const BoxConstraints(),
                                               height: 60.h,
                                               width: 120.w,
                                               decoration: BoxDecoration(
@@ -330,7 +332,7 @@ class _ProgramDetailsScreenState extends State<ProgramDetailsScreen>
                                           children: [
                                             Center(
                                                 child: Container(
-                                              constraints: BoxConstraints(),
+                                              constraints: const BoxConstraints(),
                                               height: 60.h,
                                               width: 120.w,
                                               decoration: BoxDecoration(

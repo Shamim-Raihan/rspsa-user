@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-
-import 'dart:io';
-
 import 'package:rspsa_user/utils/color_helper.dart';
 
 class ProfileEdit extends StatefulWidget {
+  const ProfileEdit({super.key});
+
   @override
   _ProfileEditState createState() => _ProfileEditState();
 }
 
 class _ProfileEditState extends State<ProfileEdit> {
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _mobileController = TextEditingController();
-  TextEditingController _addressController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _mobileController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
   String _imagePath = '';
 
   @override
@@ -96,10 +95,10 @@ class _ProfileEditState extends State<ProfileEdit> {
               child: TextField(
                 controller: _mobileController,
                 decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
+                  focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                           color: ColorHelper.primaryColor, width: 1.2)),
-                  suffixIcon: Icon(Icons.phone_android_rounded,
+                  suffixIcon: const Icon(Icons.phone_android_rounded,
                       color: ColorHelper.primaryColor),
                   labelText: 'Mobile',
                   labelStyle: const TextStyle(color: Colors.black),
@@ -117,7 +116,7 @@ class _ProfileEditState extends State<ProfileEdit> {
               child: TextField(
                 controller: _addressController,
                 decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
+                  focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                           color: ColorHelper.primaryColor, width: 1.2)),
                   suffixIcon: const Icon(Icons.location_city,

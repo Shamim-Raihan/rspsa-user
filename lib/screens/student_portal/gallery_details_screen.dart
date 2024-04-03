@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class GalleryDetailScreen extends StatelessWidget {
   final String imagePath;
 
+
+
   final int index;
   GalleryDetailScreen({
     required this.imagePath,

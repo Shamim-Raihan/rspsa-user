@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:rspsa_user/custom_widget.dart/appbarForStudent.dart';
-import 'package:rspsa_user/custom_widget.dart/appbarForTeacher.dart';
 import 'package:rspsa_user/custom_widget.dart/card.dart';
 import 'package:rspsa_user/screens/student_portal/contact_us_page.dart';
 import 'package:rspsa_user/screens/student_portal/edit_profile_screen.dart';
@@ -92,7 +91,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                       ),
                       TextButton(
                           onPressed: () {
-                            Get.to(ProfileEdit());
+                            Get.to(const ProfileEdit());
                           },
                           child: Text(
                             'Edit Profile',
@@ -131,16 +130,16 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                           onTap: () {
                             Get.to(const ProgramDetailsScreen());
                           },
-                          child: CommonCard(
+                          child: const CommonCard(
                             icon: Icons.menu,
                             title: 'Programs',
                           ),
                         ),
                         InkWell(
                           onTap: () {
-                            Get.to(GalleryScreen());
+                            Get.to(const GalleryScreen());
                           },
-                          child: CommonCard(
+                          child: const CommonCard(
                             icon: Icons.photo_library_sharp,
                             title: 'Gallery',
                           ),
@@ -150,7 +149,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                     SizedBox(
                       height: 10.h,
                     ),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         CommonCard(
@@ -173,7 +172,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                           onTap: () {
                             Get.to(const AboutUsPage());
                           },
-                          child: CommonCard(
+                          child: const CommonCard(
                             icon: Icons.remove_from_queue_sharp,
                             title: 'About Us',
                           ),
@@ -182,7 +181,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                           onTap: () {
                             Get.to(const SupportScreen());
                           },
-                          child: CommonCard(
+                          child: const CommonCard(
                             icon: Icons.people,
                             title: 'Support',
                           ),
@@ -198,7 +197,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                         InkWell(
                           onTap: () {
                           },
-                          child: CommonCard(
+                          child: const CommonCard(
                             icon: Icons.edit_outlined,
                             title: 'Refers Us',
                           ),

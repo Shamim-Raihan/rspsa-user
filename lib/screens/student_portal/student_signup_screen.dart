@@ -1,12 +1,10 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
 import 'package:intl/intl.dart';
 import 'package:rspsa_user/controller/login_controller.dart';
 import 'package:rspsa_user/custom_widget.dart/cusotm_text_field.dart';
@@ -54,13 +52,19 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
             _filePath = filePath;
           });
         } else {
-          print("No file selected");
+          if (kDebugMode) {
+            print("No file selected");
+          }
         }
       } else {
-        print("User canceled the file picker");
+        if (kDebugMode) {
+          print("User canceled the file picker");
+        }
       }
     } catch (e) {
-      print("Error picking file: $e");
+      if (kDebugMode) {
+        print("Error picking file: $e");
+      }
     }
   }
 
@@ -82,7 +86,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                   child: Text(
                     'Done',
                     style: TextStyle(
-                      color: Color(0xFF5F8B95),
+                      color: const Color(0xFF5F8B95),
                       fontSize: 16.sp,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w400,
@@ -271,7 +275,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                   ),
                   Padding(
                       padding: EdgeInsets.all(8.0.sp),
-                      child: Icon(
+                      child: const Icon(
                         Icons.calendar_month,
                         color: ColorHelper.primaryColor,
                       ))
@@ -384,12 +388,12 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Current Education Proof'),
+                const Text('Current Education Proof'),
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
                     onPressed: _openFileExplorer,
-                    child: Text('Upload File'),
+                    child: const Text('Upload File'),
                   ),
                 ),
               ],
@@ -408,12 +412,12 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Photo'),
+                const Text('Photo'),
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
                     onPressed: _openFileExplorer,
-                    child: Text('Upload File'),
+                    child: const Text('Upload File'),
                   ),
                 ),
               ],
@@ -432,12 +436,12 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Signature'),
+                const Text('Signature'),
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
                     onPressed: _openFileExplorer,
-                    child: Text('Upload File'),
+                    child: const Text('Upload File'),
                   ),
                 ),
               ],
@@ -456,12 +460,12 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Payment proof'),
+                const Text('Payment proof'),
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
                     onPressed: _openFileExplorer,
-                    child: Text('Upload File'),
+                    child: const Text('Upload File'),
                   ),
                 ),
               ],
@@ -480,12 +484,12 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('UTR Number'),
+                const Text('UTR Number'),
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
                     onPressed: _openFileExplorer,
-                    child: Text('Upload File'),
+                    child: const Text('Upload File'),
                   ),
                 ),
               ],
@@ -509,12 +513,12 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Aadhar Card'),
+                const Text('Aadhar Card'),
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
                     onPressed: _openFileExplorer,
-                    child: Text('Upload File'),
+                    child: const Text('Upload File'),
                   ),
                 ),
               ],
@@ -530,7 +534,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                     borderSide: BorderSide(
                         color: ColorHelper.primaryColor, width: 1.2)),
                 suffixIcon:
-                    Icon(Icons.description, color: ColorHelper.primaryColor),
+                    const Icon(Icons.description, color: ColorHelper.primaryColor),
                 labelText: 'Declaration',
                 labelStyle: const TextStyle(color: Colors.black),
                 enabledBorder: OutlineInputBorder(
@@ -577,7 +581,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                           TextSpan(
                             text: 'I agree to the ',
                             style: TextStyle(
-                              color: Color(0xFF181E29),
+                              color: const Color(0xFF181E29),
                               fontSize: 14.sp,
                               fontFamily: 'Inter',
                               fontWeight: FontWeight.w400,
@@ -586,7 +590,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                           TextSpan(
                             text: 'terms and conditions',
                             style: TextStyle(
-                              color: Color(0xFF1D4ED8),
+                              color: const Color(0xFF1D4ED8),
                               fontSize: 14.sp,
                               fontFamily: 'Inter',
                               fontWeight: FontWeight.w400,
