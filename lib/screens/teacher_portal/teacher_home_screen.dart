@@ -65,6 +65,13 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                             color: Colors.white,
                             fontWeight: FontWeight.w500),
                       ),
+                      Text(
+                        "Registration No: 01325458",
+                        style: TextStyle(
+                            fontSize: 16.sp,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500),
+                      ),
                     ],
                   ),
                   Column(
