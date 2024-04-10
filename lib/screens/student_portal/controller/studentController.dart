@@ -24,4 +24,6 @@ class StudentController extends GetxController {
   var visiblepass = false.obs;
   var selectedOption = 0.obs;
   var selectedValue = "Select".obs;
+
+  var myprogramview=false.obs;
 }
