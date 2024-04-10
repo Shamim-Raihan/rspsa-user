@@ -271,7 +271,7 @@ class _ProgramDetailsScreenState extends State<ProgramDetailsScreen>
                                                   height: 30.h,
                                                   width: 120.w,
                                                   decoration: BoxDecoration(
-                                                    color: Colors.redAccent,
+                                                    color: ColorHelper.primaryColor,
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             6.r),
@@ -498,7 +498,7 @@ class _ProgramDetailsScreenState extends State<ProgramDetailsScreen>
                                                   height: 30.h,
                                                   width: 70.w,
                                                   decoration: BoxDecoration(
-                                                    color: Colors.redAccent,
+                                                    color: ColorHelper.primaryColor,
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             6.r),

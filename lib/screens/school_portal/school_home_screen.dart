@@ -197,11 +197,16 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                           onTap: () {},
                           child: const CommonCard(
                             icon: Icons.edit_outlined,
+                            title: 'My Referral',
+                          ),
+                        ),
+                         InkWell(
+                          onTap: () {},
+                          child: const CommonCard(
+                            icon: Icons.edit_outlined,
                             title: 'Refer Us',
                           ),
                         ),
-                        const Spacer(),
-                        const SizedBox(),
                       ],
                     ),
                     SizedBox(

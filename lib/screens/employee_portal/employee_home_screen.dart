@@ -209,7 +209,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                           },
                           child: const CommonCard(
                             icon: Icons.edit_outlined,
-                            title: 'Our Referral',
+                            title: 'My Referral',
                           ),
                         ),
                       ],

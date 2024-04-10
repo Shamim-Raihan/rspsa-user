@@ -198,6 +198,13 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                           onTap: () {},
                           child: const CommonCard(
                             icon: Icons.edit_outlined,
+                            title: 'My Referral',
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {},
+                          child: const CommonCard(
+                            icon: Icons.edit_outlined,
                             title: 'Refers Us',
                           ),
                         ),
