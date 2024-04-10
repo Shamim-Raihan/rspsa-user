@@ -63,6 +63,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.white,
                             fontWeight: FontWeight.w500),
                       ),
+                      Text(
+                        "Registration No: 01325458",
+                        style: TextStyle(
+                            fontSize: 16.sp,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500),
+                      ),
                     ],
                   ),
                   Column(
@@ -159,6 +166,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         CommonCard(
                           icon: Icons.file_download_outlined,
                           title: 'Downloads',
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CommonCard(
+                          icon: Icons.payment,
+                          title: 'Fee Payments',
+                        ),
+                        CommonCard(
+                          icon: Icons.app_registration,
+                          title: 'Registration Status',
                         ),
                       ],
                     ),
