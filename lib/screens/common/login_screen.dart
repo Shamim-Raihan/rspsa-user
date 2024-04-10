@@ -4,21 +4,26 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:rspsa_user/controller/login_controller.dart';
-import 'package:rspsa_user/custom_widget.dart/cusotm_text_field.dart';
-import 'package:rspsa_user/screens/login_screen.dart';
+import 'package:rspsa_user/screens/employee_portal/employee_home_screen.dart';
+import 'package:rspsa_user/screens/employee_portal/employee_signup_screen.dart';
+import 'package:rspsa_user/screens/school_portal/school_home_screen.dart';
+import 'package:rspsa_user/screens/school_portal/school_signup_screen.dart';
+import 'package:rspsa_user/screens/student_portal/home_screen.dart';
+import 'package:rspsa_user/screens/student_portal/student_signup_screen.dart';
+import 'package:rspsa_user/screens/teacher_portal/teacher_signup_screen.dart';
+import 'package:rspsa_user/screens/teacher_portal/teacher_home_screen.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 import 'package:rspsa_user/utils/space_helper.dart';
 import 'package:rspsa_user/utils/text_style.dart';
 
-class StudentSignupScreen extends StatefulWidget {
-  const StudentSignupScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<StudentSignupScreen> createState() => _StudentSignupScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _StudentSignupScreenState extends State<StudentSignupScreen> {
-  String? _dropDownValue;
+class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     LoginController loginController = Get.put(LoginController());
@@ -43,16 +48,32 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                             bottomRight: Radius.circular(25))),
                     width: MediaQuery.of(context).size.width,
                     child: Image.asset('images/logo.png')),
+                SizedBox(
+                  height: 10.h,
+                ),
                 Column(
                   children: [
                     Text(
-                      "Create New Account",
+                      "Hello! let's get started",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 22.sp,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    Text(
+                      "Sign in to continue.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17.sp,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                     SizedBox(
@@ -75,78 +96,30 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
       padding: EdgeInsets.all(16.0.sp),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Select program',
-            style: FontStyles().largeTextRed,
-          ),
-          SpaceHelper().verticalSpace10,
-          Container(
+          SizedBox(
             height: 50.h,
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.grey.shade300),
-                borderRadius: BorderRadius.circular(5)),
-            child: DropdownButton(
-              underline: const SizedBox(),
-              hint: _dropDownValue == null
-                  ? const Text('Select Program')
-                  : Text(
-                      _dropDownValue!,
-                      style: FontStyles().normalTextBlack,
-                    ),
-              isExpanded: true,
-              iconSize: 30.0,
-              style: const TextStyle(color: Colors.blue),
-              items: ['Program 1', 'Program 1', 'Program 1'].map(
-                (val) {
-                  return DropdownMenuItem<String>(
-                    value: val,
-                    child: Text(
-                      val,
-                      style: FontStyles().normalTextBlack,
-                    ),
-                  );
-                },
-              ).toList(),
-              onChanged: (val) {
-                setState(
-                  () {
-                    _dropDownValue = val;
-                  },
-                );
-              },
+            child: TextField(
+              controller: loginController.emailController.value,
+              decoration: InputDecoration(
+                focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: ColorHelper.primaryColor, width: 1.2)),
+                suffixIcon: const Icon(Icons.mail_outline,
+                    color: ColorHelper.primaryColor),
+                labelText: 'Email',
+                labelStyle: const TextStyle(color: Colors.black),
+                enabledBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Colors.grey.shade300, width: 1.2)),
+                border: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 1.2)),
+              ),
             ),
           ),
-          SpaceHelper().verticalSpace10,
-          CustomTextField().textField(
-              controller: loginController.registrationForController.value,
-              levelText: "Registration For", suffixIcon: Icons.app_registration),
-          SpaceHelper().verticalSpace20,
-          Text(
-            'Student Profile',
-            style: FontStyles().largeTextRed,
+          SizedBox(
+            height:  20.h,
           ),
-           SpaceHelper().verticalSpace10,
-          CustomTextField().textField(
-              controller: loginController.nameController.value,
-              levelText: "Student Name",
-              suffixIcon: Icons.person_2_outlined
-              ),
-              SpaceHelper().verticalSpace10,
-          CustomTextField().textField(
-              controller: loginController.sdcoController.value,
-              levelText: "S/D/C/o",
-              suffixIcon: Icons.person_2_outlined
-              ),
-          SpaceHelper().verticalSpace10,
-          CustomTextField().textField(
-              controller: loginController.emailController.value,
-              levelText: "Email",
-              suffixIcon: Icons.mail_outline
-              ),
-          SpaceHelper().verticalSpace10,
           SizedBox(
             height: 50.h,
             child: TextFormField(
@@ -202,10 +175,21 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                 ),
               ),
               onPressed: () {
-                // Get.offAll(() => AdminLandingScreen());
+                  if (loginController.selectedOption.value == 1) {
+                    Get.offAll(() => const HomeScreen());
+                  }
+                  if (loginController.selectedOption.value == 2) {
+                    Get.offAll(() => const TeacherHomeScreen());
+                  }
+                  if (loginController.selectedOption.value == 3) {
+                    Get.offAll(() => const SchoolHomeScreen());
+                  }
+                  if (loginController.selectedOption.value == 4) {
+                    Get.offAll(() => const EmployeeHomeScreen());
+                  }
               },
               child: Text(
-                'SIGN UP',
+                'SIGN IN',
                 style: TextStyle(color: Colors.white, fontSize: 18.h),
               ),
             ),
@@ -213,20 +197,52 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
           SizedBox(
             height: 20.h,
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {},
+                child: Text(
+                  'Forgot password?',
+                  style: TextStyle(
+                    color: ColorHelper.primaryColor,
+                    decoration: TextDecoration.underline,
+                    decorationColor: Colors.blue,
+                    decorationThickness: 1,
+                    decorationStyle: TextDecorationStyle.solid,
+                    fontSize: 14.sp,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+            ],
+          ),
           SizedBox(
             height: 30.h,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('Already have an account'),
+              const Text('Do not have an account'),
               SpaceHelper().horizoantalSpace5,
               InkWell(
                 onTap: () {
-                  Get.off(() => const LoginScreen());
+                  if (loginController.selectedOption.value == 1) {
+                    Get.off(() => const StudentSignupScreen());
+                  }
+                  if (loginController.selectedOption.value == 2) {
+                    Get.off(() => const TeacherSignupScreen());
+                  }
+                  if (loginController.selectedOption.value == 3) {
+                    Get.off(() => const SchoolSignUpScreen());
+                  }
+                  if (loginController.selectedOption.value == 4) {
+                    Get.off(() => const EmployeeSignUpScreen());
+                  }
                 },
                 child: Text(
-                  'Sign In',
+                  'Sign Up',
                   style: FontStyles().normalTextRed,
                 ),
               )

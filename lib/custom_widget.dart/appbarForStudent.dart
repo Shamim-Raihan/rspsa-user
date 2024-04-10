@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rspsa_user/screens/login_screen.dart';
+import 'package:get/get.dart';
+import 'package:rspsa_user/screens/common/account_select_screen.dart';
+import 'package:rspsa_user/screens/common/login_screen.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 
-AppBar appBar() {
+AppBar appBar({required String title}) {
   return AppBar(
     automaticallyImplyLeading: false,
     backgroundColor: ColorHelper.primaryColor,
     elevation: 0,
     title: Text(
-      'Student Portal',
+      title,
       style: TextStyle(fontSize: 16.sp, color: Colors.white),
     ),
     centerTitle: true,
@@ -66,11 +68,7 @@ class MyCircleAvatar extends StatelessWidget {
             // Handle Change Password option
             break;
           case 3:
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LoginScreen(),
-                ));
+            Get.offAll(() => AccountSelectScreen());
             break;
         }
       },

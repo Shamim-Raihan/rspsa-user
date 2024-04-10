@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
-import 'package:rspsa_user/controller/login_controller.dart';
-import 'package:rspsa_user/screens/home_screen.dart';
-import 'package:rspsa_user/screens/student_signup_screen.dart';
+import 'package:rspsa_user/controller/school_login_controller.dart';
+import 'package:rspsa_user/custom_widget.dart/cusotm_text_field.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 import 'package:rspsa_user/utils/space_helper.dart';
 import 'package:rspsa_user/utils/text_style.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SchoolSignUpScreen extends StatefulWidget {
+  const SchoolSignUpScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SchoolSignUpScreen> createState() => _SchoolSignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SchoolSignUpScreenState extends State<SchoolSignUpScreen> {
   @override
   Widget build(BuildContext context) {
-    LoginController loginController = Get.put(LoginController());
+    SchoolLoginController schoolLoginController =
+        Get.put(SchoolLoginController());
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -42,13 +40,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             bottomRight: Radius.circular(25))),
                     width: MediaQuery.of(context).size.width,
                     child: Image.asset('images/logo.png')),
-                SizedBox(
-                  height: 10.h,
-                ),
                 Column(
                   children: [
                     Text(
-                      "Hello! let's get started",
+                      "Create New Account",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
@@ -58,22 +53,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 5.h,
-                    ),
-                    Text(
-                      "Sign in to continue.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17.sp,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    SizedBox(
                       height: 20.h,
                     ),
-                    buildInputAndActionView(loginController, context),
+                    buildInputAndActionView(schoolLoginController, context),
                   ],
                 ),
               ],
@@ -85,40 +67,50 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Padding buildInputAndActionView(
-      LoginController loginController, BuildContext context) {
+      SchoolLoginController schoolLoginController, BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(16.0.sp),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 50.h,
-            child: TextField(
-              controller: loginController.emailController.value,
-              decoration: InputDecoration(
-                focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: ColorHelper.primaryColor, width: 1.2)),
-                suffixIcon: const Icon(Icons.mail_outline,
-                    color: ColorHelper.primaryColor),
-                labelText: 'Email',
-                labelStyle: const TextStyle(color: Colors.black),
-                enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.grey.shade300, width: 1.2)),
-                border: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black, width: 1.2)),
-              ),
-            ),
-          ),
-          SizedBox(
-            height:  20.h,
-          ),
+          // Text(
+          //   'Teacher Profile',
+          //   style: FontStyles().largeTextRed,
+          // ),
+          // SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller: schoolLoginController.schoolEmailIdController.value,
+              levelText: "School Name",
+              suffixIcon: Icons.person_2_outlined),
+          SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller: schoolLoginController
+                  .schoolRegistrationNumberController.value,
+              levelText: "School Registration Number",
+              suffixIcon: Icons.numbers),
+          SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller: schoolLoginController.schoolEmailIdController.value,
+              levelText: "School Email ID",
+              suffixIcon: Icons.mail_outline),
+          SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller: schoolLoginController.schoolMobileController.value,
+              levelText: "School Mobile Number",
+              suffixIcon: Icons.phone),
+          SpaceHelper().verticalSpace10,
+
+          CustomTextField().textField(
+              controller: schoolLoginController.schooladdressController.value,
+              levelText: "School Address",
+              suffixIcon: Icons.location_on),
+          SpaceHelper().verticalSpace10,
           SizedBox(
             height: 50.h,
             child: TextFormField(
-              controller: loginController.passwordController.value,
-              obscureText: !loginController.visiblepass.value,
+              controller: schoolLoginController.passwordController.value,
+              obscureText: !schoolLoginController.visiblepass.value,
               decoration: InputDecoration(
                   focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
@@ -128,13 +120,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           BorderSide(color: Colors.grey.shade300, width: 1.2)),
                   border: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black, width: 1.2)),
-                  suffixIcon: loginController.visiblepass.value
+                  suffixIcon: schoolLoginController.visiblepass.value
                       ? IconButton(
                           onPressed: () {
                             setState(() {
-                              loginController.visiblepass.value
-                                  ? loginController.visiblepass.value = false
-                                  : loginController.visiblepass.value = true;
+                              schoolLoginController.visiblepass.value
+                                  ? schoolLoginController.visiblepass.value =
+                                      false
+                                  : schoolLoginController.visiblepass.value =
+                                      true;
                             });
                           },
                           icon: const Icon(Icons.visibility,
@@ -142,9 +136,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       : IconButton(
                           onPressed: () {
                             setState(() {
-                              loginController.visiblepass.value
-                                  ? loginController.visiblepass.value = false
-                                  : loginController.visiblepass.value = true;
+                              schoolLoginController.visiblepass.value
+                                  ? schoolLoginController.visiblepass.value =
+                                      false
+                                  : schoolLoginController.visiblepass.value =
+                                      true;
                             });
                           },
                           icon: const Icon(
@@ -155,8 +151,32 @@ class _LoginScreenState extends State<LoginScreen> {
                   labelStyle: const TextStyle(color: Colors.black)),
             ),
           ),
+          SpaceHelper().verticalSpace10,
+
+          CustomTextField().textField(
+              controller:
+                  schoolLoginController.schooldireactorNameController.value,
+              levelText: "School Director Name",
+              suffixIcon: Icons.person),
+          SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller:
+                  schoolLoginController.direactorContactNumberController.value,
+              levelText: "Director Contact Number",
+              suffixIcon: Icons.call),
+          SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller: schoolLoginController.totalStudentController.value,
+              levelText: "Total Student",
+              suffixIcon: Icons.class_),
+          SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller: schoolLoginController.totalTeacherController.value,
+              levelText: "Total Teacher",
+              suffixIcon: Icons.class_),
+
           SizedBox(
-            height: 20.h,
+            height: 30.h,
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width,
@@ -169,10 +189,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               onPressed: () {
-                Get.offAll(() => HomeScreen());
+                // Get.offAll(() => TeacherLoginScreen());
               },
               child: Text(
-                'SIGN IN',
+                'SIGN UP',
                 style: TextStyle(color: Colors.white, fontSize: 18.h),
               ),
             ),
@@ -180,52 +200,18 @@ class _LoginScreenState extends State<LoginScreen> {
           SizedBox(
             height: 20.h,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {},
-                child: Text(
-                  'Forgot password?',
-                  style: TextStyle(
-                    color: ColorHelper.primaryColor,
-                    decoration: TextDecoration.underline,
-                    decorationColor: Colors.blue,
-                    decorationThickness: 1,
-                    decorationStyle: TextDecorationStyle.solid,
-                    fontSize: 14.sp,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-            ],
-          ),
           SizedBox(
             height: 30.h,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('Do not have an account'),
+              const Text('Already have an account'),
               SpaceHelper().horizoantalSpace5,
               InkWell(
-                onTap: () {
-                  if (loginController.selectedOption.value == 1) {
-                    Get.off(() => const StudentSignupScreen());
-                  }
-                  if (loginController.selectedOption.value == 2) {
-                    Get.off(() => const StudentSignupScreen());
-                  }
-                  if (loginController.selectedOption.value == 3) {
-                    Get.off(() => const StudentSignupScreen());
-                  }
-                  if (loginController.selectedOption.value == 4) {
-                    Get.off(() => const StudentSignupScreen());
-                  }
-                },
+                onTap: () {},
                 child: Text(
-                  'Sign Up',
+                  'Sign In',
                   style: FontStyles().normalTextRed,
                 ),
               )

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 
-class LoginController extends GetxController {
+class StudentController extends GetxController {
   var emailController = TextEditingController().obs;
   var mobileController = TextEditingController().obs;
   var passwordController = TextEditingController().obs;

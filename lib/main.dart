@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/route_manager.dart';
-import 'package:rspsa_user/screens/account_select_screen.dart';
+import 'package:rspsa_user/screens/common/account_select_screen.dart';
 
 void main() {
   runApp(const MyApp());

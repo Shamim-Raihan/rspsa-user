@@ -6,14 +6,14 @@ class CommonCard extends StatelessWidget {
   final IconData icon;
   final String title;
 
-  CommonCard({
+  const CommonCard({super.key, 
     required this.icon,
     required this.title,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 180.w,
       child: Card(
         surfaceTintColor: Colors.white,

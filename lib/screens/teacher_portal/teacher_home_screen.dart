@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rspsa_user/custom_widget.dart/appbar.dart';
+import 'package:get/get.dart';
+import 'package:rspsa_user/custom_widget.dart/appbarForStudent.dart';
 import 'package:rspsa_user/custom_widget.dart/card.dart';
+import 'package:rspsa_user/screens/student_portal/contact_us_page.dart';
+import 'package:rspsa_user/screens/student_portal/edit_profile_screen.dart';
+import 'package:rspsa_user/screens/student_portal/gallery_screen.dart';
+import 'package:rspsa_user/screens/student_portal/programdetails_screen.dart';
+import 'package:rspsa_user/screens/teacher_portal/teacher_profile_screen.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+import '../student_portal/support_screen.dart';
+
+class TeacherHomeScreen extends StatefulWidget {
+  const TeacherHomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<TeacherHomeScreen> createState() => _TeacherHomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorHelper.primaryColor,
-      // drawer: SafeArea(
-      //   child: MyDrawer(),
-      // ),
-      appBar: appBar(),
+      appBar: appBar(title: "Teacher Portal"),
       body: SafeArea(
           child: Stack(
         children: [
@@ -40,14 +45,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "Student's Name",
+                        "Teacher's Name",
                         style: TextStyle(
                             fontSize: 18.sp,
                             color: Colors.white,
                             fontWeight: FontWeight.w600),
                       ),
                       Text(
-                        "Emial: student@gmail.com",
+                        "Emial: teacher@gmail.com",
                         style: TextStyle(
                             fontSize: 16.sp,
                             color: Colors.white,
@@ -55,6 +60,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Text(
                         "Mobile: 7888889999999",
+                        style: TextStyle(
+                            fontSize: 16.sp,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        "Registration No: 01325458",
                         style: TextStyle(
                             fontSize: 16.sp,
                             color: Colors.white,
@@ -77,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
-                        child: Padding(
+                        child: const Padding(
                           padding: EdgeInsets.all(3.0),
                           child: CircleAvatar(
                             child: Icon(Icons.person),
@@ -86,14 +98,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       TextButton(
                           onPressed: () {
-                            // Get.to(ProfileEdit());
+                            Get.to(const TeacherProfileScreen());
                           },
                           child: Text(
-                            'Edit Profile',
+                            'Profile',
                             style: TextStyle(
-                                fontSize: 12.sp,
+                                fontSize: 14.sp,
                                 color: Colors.white,
-                                fontWeight: FontWeight.w400,
+                                fontWeight: FontWeight.w600,
                                 decoration: TextDecoration.underline,
                                 decorationColor: Colors.white),
                           ))
@@ -113,10 +125,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       topLeft: Radius.circular(25.r),
                       topRight: Radius.circular(25.r))),
               padding: EdgeInsets.only(top: 10.h),
-              // width: 100,
-              // height: 100,
               child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(
+                physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
                 child: Column(
                   children: [
@@ -125,18 +135,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         InkWell(
                           onTap: () {
-                            // Get.to(ProgramsScreen());
+                            Get.to(const ProgramDetailsScreen());
                           },
-                          child: CommonCard(
+                          child: const CommonCard(
                             icon: Icons.menu,
                             title: 'Programs',
                           ),
                         ),
                         InkWell(
                           onTap: () {
-                            // Get.to(AdminDashboardScreen());
+                            Get.to(const GalleryScreen());
                           },
-                          child: CommonCard(
+                          child: const CommonCard(
                             icon: Icons.photo_library_sharp,
                             title: 'Gallery',
                           ),
@@ -146,12 +156,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: 10.h,
                     ),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         CommonCard(
                           icon: Icons.quiz_outlined,
-                          title: 'My Result',
+                          title: 'My Payouts',
                         ),
                         CommonCard(
                           icon: Icons.file_download_outlined,
@@ -165,18 +175,47 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        CommonCard(
-                          icon: Icons.edit_outlined,
-                          title: 'About Us',
+                        InkWell(
+                          onTap: () {
+                            Get.to(const AboutUsPage());
+                          },
+                          child: const CommonCard(
+                            icon: Icons.remove_from_queue_sharp,
+                            title: 'About Us',
+                          ),
                         ),
-                        CommonCard(
-                          icon: Icons.people,
-                          title: 'Support',
+                        InkWell(
+                          onTap: () {
+                            Get.to(const SupportScreen());
+                          },
+                          child: const CommonCard(
+                            icon: Icons.people,
+                            title: 'Support',
+                          ),
                         ),
                       ],
                     ),
                     SizedBox(
                       height: 10.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        InkWell(
+                          onTap: () {},
+                          child: const CommonCard(
+                            icon: Icons.edit_outlined,
+                            title: 'My Referral',
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {},
+                          child: const CommonCard(
+                            icon: Icons.edit_outlined,
+                            title: 'Refers Us',
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
