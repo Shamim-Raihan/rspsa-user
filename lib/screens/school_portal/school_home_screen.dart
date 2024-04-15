@@ -153,7 +153,7 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         CommonCard(
-                          icon: Icons.quiz_outlined,
+                          icon: Icons.payments_outlined,
                           title: 'My Payout',
                         ),
                         CommonCard(
@@ -197,14 +197,14 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                         InkWell(
                           onTap: () {},
                           child: const CommonCard(
-                            icon: Icons.edit_outlined,
+                            icon: Icons.pin_outlined,
                             title: 'My Referral',
                           ),
                         ),
                          InkWell(
                           onTap: () {},
                           child: const CommonCard(
-                            icon: Icons.edit_outlined,
+                            icon: Icons.autorenew_sharp,
                             title: 'Refer Us',
                           ),
                         ),

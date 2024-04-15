@@ -52,7 +52,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                             fontWeight: FontWeight.w600),
                       ),
                       Text(
-                        "Emial: student@gmail.com",
+                        "Email: student@gmail.com",
                         style: TextStyle(
                             fontSize: 16.sp,
                             color: Colors.white,
@@ -147,7 +147,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                         InkWell(
                           onTap: () {},
                           child: const CommonCard(
-                            icon: Icons.photo_library_sharp,
+                            icon: Icons.app_registration,
                             title: 'Our Registration',
                           ),
                         ),
@@ -160,7 +160,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         CommonCard(
-                          icon: Icons.quiz_outlined,
+                          icon: Icons.payments_outlined,
                           title: 'My Payout',
                         ),
                         CommonCard(
@@ -206,7 +206,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                             Get.to(const AboutUsPage());
                           },
                           child: const CommonCard(
-                            icon: Icons.edit_outlined,
+                            icon: Icons.autorenew_sharp,
                             title: 'Refer Us',
                           ),
                         ),
@@ -215,7 +215,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                             Get.to(const AboutUsPage());
                           },
                           child: const CommonCard(
-                            icon: Icons.edit_outlined,
+                            icon: Icons.pin_outlined,
                             title: 'My Referral',
                           ),
                         ),
