@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:rspsa_user/controller/login_controller.dart';
 import 'package:rspsa_user/screens/common/account_select_screen.dart';
 import 'package:rspsa_user/screens/common/login_screen.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
@@ -68,7 +71,8 @@ class MyCircleAvatar extends StatelessWidget {
             // Handle Change Password option
             break;
           case 3:
-            Get.offAll(() => AccountSelectScreen());
+            LoginController loginController = Get.find();
+            loginController.logout();
             break;
         }
       },

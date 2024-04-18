@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:rspsa_user/screens/student_portal/controller/studentController.dart';
+import 'package:rspsa_user/screens/student_portal/controller/student_controller.dart';
 import 'package:rspsa_user/screens/student_portal/program_page.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 

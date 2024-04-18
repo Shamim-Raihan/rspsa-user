@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
 import 'package:rspsa_user/controller/login_controller.dart';
-import 'package:rspsa_user/screens/employee_portal/employee_home_screen.dart';
 import 'package:rspsa_user/screens/employee_portal/employee_signup_screen.dart';
-import 'package:rspsa_user/screens/school_portal/school_home_screen.dart';
 import 'package:rspsa_user/screens/school_portal/school_signup_screen.dart';
-import 'package:rspsa_user/screens/student_portal/home_screen.dart';
+import 'package:rspsa_user/screens/student_portal/controller/student_signup_controller.dart';
 import 'package:rspsa_user/screens/student_portal/student_signup_screen.dart';
 import 'package:rspsa_user/screens/teacher_portal/teacher_signup_screen.dart';
-import 'package:rspsa_user/screens/teacher_portal/teacher_home_screen.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 import 'package:rspsa_user/utils/space_helper.dart';
 import 'package:rspsa_user/utils/text_style.dart';
@@ -24,9 +19,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  LoginController loginController = Get.put(LoginController());
+  StudentSignupController studentSignupController = Get.put(StudentSignupController());
   @override
   Widget build(BuildContext context) {
-    LoginController loginController = Get.put(LoginController());
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -118,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           SizedBox(
-            height:  20.h,
+            height: 20.h,
           ),
           SizedBox(
             height: 50.h,
@@ -175,18 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               onPressed: () {
-                  if (loginController.selectedOption.value == 1) {
-                    Get.offAll(() => const HomeScreen());
-                  }
-                  if (loginController.selectedOption.value == 2) {
-                    Get.offAll(() => const TeacherHomeScreen());
-                  }
-                  if (loginController.selectedOption.value == 3) {
-                    Get.offAll(() => const SchoolHomeScreen());
-                  }
-                  if (loginController.selectedOption.value == 4) {
-                    Get.offAll(() => const EmployeeHomeScreen());
-                  }
+                loginController.login();
               },
               child: Text(
                 'SIGN IN',
@@ -227,8 +212,10 @@ class _LoginScreenState extends State<LoginScreen> {
               const Text('Do not have an account'),
               SpaceHelper().horizoantalSpace5,
               InkWell(
-                onTap: () {
+                onTap: () async {
                   if (loginController.selectedOption.value == 1) {
+                    
+                    await studentSignupController.getProgramCategoryList();
                     Get.off(() => const StudentSignupScreen());
                   }
                   if (loginController.selectedOption.value == 2) {

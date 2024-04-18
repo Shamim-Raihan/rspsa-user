@@ -9,9 +9,12 @@ import 'package:intl/intl.dart';
 import 'package:rspsa_user/controller/login_controller.dart';
 import 'package:rspsa_user/custom_widget.dart/cusotm_text_field.dart';
 import 'package:rspsa_user/screens/common/login_screen.dart';
+import 'package:rspsa_user/screens/student_portal/controller/student_signup_controller.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 import 'package:rspsa_user/utils/space_helper.dart';
 import 'package:rspsa_user/utils/text_style.dart';
+
+import '../../models/program_category_list_response.dart';
 
 class StudentSignupScreen extends StatefulWidget {
   const StudentSignupScreen({super.key});
@@ -69,6 +72,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
   }
 
   String? _dropDownValue;
+  Datum? _selectedDatum;
   void _showCupertinoDatePicker() {
     showCupertinoModalPopup<void>(
       context: context,
@@ -118,9 +122,10 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
     return formatter.format(dateTime);
   }
 
+StudentSignupController studentSignupController = Get.find();
+
   @override
   Widget build(BuildContext context) {
-    LoginController loginController = Get.put(LoginController());
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -157,7 +162,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    buildInputAndActionView(loginController, context),
+                    buildInputAndActionView(studentSignupController, context),
                   ],
                 ),
               ],
@@ -169,7 +174,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
   }
 
   Padding buildInputAndActionView(
-      LoginController loginController, BuildContext context) {
+      StudentSignupController studentSignupController, BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(16.0.sp),
       child: Column(
@@ -181,46 +186,76 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
             style: FontStyles().largeTextRed,
           ),
           SpaceHelper().verticalSpace10,
-          Container(
-            height: 50.h,
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.grey.shade300),
-                borderRadius: BorderRadius.circular(5)),
-            child: DropdownButton(
-              underline: const SizedBox(),
-              hint: _dropDownValue == null
-                  ? const Text('Select Program')
-                  : Text(
-                      _dropDownValue!,
-                      style: FontStyles().normalTextBlack,
-                    ),
-              isExpanded: true,
-              iconSize: 30.0,
-              style: const TextStyle(color: Colors.blue),
-              items: ['Program 1', 'Program 1', 'Program 1'].map(
-                (val) {
-                  return DropdownMenuItem<String>(
-                    value: val,
+          Obx(
+            () => Container(
+              height: 50.h,
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(5)),
+              child: DropdownButton<Datum>(
+                underline: const SizedBox(),
+                hint: _selectedDatum == null
+                    ? const Text('Select Program')
+                    : Text(
+                        _selectedDatum!.title!,
+                        style: FontStyles().normalTextBlack,
+                      ),
+                isExpanded: true,
+                iconSize: 30.0,
+                style: const TextStyle(color: Colors.blue),
+                items: studentSignupController.programCategoryList.map((datum) {
+                  return DropdownMenuItem<Datum>(
+                    value: datum,
                     child: Text(
-                      val,
+                      datum.title!,
                       style: FontStyles().normalTextBlack,
                     ),
                   );
+                }).toList(),
+                onChanged: (selectedDatum) {
+                  setState(() {
+                    _selectedDatum = selectedDatum;
+                  });
                 },
-              ).toList(),
-              onChanged: (val) {
-                setState(
-                  () {
-                    _dropDownValue = val;
-                  },
-                );
-              },
+              ),
+
+              // DropdownButton(
+              //   underline: const SizedBox(),
+              //   hint: _dropDownValue == null
+              //       ? const Text('Select Program')
+              //       : Text(
+              //           _dropDownValue!,
+              //           style: FontStyles().normalTextBlack,
+              //         ),
+              //   isExpanded: true,
+              //   iconSize: 30.0,
+              //   style: const TextStyle(color: Colors.blue),
+              //   items: ['Program 1', 'Program 1', 'Program 1'].map(
+              //     (val) {
+              //       return DropdownMenuItem<String>(
+              //         value: val,
+              //         child: Text(
+              //           val,
+              //           style: FontStyles().normalTextBlack,
+              //         ),
+              //       );
+              //     },
+              //   ).toList(),
+              //   onChanged: (val) {
+              //     setState(
+              //       () {
+              //         _dropDownValue = val;
+              //       },
+              //     );
+              //   },
+              // ),
             ),
           ),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.registrationForController.value,
+              controller:
+                  studentSignupController.registrationForController.value,
               levelText: "Registration For",
               suffixIcon: Icons.app_registration),
           SpaceHelper().verticalSpace20,
@@ -230,22 +265,22 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
           ),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.nameController.value,
+              controller: studentSignupController.nameController.value,
               levelText: "Student Name",
               suffixIcon: Icons.person_2_outlined),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.sdcoController.value,
+              controller: studentSignupController.sdcoController.value,
               levelText: "S/D/C/o",
               suffixIcon: Icons.person_2_outlined),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.emailController.value,
+              controller: studentSignupController.emailController.value,
               levelText: "Email",
               suffixIcon: Icons.mail_outline),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.mobileController.value,
+              controller: studentSignupController.mobileController.value,
               levelText: "Mobile",
               suffixIcon: Icons.phone),
           SpaceHelper().verticalSpace10,
@@ -285,20 +320,20 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
           ),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.addressController.value,
+              controller: studentSignupController.addressController.value,
               levelText: "Full Address",
               suffixIcon: Icons.location_on),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.aadharController.value,
+              controller: studentSignupController.aadharController.value,
               levelText: "Aadhar Number",
               suffixIcon: Icons.numbers),
           SpaceHelper().verticalSpace10,
           SizedBox(
             height: 50.h,
             child: TextFormField(
-              controller: loginController.passwordController.value,
-              obscureText: !loginController.visiblepass.value,
+              controller: studentSignupController.passwordController.value,
+              obscureText: !studentSignupController.visiblepass.value,
               decoration: InputDecoration(
                   focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
@@ -308,13 +343,15 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                           BorderSide(color: Colors.grey.shade300, width: 1.2)),
                   border: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black, width: 1.2)),
-                  suffixIcon: loginController.visiblepass.value
+                  suffixIcon: studentSignupController.visiblepass.value
                       ? IconButton(
                           onPressed: () {
                             setState(() {
-                              loginController.visiblepass.value
-                                  ? loginController.visiblepass.value = false
-                                  : loginController.visiblepass.value = true;
+                              studentSignupController.visiblepass.value
+                                  ? studentSignupController.visiblepass.value =
+                                      false
+                                  : studentSignupController.visiblepass.value =
+                                      true;
                             });
                           },
                           icon: const Icon(Icons.visibility,
@@ -322,9 +359,11 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                       : IconButton(
                           onPressed: () {
                             setState(() {
-                              loginController.visiblepass.value
-                                  ? loginController.visiblepass.value = false
-                                  : loginController.visiblepass.value = true;
+                              studentSignupController.visiblepass.value
+                                  ? studentSignupController.visiblepass.value =
+                                      false
+                                  : studentSignupController.visiblepass.value =
+                                      true;
                             });
                           },
                           icon: const Icon(
@@ -342,17 +381,17 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
           ),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.schoolNameController.value,
+              controller: studentSignupController.schoolNameController.value,
               levelText: "School/Institute Name",
               suffixIcon: Icons.school),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.schoolAddressController.value,
+              controller: studentSignupController.schoolAddressController.value,
               levelText: "School/Institute Address",
               suffixIcon: Icons.location_on),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.schoolAddressController.value,
+              controller: studentSignupController.schoolAddressController.value,
               levelText: "Appearing Class",
               suffixIcon: Icons.class_),
           SpaceHelper().verticalSpace10,
@@ -362,12 +401,12 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
           ),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.accountNumberController.value,
+              controller: studentSignupController.accountNumberController.value,
               levelText: "Account Number",
               suffixIcon: Icons.balance),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
-              controller: loginController.ifscCodeController.value,
+              controller: studentSignupController.ifscCodeController.value,
               levelText: "IFSC Code",
               suffixIcon: Icons.pin_rounded),
           SpaceHelper().verticalSpace10,
@@ -528,7 +567,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
           SizedBox(
             height: 50.h,
             child: TextField(
-              controller: loginController.declarationController.value,
+              controller: studentSignupController.declarationController.value,
               decoration: InputDecoration(
                 focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
