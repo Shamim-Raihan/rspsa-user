@@ -26,4 +26,9 @@ class EmployeeController extends GetxController {
   var visiblepass = false.obs;
   var selectedOption = 0.obs;
   var selectedValue = "Select".obs;
+
+  var passingYearController = TextEditingController().obs;
+  var totalMarksController = TextEditingController().obs;
+  var obtainedController = TextEditingController().obs;
+  var percentageController = TextEditingController().obs;
 }

@@ -73,6 +73,17 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
 
   String? _dropDownValue;
   Datum? _selectedDatum;
+
+  bool showAdditionalDropdowns =
+      false; // Determines if additional dropdowns should be shown
+  String? _selectedOption1; // Selected value of the first additional dropdown
+  String? _selectedOption2; // Selected value of the second additional dropdown
+  bool showTextWidgets = false;
+  bool selectedOption2Valid = false;
+
+  // Options for the additional dropdowns (update based on the selected program)
+  List<String> optionsForDropdown1 = [];
+  List<String> optionsForDropdown2 = ['OptionA', 'OptionB'];
   void _showCupertinoDatePicker() {
     showCupertinoModalPopup<void>(
       context: context,
@@ -122,7 +133,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
     return formatter.format(dateTime);
   }
 
-StudentSignupController studentSignupController = Get.find();
+  StudentSignupController studentSignupController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -186,6 +197,74 @@ StudentSignupController studentSignupController = Get.find();
             style: FontStyles().largeTextRed,
           ),
           SpaceHelper().verticalSpace10,
+          // Obx(
+          //   () =>
+          //    Container(
+          //     height: 50.h,
+          //     padding: const EdgeInsets.symmetric(horizontal: 10),
+          //     decoration: BoxDecoration(
+          //         border: Border.all(width: 1, color: Colors.grey.shade300),
+          //         borderRadius: BorderRadius.circular(5)),
+          //     child: DropdownButton<Datum>(
+          //       underline: const SizedBox(),
+          //       hint: _selectedDatum == null
+          //           ? const Text('Select Program')
+          //           : Text(
+          //               _selectedDatum!.title!,
+          //               style: FontStyles().normalTextBlack,
+          //             ),
+          //       isExpanded: true,
+          //       iconSize: 30.0,
+          //       style: const TextStyle(color: Colors.blue),
+          //       items: studentSignupController.programCategoryList.map((datum) {
+          //         return DropdownMenuItem<Datum>(
+          //           value: datum,
+          //           child: Text(
+          //             datum.title!,
+          //             style: FontStyles().normalTextBlack,
+          //           ),
+          //         );
+          //       }).toList(),
+          //       onChanged: (selectedDatum) {
+          //         setState(() {
+          //           _selectedDatum = selectedDatum;
+          //         });
+          //       },
+          //     ),
+
+          //     // DropdownButton(
+          //     //   underline: const SizedBox(),
+          //     //   hint: _dropDownValue == null
+          //     //       ? const Text('Select Program')
+          //     //       : Text(
+          //     //           _dropDownValue!,
+          //     //           style: FontStyles().normalTextBlack,
+          //     //         ),
+          //     //   isExpanded: true,
+          //     //   iconSize: 30.0,
+          //     //   style: const TextStyle(color: Colors.blue),
+          //     //   items: ['Program 1', 'Program 1', 'Program 1'].map(
+          //     //     (val) {
+          //     //       return DropdownMenuItem<String>(
+          //     //         value: val,
+          //     //         child: Text(
+          //     //           val,
+          //     //           style: FontStyles().normalTextBlack,
+          //     //         ),
+          //     //       );
+          //     //     },
+          //     //   ).toList(),
+          //     //   onChanged: (val) {
+          //     //     setState(
+          //     //       () {
+          //     //         _dropDownValue = val;
+          //     //       },
+          //     //     );
+          //     //   },
+          //     // ),
+          //   ),
+          // ),
+
           Obx(
             () => Container(
               height: 50.h,
@@ -216,48 +295,177 @@ StudentSignupController studentSignupController = Get.find();
                 onChanged: (selectedDatum) {
                   setState(() {
                     _selectedDatum = selectedDatum;
+                    // Update state to show additional dropdowns and update their options
+                    showAdditionalDropdowns = true;
+                    optionsForDropdown1 = [
+                      'Please Select',
+                      'Option1',
+                      'Option2'
+                    ]; // Update with relevant options based on selected program
+                    optionsForDropdown2 = [
+                      'Please Select',
+                      'OptionA',
+                      'OptionB'
+                    ]; // Update with relevant options based on selected program
                   });
                 },
               ),
-
-              // DropdownButton(
-              //   underline: const SizedBox(),
-              //   hint: _dropDownValue == null
-              //       ? const Text('Select Program')
-              //       : Text(
-              //           _dropDownValue!,
-              //           style: FontStyles().normalTextBlack,
-              //         ),
-              //   isExpanded: true,
-              //   iconSize: 30.0,
-              //   style: const TextStyle(color: Colors.blue),
-              //   items: ['Program 1', 'Program 1', 'Program 1'].map(
-              //     (val) {
-              //       return DropdownMenuItem<String>(
-              //         value: val,
-              //         child: Text(
-              //           val,
-              //           style: FontStyles().normalTextBlack,
-              //         ),
-              //       );
-              //     },
-              //   ).toList(),
-              //   onChanged: (val) {
-              //     setState(
-              //       () {
-              //         _dropDownValue = val;
-              //       },
-              //     );
-              //   },
-              // ),
             ),
           ),
-          SpaceHelper().verticalSpace10,
-          CustomTextField().textField(
-              controller:
-                  studentSignupController.registrationForController.value,
-              levelText: "Registration For",
-              suffixIcon: Icons.app_registration),
+
+          if (showAdditionalDropdowns) ...[
+            Padding(
+              padding: EdgeInsets.only(top: 5.h),
+              child: Container(
+                height: 50.h,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: Colors.grey.shade300),
+                    borderRadius: BorderRadius.circular(5)),
+                child: DropdownButton<String>(
+                  underline: const SizedBox(),
+                  hint: Text('Program Name'),
+                  isExpanded: true,
+                  value: _selectedOption1,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedOption1 = newValue;
+                    });
+                  },
+                  items: optionsForDropdown1.map((option) {
+                    return DropdownMenuItem<String>(
+                      value: option,
+                      child: Text(
+                        option,
+                        style: FontStyles().normalTextBlack,
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 5.h),
+              child: Container(
+                height: 50.h,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: DropdownButton<String>(
+                  underline: const SizedBox(),
+                  hint: Text('Registration for'),
+                  isExpanded: true,
+                  value: _selectedOption2,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedOption2 = newValue;
+                      // Update selectedOption2Valid based on the selection from the second dropdown
+                      selectedOption2Valid = _selectedOption2 != null &&
+                          _selectedOption2 != 'Please Select';
+                    });
+                  },
+                  items: optionsForDropdown2.map((option) {
+                    return DropdownMenuItem<String>(
+                      value: option,
+                      child: Text(
+                        option,
+                        style: FontStyles().normalTextBlack,
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+            if (selectedOption2Valid) ...[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 10.h),
+                  Text(
+                    'Enrollment Fee *:',
+                    style:
+                        TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w400),
+                  ),
+                  Container(
+                    height: 50.h,
+                    width: double.infinity,
+                    margin: EdgeInsets.symmetric(vertical: 5.h),
+                    padding: EdgeInsets.all(10.h),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: Colors.grey.shade300),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Text 1',
+                        style: FontStyles().normalTextBlack,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 10.h),
+                  Text(
+                    'Fee Refundable *:',
+                    style:
+                        TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w400),
+                  ),
+                  Container(
+                    height: 50.h,
+                    width: double.infinity,
+                    margin: EdgeInsets.symmetric(vertical: 5.h),
+                    padding: EdgeInsets.all(10.h),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: Colors.grey.shade300),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Text  2',
+                        style: FontStyles().normalTextBlack,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 10.h),
+                  Text(
+                    'Participation Period *:',
+                    style:
+                        TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w400),
+                  ),
+                  Container(
+                    height: 50.h,
+                    width: double.infinity,
+                    margin: EdgeInsets.symmetric(vertical: 5.h),
+                    padding: EdgeInsets.all(10.h),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: Colors.grey.shade300),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Text  3',
+                        style: FontStyles().normalTextBlack,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ],
+
           SpaceHelper().verticalSpace20,
           Text(
             'Student Profile',
