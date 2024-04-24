@@ -9,6 +9,7 @@ class StudentSignupController extends GetxController {
   var emailController = TextEditingController().obs;
   var mobileController = TextEditingController().obs;
   var passwordController = TextEditingController().obs;
+  var confirmPasswordController = TextEditingController().obs;
 
   var addressController = TextEditingController().obs;
   var aadharController = TextEditingController().obs;
@@ -17,7 +18,10 @@ class StudentSignupController extends GetxController {
   var schoolAddressController = TextEditingController().obs;
   var appearingClassController = TextEditingController().obs;
   var accountNumberController = TextEditingController().obs;
+  var bankNameController = TextEditingController().obs;
+  var accountHolderNameController = TextEditingController().obs;
   var ifscCodeController = TextEditingController().obs;
+  var utrController = TextEditingController().obs;
   var utrNumberController = TextEditingController().obs;
   var declarationController = TextEditingController().obs;
   var agree = false.obs;
@@ -25,7 +29,8 @@ class StudentSignupController extends GetxController {
   var registrationForController = TextEditingController().obs;
   var nameController = TextEditingController().obs;
   var sdcoController = TextEditingController().obs;
-  var visiblepass = false.obs;
+  var visiblePass = false.obs;
+  var visibleConfirmPass = false.obs;
   var selectedOption = 0.obs;
   var selectedValue = "Select".obs;
 

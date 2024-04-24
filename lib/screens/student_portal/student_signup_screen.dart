@@ -122,7 +122,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
     return formatter.format(dateTime);
   }
 
-StudentSignupController studentSignupController = Get.find();
+  StudentSignupController studentSignupController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -219,45 +219,9 @@ StudentSignupController studentSignupController = Get.find();
                   });
                 },
               ),
-
-              // DropdownButton(
-              //   underline: const SizedBox(),
-              //   hint: _dropDownValue == null
-              //       ? const Text('Select Program')
-              //       : Text(
-              //           _dropDownValue!,
-              //           style: FontStyles().normalTextBlack,
-              //         ),
-              //   isExpanded: true,
-              //   iconSize: 30.0,
-              //   style: const TextStyle(color: Colors.blue),
-              //   items: ['Program 1', 'Program 1', 'Program 1'].map(
-              //     (val) {
-              //       return DropdownMenuItem<String>(
-              //         value: val,
-              //         child: Text(
-              //           val,
-              //           style: FontStyles().normalTextBlack,
-              //         ),
-              //       );
-              //     },
-              //   ).toList(),
-              //   onChanged: (val) {
-              //     setState(
-              //       () {
-              //         _dropDownValue = val;
-              //       },
-              //     );
-              //   },
-              // ),
             ),
           ),
-          SpaceHelper().verticalSpace10,
-          CustomTextField().textField(
-              controller:
-                  studentSignupController.registrationForController.value,
-              levelText: "Registration For",
-              suffixIcon: Icons.app_registration),
+        
           SpaceHelper().verticalSpace20,
           Text(
             'Student Profile',
@@ -333,7 +297,7 @@ StudentSignupController studentSignupController = Get.find();
             height: 50.h,
             child: TextFormField(
               controller: studentSignupController.passwordController.value,
-              obscureText: !studentSignupController.visiblepass.value,
+              obscureText: !studentSignupController.visiblePass.value,
               decoration: InputDecoration(
                   focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
@@ -343,14 +307,14 @@ StudentSignupController studentSignupController = Get.find();
                           BorderSide(color: Colors.grey.shade300, width: 1.2)),
                   border: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black, width: 1.2)),
-                  suffixIcon: studentSignupController.visiblepass.value
+                  suffixIcon: studentSignupController.visiblePass.value
                       ? IconButton(
                           onPressed: () {
                             setState(() {
-                              studentSignupController.visiblepass.value
-                                  ? studentSignupController.visiblepass.value =
+                              studentSignupController.visiblePass.value
+                                  ? studentSignupController.visiblePass.value =
                                       false
-                                  : studentSignupController.visiblepass.value =
+                                  : studentSignupController.visiblePass.value =
                                       true;
                             });
                           },
@@ -359,10 +323,10 @@ StudentSignupController studentSignupController = Get.find();
                       : IconButton(
                           onPressed: () {
                             setState(() {
-                              studentSignupController.visiblepass.value
-                                  ? studentSignupController.visiblepass.value =
+                              studentSignupController.visiblePass.value
+                                  ? studentSignupController.visiblePass.value =
                                       false
-                                  : studentSignupController.visiblepass.value =
+                                  : studentSignupController.visiblePass.value =
                                       true;
                             });
                           },
@@ -371,6 +335,53 @@ StudentSignupController studentSignupController = Get.find();
                             color: ColorHelper.primaryColor,
                           )),
                   labelText: 'Password',
+                  labelStyle: const TextStyle(color: Colors.black)),
+            ),
+          ),
+          SpaceHelper().verticalSpace10,
+          SizedBox(
+            height: 50.h,
+            child: TextFormField(
+              controller:
+                  studentSignupController.confirmPasswordController.value,
+              obscureText: !studentSignupController.visibleConfirmPass.value,
+              decoration: InputDecoration(
+                  focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: ColorHelper.primaryColor, width: 1.2)),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.grey.shade300, width: 1.2)),
+                  border: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 1.2)),
+                  suffixIcon: studentSignupController.visibleConfirmPass.value
+                      ? IconButton(
+                          onPressed: () {
+                            setState(() {
+                              studentSignupController.visibleConfirmPass.value
+                                  ? studentSignupController
+                                      .visibleConfirmPass.value = false
+                                  : studentSignupController
+                                      .visibleConfirmPass.value = true;
+                            });
+                          },
+                          icon: const Icon(Icons.visibility,
+                              color: ColorHelper.primaryColor))
+                      : IconButton(
+                          onPressed: () {
+                            setState(() {
+                              studentSignupController.visibleConfirmPass.value
+                                  ? studentSignupController
+                                      .visibleConfirmPass.value = false
+                                  : studentSignupController
+                                      .visibleConfirmPass.value = true;
+                            });
+                          },
+                          icon: const Icon(
+                            Icons.visibility_off,
+                            color: ColorHelper.primaryColor,
+                          )),
+                  labelText: 'Confirm Password',
                   labelStyle: const TextStyle(color: Colors.black)),
             ),
           ),
@@ -399,6 +410,17 @@ StudentSignupController studentSignupController = Get.find();
             'Bank Details',
             style: FontStyles().largeTextRed,
           ),
+          SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller: studentSignupController.bankNameController.value,
+              levelText: "bank Name",
+              suffixIcon: Icons.balance),
+          SpaceHelper().verticalSpace10,
+          CustomTextField().textField(
+              controller:
+                  studentSignupController.accountHolderNameController.value,
+              levelText: "Account Holder Name",
+              suffixIcon: Icons.balance),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
               controller: studentSignupController.accountNumberController.value,
@@ -487,6 +509,7 @@ StudentSignupController studentSignupController = Get.find();
             ),
           ),
           SpaceHelper().verticalSpace10,
+          const Divider(),
           Container(
             height: 50.h,
             padding: EdgeInsets.only(top: 4.h, left: 16.w, bottom: 4.h),
@@ -511,35 +534,15 @@ StudentSignupController studentSignupController = Get.find();
             ),
           ),
           SpaceHelper().verticalSpace10,
-          Container(
-            height: 50.h,
-            padding: EdgeInsets.only(top: 4.h, left: 16.w, bottom: 4.h),
-            decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.grey.shade300, width: 1.2),
-                borderRadius: BorderRadius.circular(4.r),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('UTR Number'),
-                Padding(
-                  padding: EdgeInsets.only(right: 3.w),
-                  child: ElevatedButton(
-                    onPressed: _openFileExplorer,
-                    child: const Text('Upload File'),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          const Center(child: Text('OR')),
           SpaceHelper().verticalSpace10,
-          Text(
-            'Upload Documents',
-            style: FontStyles().largeTextRed,
-          ),
+          CustomTextField().textField(
+              controller: studentSignupController.utrController.value,
+              levelText: "UTR Number",
+              suffixIcon: Icons.pin_rounded),
+          const Divider(),
           SpaceHelper().verticalSpace10,
+
           Container(
             height: 50.h,
             padding: EdgeInsets.only(top: 4.h, left: 16.w, bottom: 4.h),
