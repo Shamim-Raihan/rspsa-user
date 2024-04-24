@@ -21,11 +21,27 @@ class EmployeeSignUpScreen extends StatefulWidget {
 }
 
 class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
+  EmployeeController employeeController = Get.put(EmployeeController());
   final sDateFormate = "dd/MM/yyyy";
   DateTime _dateTime = DateTime.now();
   bool isDateSelected = false;
   File? _file;
   PlatformFile? _platformFile;
+
+  String? _selectedOption1;
+  String? _selectedOption2;
+  String? _selectedOption3;
+  bool showDropdown2 = false; // Control visibility of second dropdown
+  bool showDropdown3 = false; // Control visibility of third dropdown
+
+  // Options for the dropdowns
+  List<String> optionsForDropdown1 = ['Select', 'Dhaka', 'Barishal'];
+  List<String> optionsForDropdown2 = ['Select', 'SubOptionA', 'SubOptionB'];
+  List<String> optionsForDropdown3 = [
+    'Select',
+    'SubSubOptionX',
+    'SubSubOptionY'
+  ];
 
   selectFile() async {
     final file = await FilePicker.platform.pickFiles(
@@ -116,6 +132,170 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
     return formatter.format(dateTime);
   }
 
+  final List<String> _dropdownOptions = ['Education', 'Option 2', 'Option 3'];
+  String _selectedOption = 'Education';
+
+  List<Map<String, String>> _educationDetails = [];
+  void _submitEducationDetails() {
+    Map<String, String> educationData = {
+      'option': _selectedOption,
+      'passingYear': employeeController.passingYearController.value.text,
+      'totalMarks': employeeController.totalMarksController.value.text,
+      'obtainedMarks': employeeController.obtainedController.value.text,
+      'percentage': employeeController.percentageController.value.text,
+    };
+    // print("Captured Education Data: ${educationData}");
+    setState(() {
+      _educationDetails.add(educationData);
+    });
+    print("Captured Education Data: ${educationData}");
+    Navigator.of(context).pop();
+  }
+
+  void _showEducationDetailsDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          surfaceTintColor: Colors.white,
+          title: const Text('Add Education Details'),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(28.r)),
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  alignment: Alignment.centerLeft,
+                  height: 50.h,
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: Colors.grey.shade300),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: DropdownButton<String>(
+                    underline: const SizedBox(),
+                    value: _selectedOption,
+                    items: _dropdownOptions
+                        .map((option) => DropdownMenuItem(
+                              value: option,
+                              child: Text(option),
+                            ))
+                        .toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedOption = value!;
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                _buildTextField(employeeController.passingYearController.value,
+                    'Passing Year'),
+                SizedBox(
+                  height: 10.h,
+                ),
+                _buildTextField(employeeController.totalMarksController.value,
+                    'Total Marks'),
+                SizedBox(
+                  height: 10.h,
+                ),
+                _buildTextField(employeeController.obtainedController.value,
+                    'Obtained Marks'),
+                SizedBox(
+                  height: 10.h,
+                ),
+                _buildTextField(employeeController.percentageController.value,
+                    'Percentage'),
+              ],
+            ),
+          ),
+          actions: [
+            InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                width: 80.w,
+                height: 35.h,
+                clipBehavior: Clip.antiAlias,
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100.r),
+                    side: const BorderSide(
+                        width: 1, color: Color.fromARGB(255, 195, 197, 197)),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    'Cancel',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            TextButton(
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all(
+                  const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                ),
+                backgroundColor:
+                    MaterialStateProperty.all(ColorHelper.primaryColor),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(100), // Custom border radius
+                  ),
+                ),
+                minimumSize: MaterialStateProperty.all(
+                  Size(70.w, 30.h),
+                ),
+              ),
+              onPressed: _submitEducationDetails,
+              child: Text(
+                'Submit',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildTextField(TextEditingController controller, String hintText) {
+    return Container(
+      height: 50.h,
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      decoration: BoxDecoration(
+        border: Border.all(width: 1, color: Colors.grey.shade300),
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          hintText: hintText,
+          border: InputBorder.none,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     EmployeeController employeeController = Get.put(EmployeeController());
@@ -204,10 +384,111 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
               levelText: "Designation",
               suffixIcon: Icons.work),
           SpaceHelper().verticalSpace10,
-          CustomTextField().textField(
-              controller: employeeController.workingAreaController.value,
-              levelText: "Working Area",
-              suffixIcon: Icons.location_on),
+          Container(
+            height: 50.h,
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(
+              border: Border.all(width: 1, color: Colors.grey.shade300),
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: DropdownButton<String>(
+              underline: const SizedBox(),
+              hint: Text('State'),
+              isExpanded: true,
+              value: _selectedOption1,
+              onChanged: (String? newValue) {
+                setState(() {
+                  _selectedOption1 = newValue;
+                  // Update visibility of second dropdown based on selection
+                  showDropdown2 =
+                      _selectedOption1 != null && _selectedOption1 != 'Select';
+                  // Reset second and third dropdown selections and visibility
+                  _selectedOption2 = null;
+                  showDropdown3 = false;
+                });
+              },
+              items: optionsForDropdown1.map((option) {
+                return DropdownMenuItem<String>(
+                  value: option,
+                  child: Text(option),
+                );
+              }).toList(),
+            ),
+          ),
+
+          // Conditionally render the second dropdown
+          if (showDropdown2)
+            Padding(
+              padding: EdgeInsets.only(top: 10.h),
+              child: Container(
+                height: 50.h,
+                padding: EdgeInsets.symmetric(horizontal: 10.h),
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: DropdownButton<String>(
+                  underline: const SizedBox(),
+                  hint: Text('District'),
+                  isExpanded: true,
+                  value: _selectedOption2,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedOption2 = newValue;
+                      // Update visibility of third dropdown based on selection
+                      showDropdown3 = _selectedOption2 != null &&
+                          _selectedOption2 != 'Select';
+                      // Reset third dropdown selection
+                      _selectedOption3 = null;
+                    });
+                  },
+                  items: optionsForDropdown2.map((option) {
+                    return DropdownMenuItem<String>(
+                      value: option,
+                      child: Text(option),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+
+          // Conditionally render the third dropdown
+          if (showDropdown3)
+            Padding(
+              padding: EdgeInsets.only(top: 10.h),
+              child: Container(
+                height: 50.h,
+                padding: EdgeInsets.symmetric(horizontal: 10.h),
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: DropdownButton<String>(
+                  underline: const SizedBox(),
+                  hint: Text('Block'),
+                  isExpanded: true,
+                  value: _selectedOption3,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedOption3 = newValue;
+                      // Handle additional logic here if needed for the third dropdown selection
+                    });
+                  },
+                  items: optionsForDropdown3.map((option) {
+                    return DropdownMenuItem<String>(
+                      value: option,
+                      child: Align(
+                          alignment: Alignment.centerLeft, child: Text(option)),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+          SpaceHelper().verticalSpace10,
+          // CustomTextField().textField(
+          //     controller: employeeController.workingAreaController.value,
+          //     levelText: "Working Area",
+          //     suffixIcon: Icons.location_on),
           SpaceHelper().verticalSpace10,
           GestureDetector(
             onTap: _showCupertinoDatePicker,
@@ -296,9 +577,32 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
             ),
           ),
           SpaceHelper().verticalSpace10,
-          Text(
-            'Education Details',
-            style: FontStyles().largeTextRed,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Education Details',
+                style: FontStyles().largeTextRed,
+              ),
+              const SizedBox(width: 8.0),
+              InkWell(
+                onTap: _showEducationDetailsDialog,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: const Icon(Icons.add),
+                ),
+              ),
+              // Display the submitted education details
+            ],
+          ),
+          const SizedBox(height: 16.0),
+          Column(
+            children: _educationDetails.map((details) {
+              return _buildEducationDetailsSection(details);
+            }).toList(),
           ),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
@@ -453,5 +757,203 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
         ],
       ),
     );
+  }
+
+  Widget _buildEducationDetailsSection(Map<String, String> details) {
+    int index = _educationDetails.indexOf(details);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 50.h,
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300, width: 1.2),
+                  borderRadius: BorderRadius.circular(5.r)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Educatiuon: ',
+                        style: TextStyle(
+                            fontSize: 15.sp, fontWeight: FontWeight.w500),
+                      ),
+                      Text('${details['option']}')
+                    ],
+                  ),
+                  const Icon(
+                    Icons.school,
+                    color: ColorHelper.primaryColor,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Container(
+              height: 50.h,
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300, width: 1.2),
+                  borderRadius: BorderRadius.circular(5.r)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Passing Year: ',
+                        style: TextStyle(
+                            fontSize: 15.sp, fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        '${details['passingYear']}',
+                        style: TextStyle(
+                            fontSize: 15.sp, fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
+                  const Icon(
+                    Icons.location_on,
+                    color: ColorHelper.primaryColor,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Container(
+              height: 50.h,
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300, width: 1.2),
+                  borderRadius: BorderRadius.circular(5.r)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Total Marks: ',
+                        style: TextStyle(
+                            fontSize: 15.sp, fontWeight: FontWeight.w500),
+                      ),
+                      Text(' ${details['totalMarks']}'),
+                    ],
+                  ),
+                  const Icon(
+                    Icons.class_,
+                    color: ColorHelper.primaryColor,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Container(
+              height: 50.h,
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300, width: 1.2),
+                  borderRadius: BorderRadius.circular(5.r)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Obtained Marks: ',
+                        style: TextStyle(
+                            fontSize: 15.sp, fontWeight: FontWeight.w500),
+                      ),
+                      Text('${details['obtainedMarks']}'),
+                    ],
+                  ),
+                  const Icon(
+                    Icons.class_,
+                    color: ColorHelper.primaryColor,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Container(
+              height: 50.h,
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300, width: 1.2),
+                  borderRadius: BorderRadius.circular(5.r)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Percentage:',
+                        style: TextStyle(
+                            fontSize: 15.sp, fontWeight: FontWeight.w500),
+                      ),
+                      Text(' ${details['percentage']}'),
+                    ],
+                  ),
+                  const Icon(
+                    Icons.class_,
+                    color: ColorHelper.primaryColor,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            InkWell(
+              onTap: () {
+                _removeEducationDetails(index);
+              },
+              child: Container(
+                width: 80.w,
+                height: 30.h,
+                clipBehavior: Clip.antiAlias,
+                decoration: ShapeDecoration(
+                  color: ColorHelper.primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100.r),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    'Remove',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.sp,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  void _removeEducationDetails(int index) {
+    setState(() {
+      _educationDetails.removeAt(index);
+    });
   }
 }

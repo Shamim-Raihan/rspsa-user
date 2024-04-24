@@ -119,6 +119,174 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
     return formatter.format(dateTime);
   }
 
+  final List<String> _dropdownOptions = ['Education', 'Option 2', 'Option 3'];
+  String _selectedOption = 'Education';
+
+  List<Map<String, String>> _educationDetails = [];
+  TeacherLoginController teacherLoginController = TeacherLoginController();
+  void _submitEducationDetails() {
+    Map<String, String> educationData = {
+      'option': _selectedOption,
+      'passingYear': teacherLoginController.passingYearController.value.text,
+      'totalMarks': teacherLoginController.totalMarksController.value.text,
+      'obtainedMarks': teacherLoginController.obtainedController.value.text,
+      'percentage': teacherLoginController.percentageController.value.text,
+    };
+    // print("Captured Education Data: ${educationData}");
+    setState(() {
+      _educationDetails.add(educationData);
+    });
+    print("Captured Education Data: ${educationData}");
+    Navigator.of(context).pop();
+  }
+
+  void _showEducationDetailsDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          surfaceTintColor: Colors.white,
+          title: const Text('Add Education Details'),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(28.r)),
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  alignment: Alignment.centerLeft,
+                  height: 50.h,
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: Colors.grey.shade300),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: DropdownButton<String>(
+                    underline: const SizedBox(),
+                    value: _selectedOption,
+                    items: _dropdownOptions
+                        .map((option) => DropdownMenuItem(
+                              value: option,
+                              child: Text(option),
+                            ))
+                        .toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedOption = value!;
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                _buildTextField(
+                    teacherLoginController.passingYearController.value,
+                    'Passing Year'),
+                SizedBox(
+                  height: 10.h,
+                ),
+                _buildTextField(
+                    teacherLoginController.totalMarksController.value,
+                    'Total Marks'),
+                SizedBox(
+                  height: 10.h,
+                ),
+                _buildTextField(teacherLoginController.obtainedController.value,
+                    'Obtained Marks'),
+                SizedBox(
+                  height: 10.h,
+                ),
+                _buildTextField(
+                    teacherLoginController.percentageController.value,
+                    'Percentage'),
+              ],
+            ),
+          ),
+          actions: [
+            InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                width: 80.w,
+                height: 35.h,
+                clipBehavior: Clip.antiAlias,
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100.r),
+                    side: const BorderSide(
+                        width: 1, color: Color.fromARGB(255, 195, 197, 197)),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    'Cancel',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            TextButton(
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all(
+                  const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                ),
+                backgroundColor:
+                    MaterialStateProperty.all(ColorHelper.primaryColor),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(100), // Custom border radius
+                  ),
+                ),
+                minimumSize: MaterialStateProperty.all(
+                  Size(70.w, 30.h),
+                ),
+              ),
+              onPressed: _submitEducationDetails,
+              child: Text(
+                'Submit',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildTextField(TextEditingController controller, String hintText) {
+    return Container(
+      height: 50.h,
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      decoration: BoxDecoration(
+        border: Border.all(width: 1, color: Colors.grey.shade300),
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          hintText: hintText,
+          border: InputBorder.none,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     TeacherLoginController teacherLoginController =
@@ -289,35 +457,217 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
             ),
           ),
           SpaceHelper().verticalSpace10,
-          Text(
-            'Education Details',
-            style: FontStyles().largeTextRed,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Education Details',
+                style: FontStyles().largeTextRed,
+              ),
+              const SizedBox(width: 8.0),
+              InkWell(
+                onTap: _showEducationDetailsDialog,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: const Icon(Icons.add),
+                ),
+              ),
+              // Display the submitted education details
+            ],
           ),
-          SpaceHelper().verticalSpace10,
-          CustomTextField().textField(
-              controller: teacherLoginController.degreeController.value,
-              levelText: "Degree",
-              suffixIcon: Icons.school),
-          SpaceHelper().verticalSpace10,
-          CustomTextField().textField(
-              controller: teacherLoginController.passingYearController.value,
-              levelText: "Passing Year",
-              suffixIcon: Icons.location_on),
-          SpaceHelper().verticalSpace10,
-          CustomTextField().textField(
-              controller: teacherLoginController.totalMarksController.value,
-              levelText: "Total Marks",
-              suffixIcon: Icons.class_),
-          SpaceHelper().verticalSpace10,
-          CustomTextField().textField(
-              controller: teacherLoginController.obtainedController.value,
-              levelText: "Obtained Marks",
-              suffixIcon: Icons.class_),
-          SpaceHelper().verticalSpace10,
-          CustomTextField().textField(
-              controller: teacherLoginController.percentageController.value,
-              levelText: "Percentage",
-              suffixIcon: Icons.class_),
+          const SizedBox(height: 16.0),
+          Column(
+            children: _educationDetails.map((details) {
+              return _buildEducationDetailsSection(details);
+            }).toList(),
+          ),
+
+          // for (Map<String, String> details in _educationDetails)
+          //   Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       Container(
+          //         height: 50.h,
+          //         padding: EdgeInsets.symmetric(horizontal: 10.w),
+          //         decoration: BoxDecoration(
+          //             border:
+          //                 Border.all(color: Colors.grey.shade300, width: 1.2),
+          //             borderRadius: BorderRadius.circular(5.r)),
+          //         child: Row(
+          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //           children: [
+          //             Row(
+          //               children: [
+          //                 Text(
+          //                   'Educatiuon: ',
+          //                   style: TextStyle(
+          //                       fontSize: 15.sp, fontWeight: FontWeight.w500),
+          //                 ),
+          //                 Text('${details['option']}')
+          //               ],
+          //             ),
+          //             const Icon(
+          //               Icons.school,
+          //               color: ColorHelper.primaryColor,
+          //             )
+          //           ],
+          //         ),
+          //       ),
+          //       SizedBox(
+          //         height: 10.h,
+          //       ),
+          //       Container(
+          //         height: 50.h,
+          //         padding: EdgeInsets.symmetric(horizontal: 10.w),
+          //         decoration: BoxDecoration(
+          //             border:
+          //                 Border.all(color: Colors.grey.shade300, width: 1.2),
+          //             borderRadius: BorderRadius.circular(5.r)),
+          //         child: Row(
+          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //           children: [
+          //             Row(
+          //               children: [
+          //                 Text(
+          //                   'Passing Year: ',
+          //                   style: TextStyle(
+          //                       fontSize: 15.sp, fontWeight: FontWeight.w500),
+          //                 ),
+          //                 Text(
+          //                   '${details['field1']}',
+          //                   style: TextStyle(
+          //                       fontSize: 15.sp, fontWeight: FontWeight.w400),
+          //                 ),
+          //               ],
+          //             ),
+          //             Icon(
+          //               Icons.location_on,
+          //               color: ColorHelper.primaryColor,
+          //             )
+          //           ],
+          //         ),
+          //       ),
+          //       SizedBox(
+          //         height: 10.h,
+          //       ),
+          //       Container(
+          //         height: 50.h,
+          //         padding: EdgeInsets.symmetric(horizontal: 10.w),
+          //         decoration: BoxDecoration(
+          //             border:
+          //                 Border.all(color: Colors.grey.shade300, width: 1.2),
+          //             borderRadius: BorderRadius.circular(5.r)),
+          //         child: Row(
+          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //           children: [
+          //             Row(
+          //               children: [
+          //                 Text(
+          //                   'Total Marks: ',
+          //                   style: TextStyle(
+          //                       fontSize: 15.sp, fontWeight: FontWeight.w500),
+          //                 ),
+          //                 Text('${details['field2']}'),
+          //               ],
+          //             ),
+          //             Icon(
+          //               Icons.class_,
+          //               color: ColorHelper.primaryColor,
+          //             )
+          //           ],
+          //         ),
+          //       ),
+          //       SizedBox(
+          //         height: 10.h,
+          //       ),
+          //       Container(
+          //         height: 50.h,
+          //         padding: EdgeInsets.symmetric(horizontal: 10.w),
+          //         decoration: BoxDecoration(
+          //             border:
+          //                 Border.all(color: Colors.grey.shade300, width: 1.2),
+          //             borderRadius: BorderRadius.circular(5.r)),
+          //         child: Row(
+          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //           children: [
+          //             Row(
+          //               children: [
+          //                 Text(
+          //                   'Obtained Marks: ',
+          //                   style: TextStyle(
+          //                       fontSize: 15.sp, fontWeight: FontWeight.w500),
+          //                 ),
+          //                 Text(' ${details['field3']}'),
+          //               ],
+          //             ),
+          //             Icon(
+          //               Icons.class_,
+          //               color: ColorHelper.primaryColor,
+          //             )
+          //           ],
+          //         ),
+          //       ),
+          //       SizedBox(
+          //         height: 10.h,
+          //       ),
+          //       Container(
+          //         height: 50.h,
+          //         padding: EdgeInsets.symmetric(horizontal: 10.w),
+          //         decoration: BoxDecoration(
+          //             border:
+          //                 Border.all(color: Colors.grey.shade300, width: 1.2),
+          //             borderRadius: BorderRadius.circular(5.r)),
+          //         child: Row(
+          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //           children: [
+          //             Row(
+          //               children: [
+          //                 Text(
+          //                   'Percentage:',
+          //                   style: TextStyle(
+          //                       fontSize: 15.sp, fontWeight: FontWeight.w500),
+          //                 ),
+          //                 Text(' ${details['field4']}'),
+          //               ],
+          //             ),
+          //             Icon(
+          //               Icons.class_,
+          //               color: ColorHelper.primaryColor,
+          //             )
+          //           ],
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+
+          // SpaceHelper().verticalSpace10,
+          // CustomTextField().textField(
+          //     controller: teacherLoginController.degreeController.value,
+          //     levelText: "Degree",
+          //     suffixIcon: Icons.school),
+          // SpaceHelper().verticalSpace10,
+          // CustomTextField().textField(
+          //     controller: teacherLoginController.passingYearController.value,
+          //     levelText: "Passing Year",
+          //     suffixIcon: Icons.location_on),
+          // SpaceHelper().verticalSpace10,
+          // CustomTextField().textField(
+          //     controller: teacherLoginController.totalMarksController.value,
+          //     levelText: "Total Marks",
+          //     suffixIcon: Icons.class_),
+          // SpaceHelper().verticalSpace10,
+          // CustomTextField().textField(
+          //     controller: teacherLoginController.obtainedController.value,
+          //     levelText: "Obtained Marks",
+          //     suffixIcon: Icons.class_),
+          // SpaceHelper().verticalSpace10,
+          // CustomTextField().textField(
+          //     controller: teacherLoginController.percentageController.value,
+          //     levelText: "Percentage",
+          //     suffixIcon: Icons.class_),
           SpaceHelper().verticalSpace10,
           Text(
             'Teaching Details',
@@ -458,5 +808,203 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
         ],
       ),
     );
+  }
+
+  Widget _buildEducationDetailsSection(Map<String, String> details) {
+    int index = _educationDetails.indexOf(details);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 50.h,
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300, width: 1.2),
+                  borderRadius: BorderRadius.circular(5.r)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Educatiuon: ',
+                        style: TextStyle(
+                            fontSize: 15.sp, fontWeight: FontWeight.w500),
+                      ),
+                      Text('${details['option']}')
+                    ],
+                  ),
+                  const Icon(
+                    Icons.school,
+                    color: ColorHelper.primaryColor,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Container(
+              height: 50.h,
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300, width: 1.2),
+                  borderRadius: BorderRadius.circular(5.r)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Passing Year: ',
+                        style: TextStyle(
+                            fontSize: 15.sp, fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        '${details['passingYear']}',
+                        style: TextStyle(
+                            fontSize: 15.sp, fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
+                  const Icon(
+                    Icons.location_on,
+                    color: ColorHelper.primaryColor,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Container(
+              height: 50.h,
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300, width: 1.2),
+                  borderRadius: BorderRadius.circular(5.r)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Total Marks: ',
+                        style: TextStyle(
+                            fontSize: 15.sp, fontWeight: FontWeight.w500),
+                      ),
+                      Text(' ${details['totalMarks']}'),
+                    ],
+                  ),
+                  const Icon(
+                    Icons.class_,
+                    color: ColorHelper.primaryColor,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Container(
+              height: 50.h,
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300, width: 1.2),
+                  borderRadius: BorderRadius.circular(5.r)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Obtained Marks: ',
+                        style: TextStyle(
+                            fontSize: 15.sp, fontWeight: FontWeight.w500),
+                      ),
+                      Text('${details['obtainedMarks']}'),
+                    ],
+                  ),
+                  const Icon(
+                    Icons.class_,
+                    color: ColorHelper.primaryColor,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Container(
+              height: 50.h,
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300, width: 1.2),
+                  borderRadius: BorderRadius.circular(5.r)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Percentage:',
+                        style: TextStyle(
+                            fontSize: 15.sp, fontWeight: FontWeight.w500),
+                      ),
+                      Text(' ${details['percentage']}'),
+                    ],
+                  ),
+                  const Icon(
+                    Icons.class_,
+                    color: ColorHelper.primaryColor,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            InkWell(
+              onTap: () {
+                _removeEducationDetails(index);
+              },
+              child: Container(
+                width: 80.w,
+                height: 30.h,
+                clipBehavior: Clip.antiAlias,
+                decoration: ShapeDecoration(
+                  color: ColorHelper.primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100.r),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    'Remove',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.sp,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  void _removeEducationDetails(int index) {
+    setState(() {
+      _educationDetails.removeAt(index);
+    });
   }
 }
