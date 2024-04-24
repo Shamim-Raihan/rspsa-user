@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:rspsa_user/custom_widget.dart/appbarForStudent.dart';
 import 'package:rspsa_user/custom_widget.dart/card.dart';
 import 'package:rspsa_user/screens/student_portal/contact_us_page.dart';
+import 'package:rspsa_user/screens/student_portal/controller/student_home_controller.dart';
 import 'package:rspsa_user/screens/student_portal/edit_profile_screen.dart';
 import 'package:rspsa_user/screens/student_portal/gallery_screen.dart';
 import 'package:rspsa_user/screens/student_portal/programdetails_screen.dart';
@@ -18,6 +19,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  StudentHomeController studentHomeController =
+      Get.put(StudentHomeController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,86 +35,88 @@ class _HomeScreenState extends State<HomeScreen> {
             width: double.infinity,
             height: double.infinity,
           ),
-          Positioned(
-              top: 20.h,
-              left: 20.w,
-              right: 20.w,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Student's Name",
-                        style: TextStyle(
-                            fontSize: 18.sp,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      Text(
-                        "Emial: student@gmail.com",
-                        style: TextStyle(
-                            fontSize: 16.sp,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      Text(
-                        "Mobile: 7888889999999",
-                        style: TextStyle(
-                            fontSize: 16.sp,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      Text(
-                        "Registration No: 01325458",
-                        style: TextStyle(
-                            fontSize: 16.sp,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 60.w,
-                        height: 60.h,
-                        decoration: const ShapeDecoration(
-                          shape: CircleBorder(
-                            side: BorderSide(
-                              width: 3,
-                              strokeAlign: BorderSide.strokeAlignCenter,
-                              color: Color(0xFFE7E9EB),
+          Obx(
+            () => Positioned(
+                top: 20.h,
+                left: 20.w,
+                right: 20.w,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          studentHomeController.name.value,
+                          style: TextStyle(
+                              fontSize: 18.sp,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        Text(
+                          "Emial: ${studentHomeController.userEmail.value}",
+                          style: TextStyle(
+                              fontSize: 16.sp,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        Text(
+                          "Mobile: ${studentHomeController.userMobile.value}",
+                          style: TextStyle(
+                              fontSize: 16.sp,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        Text(
+                          "Registration No: 01325458",
+                          style: TextStyle(
+                              fontSize: 16.sp,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 60.w,
+                          height: 60.h,
+                          decoration: const ShapeDecoration(
+                            shape: CircleBorder(
+                              side: BorderSide(
+                                width: 3,
+                                strokeAlign: BorderSide.strokeAlignCenter,
+                                color: Color(0xFFE7E9EB),
+                              ),
+                            ),
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.all(3.0),
+                            child: CircleAvatar(
+                              child: Icon(Icons.person),
                             ),
                           ),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(3.0),
-                          child: CircleAvatar(
-                            child: Icon(Icons.person),
-                          ),
-                        ),
-                      ),
-                      TextButton(
-                          onPressed: () {
-                            Get.to(const ProfileEdit());
-                          },
-                          child: Text(
-                            'Profile',
-                            style: TextStyle(
-                                fontSize: 14.sp,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                decoration: TextDecoration.underline,
-                                decorationColor: Colors.white),
-                          ))
-                    ],
-                  ),
-                ],
-              )),
+                        TextButton(
+                            onPressed: () {
+                              Get.to(const ProfileEdit());
+                            },
+                            child: Text(
+                              'Profile',
+                              style: TextStyle(
+                                  fontSize: 14.sp,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: Colors.white),
+                            ))
+                      ],
+                    ),
+                  ],
+                )),
+          ),
           Positioned(
             top: 120.h,
             left: 0,

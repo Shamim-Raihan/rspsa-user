@@ -215,7 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onTap: () async {
                   if (loginController.selectedOption.value == 1) {
                     
-                    await studentSignupController.getProgramCategoryList();
+                    await studentSignupController.getTalentList();
                     Get.off(() => const StudentSignupScreen());
                   }
                   if (loginController.selectedOption.value == 2) {

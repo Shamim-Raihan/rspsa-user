@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,7 +15,9 @@ import 'package:rspsa_user/utils/color_helper.dart';
 import 'package:rspsa_user/utils/space_helper.dart';
 import 'package:rspsa_user/utils/text_style.dart';
 
-import '../../models/program_category_list_response.dart';
+import '../../models/program_list_response.dart';
+import '../../models/talent_details_response.dart';
+import '../../models/talent_list_response.dart';
 
 class StudentSignupScreen extends StatefulWidget {
   const StudentSignupScreen({super.key});
@@ -43,16 +46,37 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
     }
   }
 
-  String? _filePath;
+  String? currentEducationProof;
+  String? photo;
+  String? signature;
+  String? paymentProof;
+  String? aadharCard;
 
-  void _openFileExplorer() async {
+  void _openFileExplorer({required int from}) async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles();
       if (result != null) {
         String? filePath = result.files.single.path;
+
         if (filePath != null) {
           setState(() {
-            _filePath = filePath;
+            if (from == 1) {
+              currentEducationProof = filePath;
+            }
+            if (from == 2) {
+              photo = filePath;
+            }
+            if (from == 3) {
+              signature = filePath;
+            }
+            if (from == 4) {
+              paymentProof = filePath;
+            }
+            if (from == 5) {
+              aadharCard = filePath;
+            }
+
+            log(filePath.toString());
           });
         } else {
           if (kDebugMode) {
@@ -73,10 +97,13 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
 
   String? _dropDownValue;
   Datum? _selectedDatum;
+  ProgramList? _selectedProgram;
+  TalentDetails? _selectedTalentDetails;
 
   bool showAdditionalDropdowns =
       false; // Determines if additional dropdowns should be shown
-  String? _selectedOption1; // Selected value of the first additional dropdown
+  String?
+      selectedAppearingClass; // Selected value of the first additional dropdown
   String? _selectedOption2; // Selected value of the second additional dropdown
   bool showTextWidgets = false;
   bool selectedOption2Valid = false;
@@ -275,7 +302,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
               child: DropdownButton<Datum>(
                 underline: const SizedBox(),
                 hint: _selectedDatum == null
-                    ? const Text('Select Program')
+                    ? const Text('Enrollment Rules/Talent')
                     : Text(
                         _selectedDatum!.title!,
                         style: FontStyles().normalTextBlack,
@@ -283,7 +310,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                 isExpanded: true,
                 iconSize: 30.0,
                 style: const TextStyle(color: Colors.blue),
-                items: studentSignupController.programCategoryList.map((datum) {
+                items: studentSignupController.talentList.map((datum) {
                   return DropdownMenuItem<Datum>(
                     value: datum,
                     child: Text(
@@ -295,18 +322,16 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                 onChanged: (selectedDatum) {
                   setState(() {
                     _selectedDatum = selectedDatum;
-                    // Update state to show additional dropdowns and update their options
+
+                    _selectedProgram = null;
+                    _selectedTalentDetails = null;
+                    selectedOption2Valid = false;
                     showAdditionalDropdowns = true;
-                    optionsForDropdown1 = [
-                      'Please Select',
-                      'Option1',
-                      'Option2'
-                    ]; // Update with relevant options based on selected program
-                    optionsForDropdown2 = [
-                      'Please Select',
-                      'OptionA',
-                      'OptionB'
-                    ]; // Update with relevant options based on selected program
+
+                    studentSignupController.getProgramList(
+                        talentId: _selectedDatum!.id.toString());
+                    studentSignupController.getTalentDetailsList(
+                        talentId: _selectedDatum!.id.toString());
                   });
                 },
               ),
@@ -316,31 +341,40 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
           if (showAdditionalDropdowns) ...[
             Padding(
               padding: EdgeInsets.only(top: 5.h),
-              child: Container(
-                height: 50.h,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
+              child: Obx(
+                () => Container(
+                  height: 50.h,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
                     border: Border.all(width: 1, color: Colors.grey.shade300),
-                    borderRadius: BorderRadius.circular(5)),
-                child: DropdownButton<String>(
-                  underline: const SizedBox(),
-                  hint: Text('Program Name'),
-                  isExpanded: true,
-                  value: _selectedOption1,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectedOption1 = newValue;
-                    });
-                  },
-                  items: optionsForDropdown1.map((option) {
-                    return DropdownMenuItem<String>(
-                      value: option,
-                      child: Text(
-                        option,
-                        style: FontStyles().normalTextBlack,
-                      ),
-                    );
-                  }).toList(),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: DropdownButton<ProgramList>(
+                    underline: const SizedBox(),
+                    hint: _selectedProgram == null
+                        ? const Text('Select Program')
+                        : Text(
+                            _selectedProgram!.name!,
+                            style: FontStyles().normalTextBlack,
+                          ),
+                    isExpanded: true,
+                    iconSize: 30.0,
+                    style: const TextStyle(color: Colors.blue),
+                    items: studentSignupController.programList.map((program) {
+                      return DropdownMenuItem<ProgramList>(
+                        value: program,
+                        child: Text(
+                          program.name!,
+                          style: FontStyles().normalTextBlack,
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (selectedProgram) {
+                      setState(() {
+                        _selectedProgram = selectedProgram;
+                      });
+                    },
+                  ),
                 ),
               ),
             ),
@@ -353,28 +387,33 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                   border: Border.all(width: 1, color: Colors.grey.shade300),
                   borderRadius: BorderRadius.circular(5),
                 ),
-                child: DropdownButton<String>(
+                child: DropdownButton<TalentDetails>(
                   underline: const SizedBox(),
-                  hint: Text('Registration for'),
+                  hint: _selectedTalentDetails == null
+                      ? const Text('Registration for')
+                      : Text(
+                          _selectedTalentDetails!.registrationFor!,
+                          style: FontStyles().normalTextBlack,
+                        ),
                   isExpanded: true,
-                  value: _selectedOption2,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectedOption2 = newValue;
-                      // Update selectedOption2Valid based on the selection from the second dropdown
-                      selectedOption2Valid = _selectedOption2 != null &&
-                          _selectedOption2 != 'Please Select';
-                    });
-                  },
-                  items: optionsForDropdown2.map((option) {
-                    return DropdownMenuItem<String>(
-                      value: option,
+                  iconSize: 30.0,
+                  style: const TextStyle(color: Colors.blue),
+                  items: studentSignupController.talentDetailsList
+                      .map((talentDetails) {
+                    return DropdownMenuItem<TalentDetails>(
+                      value: talentDetails,
                       child: Text(
-                        option,
+                        talentDetails.registrationFor!,
                         style: FontStyles().normalTextBlack,
                       ),
                     );
                   }).toList(),
+                  onChanged: (selectedTalentDetails) {
+                    setState(() {
+                      _selectedTalentDetails = selectedTalentDetails;
+                      selectedOption2Valid = true;
+                    });
+                  },
                 ),
               ),
             ),
@@ -400,7 +439,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Text 1',
+                        _selectedTalentDetails!.enrollmentFee!.toString(),
                         style: FontStyles().normalTextBlack,
                       ),
                     ),
@@ -428,7 +467,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Text  2',
+                        _selectedTalentDetails!.feeRefundable!.toString(),
                         style: FontStyles().normalTextBlack,
                       ),
                     ),
@@ -456,7 +495,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Text  3',
+                        _selectedTalentDetails!.participationPeriod!.toString(),
                         style: FontStyles().normalTextBlack,
                       ),
                     ),
@@ -645,10 +684,40 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
               levelText: "School/Institute Address",
               suffixIcon: Icons.location_on),
           SpaceHelper().verticalSpace10,
-          CustomTextField().textField(
-              controller: studentSignupController.schoolAddressController.value,
-              levelText: "Appearing Class",
-              suffixIcon: Icons.class_),
+          // CustomTextField().textField(
+          //     controller: studentSignupController.schoolAddressController.value,
+          //     levelText: "Appearing Class",
+          //     suffixIcon: Icons.class_),
+          Padding(
+            padding: EdgeInsets.only(top: 5.h),
+            child: Container(
+              height: 50.h,
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(5)),
+              child: DropdownButton<String>(
+                underline: const SizedBox(),
+                hint: const Text('Appearing Class'),
+                isExpanded: true,
+                value: selectedAppearingClass,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedAppearingClass = newValue;
+                  });
+                },
+                items: studentSignupController.appearingClasss.map((option) {
+                  return DropdownMenuItem<String>(
+                    value: option,
+                    child: Text(
+                      option,
+                      style: FontStyles().normalTextBlack,
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
           SpaceHelper().verticalSpace10,
           Text(
             'Bank Details',
@@ -697,7 +766,9 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
-                    onPressed: _openFileExplorer,
+                    onPressed: () {
+                      _openFileExplorer(from: 1);
+                    },
                     child: const Text('Upload File'),
                   ),
                 ),
@@ -721,7 +792,9 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
-                    onPressed: _openFileExplorer,
+                    onPressed: () {
+                      _openFileExplorer(from: 2);
+                    },
                     child: const Text('Upload File'),
                   ),
                 ),
@@ -745,7 +818,9 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
-                    onPressed: _openFileExplorer,
+                    onPressed: () {
+                      _openFileExplorer(from: 3);
+                    },
                     child: const Text('Upload File'),
                   ),
                 ),
@@ -770,7 +845,9 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
-                    onPressed: _openFileExplorer,
+                    onPressed: () {
+                      _openFileExplorer(from: 4);
+                    },
                     child: const Text('Upload File'),
                   ),
                 ),
@@ -803,7 +880,9 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
-                    onPressed: _openFileExplorer,
+                    onPressed: () {
+                      _openFileExplorer(from: 5);
+                    },
                     child: const Text('Upload File'),
                   ),
                 ),
@@ -904,7 +983,45 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                 ),
               ),
               onPressed: () {
-                // Get.offAll(() => AdminLandingScreen());
+                studentSignupController.studentSignup(
+                    talentId: _selectedDatum!.id!.toString(),
+                    programId: _selectedProgram!.id!.toString(),
+                    talentDetailsId: _selectedTalentDetails!.id.toString(),
+                    name: studentSignupController.nameController.value.text,
+                    fatherName:
+                        studentSignupController.sdcoController.value.text,
+                    email: studentSignupController.emailController.value.text,
+                    mobile: studentSignupController.mobileController.value.text,
+                    dob: DateFormat('yyyy-MM-dd').format(_dateTime),
+                    password:
+                        studentSignupController.passwordController.value.text,
+                    address:
+                        studentSignupController.addressController.value.text,
+                    aadharNumber:
+                        studentSignupController.aadharController.value.text,
+                    schoolOrInstitutionName:
+                        studentSignupController.schoolNameController.value.text,
+                    schoolOrInstitutionAddress: studentSignupController
+                        .schoolAddressController.value.text,
+                    appearingClass: selectedAppearingClass!,
+                    bankName:
+                        studentSignupController.bankNameController.value.text,
+                    accountHolderName: studentSignupController
+                        .accountHolderNameController.value.text,
+                    accountNumber: studentSignupController
+                        .accountNumberController.value.text,
+                    ifscCode:
+                        studentSignupController.ifscCodeController.value.text,
+                    utrNo: studentSignupController.utrController.value.text,
+                    declaration: studentSignupController
+                        .declarationController.value.text,
+                    termsAndConditions: agreeToTerms ? "1" : "0",
+                    registrationFor: _selectedTalentDetails!.registrationFor!,
+                    currentEducationProof: currentEducationProof!,
+                    photo: photo!,
+                    signature: signature!,
+                    paymentProof: paymentProof!,
+                    aadharCard: aadharCard!);
               },
               child: Text(
                 'SIGN UP',

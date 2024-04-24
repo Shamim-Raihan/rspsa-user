@@ -127,7 +127,7 @@ class LoginController extends GetxController {
     await SharedPreferenceHelper().setString(
         key: uniqueCode, value: loginResponse.data!.user!.uniqueCode ?? '');
     await SharedPreferenceHelper()
-        .setString(key: email, value: loginResponse.data!.user!.email ?? '');
+        .setString(key: email, value: loginResponse.data!.user!.details!.email ?? '');
     await SharedPreferenceHelper().setString(
         key: mobile, value: loginResponse.data!.user!.details!.mobile ?? '');
     await SharedPreferenceHelper().setString(
