@@ -46,6 +46,7 @@ class TeacherRepository{
       'teaching_school_name': teachingSchoolName,
       'experience': experience,
       'teaching_school_address': teachingSchoolAddress,
+      'password_confirmation':password,
     });
 
     try {

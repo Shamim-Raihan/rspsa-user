@@ -142,7 +142,7 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
     return formatter.format(dateTime);
   }
 
-  final List<String> _dropdownOptions = ['Education', 'Option 2', 'Option 3'];
+  final List<String> _dropdownOptions = ['Education', 'B.Tech.', 'BSc', 'MBA', 'Engineering'];
   String _selectedOption = 'Education';
 
 
@@ -502,6 +502,52 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
                             color: ColorHelper.primaryColor,
                           )),
                   labelText: 'Password',
+                  labelStyle: const TextStyle(color: Colors.black)),
+            ),
+          ),
+          SpaceHelper().verticalSpace10,
+          SizedBox(
+            height: 50.h,
+            child: TextFormField(
+              controller: teacherLoginController.conpasswordController.value,
+              obscureText: !teacherLoginController.convisiblepass.value,
+              decoration: InputDecoration(
+                  focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: ColorHelper.primaryColor, width: 1.2)),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide:
+                      BorderSide(color: Colors.grey.shade300, width: 1.2)),
+                  border: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 1.2)),
+                  suffixIcon: teacherLoginController.convisiblepass.value
+                      ? IconButton(
+                      onPressed: () {
+                        setState(() {
+                          teacherLoginController.convisiblepass.value
+                              ? teacherLoginController.convisiblepass.value =
+                          false
+                              : teacherLoginController.convisiblepass.value =
+                          true;
+                        });
+                      },
+                      icon: const Icon(Icons.visibility,
+                          color: ColorHelper.primaryColor))
+                      : IconButton(
+                      onPressed: () {
+                        setState(() {
+                          teacherLoginController.convisiblepass.value
+                              ? teacherLoginController.convisiblepass.value =
+                          false
+                              : teacherLoginController.convisiblepass.value =
+                          true;
+                        });
+                      },
+                      icon: const Icon(
+                        Icons.visibility_off,
+                        color: ColorHelper.primaryColor,
+                      )),
+                  labelText: 'Confirm Password',
                   labelStyle: const TextStyle(color: Colors.black)),
             ),
           ),
@@ -926,7 +972,7 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
                     fontSize: 16.0,
                   );
                 }
-                else if(teacherLoginController.mobileController.value.text.length!=10)
+                else if(teacherLoginController.mobileController.value.text.length<10)
                   {
                     Fluttertoast.showToast(
                       msg: 'The mobile field must be 10 digits.',
@@ -953,6 +999,18 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
                 else if(teacherLoginController.isEmailValid(teacherLoginController.emailController.value.text)==false){
                   Fluttertoast.showToast(
                     msg: 'Insert a valid email.',
+                    toastLength: Toast.LENGTH_LONG,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
+                }
+
+                else if(teacherLoginController.passwordController.value.text!=teacherLoginController.conpasswordController.value.text){
+                  Fluttertoast.showToast(
+                    msg: 'Please make sure your password match .',
                     toastLength: Toast.LENGTH_LONG,
                     gravity: ToastGravity.BOTTOM,
                     timeInSecForIosWeb: 1,

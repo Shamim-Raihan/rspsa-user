@@ -12,6 +12,7 @@ class TeacherLoginController extends GetxController {
   var emailController = TextEditingController().obs;
   var mobileController = TextEditingController().obs;
   var passwordController = TextEditingController().obs;
+  var conpasswordController = TextEditingController().obs;
 
   var addressController = TextEditingController().obs;
   var aadharController = TextEditingController().obs;
@@ -29,6 +30,7 @@ class TeacherLoginController extends GetxController {
   var nameController = TextEditingController().obs;
   var sdwoController = TextEditingController().obs;
   var visiblepass = false.obs;
+  var convisiblepass = false.obs;
   var selectedOption = 0.obs;
   var selectedValue = "Select".obs;
   var signaturePath = "".obs;

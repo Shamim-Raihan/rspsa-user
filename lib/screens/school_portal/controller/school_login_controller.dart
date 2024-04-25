@@ -7,6 +7,7 @@ class SchoolLoginController extends GetxController {
   var schoolRegistrationNumberController = TextEditingController().obs;
   var schoolEmailIdController = TextEditingController().obs;
   var passwordController = TextEditingController().obs;
+  var conpasswordController = TextEditingController().obs;
 
   var schooladdressController = TextEditingController().obs;
   var schooldireactorNameController = TextEditingController().obs;
@@ -17,6 +18,7 @@ class SchoolLoginController extends GetxController {
   var schoolNameController = TextEditingController().obs;
   var schoolMobileController = TextEditingController().obs;
   var visiblepass = false.obs;
+  var convisiblepass = false.obs;
   var submitting=false.obs;
   Future<void> createSchool() async{
     submitting.value=true;

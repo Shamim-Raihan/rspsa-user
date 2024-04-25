@@ -32,6 +32,7 @@ class SchoolRepository {
       'director_contact_number': directorContactNumber,
       'total_student': totalStudent,
       'total_teacher': totalTeacher,
+      'password_confirmation':password,
     });
 
     try {
@@ -47,9 +48,9 @@ class SchoolRepository {
           textColor: Colors.white,
           fontSize: 16.0,
         );
-        print(await response.stream.bytesToString());
+       // print(await response.stream.bytesToString());
       } else {
-        print(response.reasonPhrase);
+        print("response:   "+response.reasonPhrase!);
       }
     } catch (e) {
       print('Error: $e');

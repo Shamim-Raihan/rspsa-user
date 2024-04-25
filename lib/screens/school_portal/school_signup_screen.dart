@@ -156,6 +156,52 @@ class _SchoolSignUpScreenState extends State<SchoolSignUpScreen> {
             ),
           ),
           SpaceHelper().verticalSpace10,
+          SizedBox(
+            height: 50.h,
+            child: TextFormField(
+              controller: schoolLoginController.conpasswordController.value,
+              obscureText: !schoolLoginController.convisiblepass.value,
+              decoration: InputDecoration(
+                  focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: ColorHelper.primaryColor, width: 1.2)),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide:
+                      BorderSide(color: Colors.grey.shade300, width: 1.2)),
+                  border: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 1.2)),
+                  suffixIcon: schoolLoginController.convisiblepass.value
+                      ? IconButton(
+                      onPressed: () {
+                        setState(() {
+                          schoolLoginController.convisiblepass.value
+                              ? schoolLoginController.convisiblepass.value =
+                          false
+                              : schoolLoginController.convisiblepass.value =
+                          true;
+                        });
+                      },
+                      icon: const Icon(Icons.visibility,
+                          color: ColorHelper.primaryColor))
+                      : IconButton(
+                      onPressed: () {
+                        setState(() {
+                          schoolLoginController.convisiblepass.value
+                              ? schoolLoginController.convisiblepass.value =
+                          false
+                              : schoolLoginController.convisiblepass.value =
+                          true;
+                        });
+                      },
+                      icon: const Icon(
+                        Icons.visibility_off,
+                        color: ColorHelper.primaryColor,
+                      )),
+                  labelText: 'Confirm Password',
+                  labelStyle: const TextStyle(color: Colors.black)),
+            ),
+          ),
+          SpaceHelper().verticalSpace10,
 
           CustomTextField().textField(
               controller:
@@ -252,6 +298,18 @@ class _SchoolSignUpScreenState extends State<SchoolSignUpScreen> {
                 else if(schoolLoginController.isEmailValid(schoolLoginController.schoolEmailIdController.value.text)==false){
                   Fluttertoast.showToast(
                     msg: 'Insert a valid email.',
+                    toastLength: Toast.LENGTH_LONG,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
+                }
+
+                else if(schoolLoginController.passwordController.value.text!=schoolLoginController.conpasswordController.value.text){
+                  Fluttertoast.showToast(
+                    msg: 'Please make sure your password match .',
                     toastLength: Toast.LENGTH_LONG,
                     gravity: ToastGravity.BOTTOM,
                     timeInSecForIosWeb: 1,
