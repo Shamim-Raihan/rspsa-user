@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:rspsa_user/custom_widget.dart/cusotm_text_field.dart';
@@ -13,6 +14,8 @@ import 'package:rspsa_user/screens/teacher_portal/controller/teacher_controller.
 import 'package:rspsa_user/utils/color_helper.dart';
 import 'package:rspsa_user/utils/space_helper.dart';
 import 'package:rspsa_user/utils/text_style.dart';
+
+import '../../utils/constants.dart';
 
 class TeacherSignupScreen extends StatefulWidget {
   const TeacherSignupScreen({super.key});
@@ -43,7 +46,7 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
 
   String? _filePath;
 
-  void _openFileExplorer() async {
+  void openFileExplorer(String type) async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles();
       if (result != null) {
@@ -51,6 +54,24 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
         if (filePath != null) {
           setState(() {
             _filePath = filePath;
+            print(_filePath.toString());
+
+            if(type=="adharcard")
+              {
+                teacherLoginController.adharCardPath.value=_filePath!;
+              }
+            else if(type=="photo") {
+              teacherLoginController.photoPath.value = _filePath.toString();
+            }
+            else if(type=="signature")
+            {
+              teacherLoginController.signaturePath.value=_filePath.toString();
+            }
+            else if(type=="school")
+            {
+              teacherLoginController.schoolPhotoPath.value=_filePath.toString();
+            }
+
           });
         } else {
           if (kDebugMode) {
@@ -82,6 +103,7 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
             children: [
               TextButton(
                   onPressed: () {
+
                     Navigator.pop(context);
                   },
                   child: Text(
@@ -100,6 +122,7 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
                   minimumDate: DateTime(1900),
                   maximumDate: DateTime(2025),
                   onDateTimeChanged: (DateTime newDate) {
+                    teacherLoginController.dob.value=_formatDate(_dateTime).toString();
                     setState(() {
                       _dateTime = newDate;
                       isDateSelected = true;
@@ -115,7 +138,7 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
   }
 
   String _formatDate(DateTime dateTime) {
-    final formatter = DateFormat('dd/MM/yyyy');
+    final formatter = DateFormat('yyyy-MM-dd');
     return formatter.format(dateTime);
   }
 
@@ -123,7 +146,7 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
   String _selectedOption = 'Education';
 
   List<Map<String, String>> _educationDetails = [];
-  TeacherLoginController teacherLoginController = TeacherLoginController();
+  TeacherLoginController teacherLoginController = Get.put(TeacherLoginController());
   void _submitEducationDetails() {
     Map<String, String> educationData = {
       'option': _selectedOption,
@@ -174,6 +197,7 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
                         .toList(),
                     onChanged: (value) {
                       setState(() {
+                        teacherLoginController.degreeController.value.text=_selectedOption!;
                         _selectedOption = value!;
                       });
                     },
@@ -701,11 +725,19 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Aadhar Card'),
+                teacherLoginController.adharCardPath.value==''?const Text('Aadhar Card'):
+               Image.file(
+                 File(teacherLoginController.adharCardPath.value),
+                 width: 60.w, // Adjust as needed
+                 height: 35.h, // Adjust as needed
+                 fit: BoxFit.cover,
+               ),
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
-                    onPressed: _openFileExplorer,
+                    onPressed: (){
+                      openFileExplorer("adharcard");
+                    },
                     child: const Text('Upload File'),
                   ),
                 ),
@@ -725,11 +757,20 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Photo'),
+                teacherLoginController.photoPath.value==""?
+                const Text('Photo'):
+              Image.file(
+              File(teacherLoginController.photoPath.value),
+      width: 60.w, // Adjust as needed
+      height: 35.h, // Adjust as needed
+      fit: BoxFit.cover,
+    ),
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
-                    onPressed: _openFileExplorer,
+                    onPressed: (){
+                      openFileExplorer("photo");
+                    },
                     child: const Text('Upload File'),
                   ),
                 ),
@@ -749,11 +790,55 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Signature'),
+                teacherLoginController.signaturePath.value==""?
+                const Text('Signature'):
+              Image.file(
+                File(teacherLoginController.signaturePath.value),
+                width: 60.w, // Adjust as needed
+                height: 35.h, // Adjust as needed
+                fit: BoxFit.cover,
+              ),
+
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
-                    onPressed: _openFileExplorer,
+                    onPressed:(){
+                      openFileExplorer("signature");
+                    },
+                    child: const Text('Upload File'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SpaceHelper().verticalSpace10,
+          Container(
+            height: 50.h,
+            padding: EdgeInsets.only(top: 4.h, left: 16.w, bottom: 4.h),
+            decoration: ShapeDecoration(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.grey.shade300, width: 1.2),
+                borderRadius: BorderRadius.circular(4.r),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                teacherLoginController.schoolPhotoPath.value==""?
+                const Text('School'):
+                Image.file(
+                  File(teacherLoginController.schoolPhotoPath.value),
+                  width: 60.w, // Adjust as needed
+                  height: 35.h, // Adjust as needed
+                  fit: BoxFit.cover,
+                ),
+
+                Padding(
+                  padding: EdgeInsets.only(right: 3.w),
+                  child: ElevatedButton(
+                    onPressed:(){
+                      openFileExplorer("school");
+                    },
                     child: const Text('Upload File'),
                   ),
                 ),
@@ -773,13 +858,92 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
                   borderRadius: BorderRadius.circular(100), // <-- Radius
                 ),
               ),
-              onPressed: () {
-                Get.off(() => const LoginScreen());
+              onPressed: () async{
+                if (teacherLoginController.nameController.value.text.isEmpty ||
+                    teacherLoginController.sdwoController.value.text.isEmpty ||
+                    teacherLoginController.emailController.value.text.isEmpty ||
+                    teacherLoginController.mobileController.value.text.isEmpty ||
+                    teacherLoginController.dob.value.isEmpty ||
+                    teacherLoginController.addressController.value.text.isEmpty ||
+                    teacherLoginController.passwordController.value.text.isEmpty ||
+                    teacherLoginController.degreeController.value.text.isEmpty ||
+                    teacherLoginController.passingYearController.value.text.isEmpty ||
+                    teacherLoginController.totalMarksController.value.text.isEmpty ||
+                    teacherLoginController.obtainedController.value.text.isEmpty ||
+                    teacherLoginController. percentageController.value.text.isEmpty ||
+                    teacherLoginController.schoolNameController.value.text.isEmpty ||
+                    teacherLoginController.experienceController.value.text.isEmpty ||
+                    teacherLoginController. adharCardPath.value.isEmpty ||
+                    teacherLoginController.photoPath.value.isEmpty ||
+                    teacherLoginController.signaturePath.value.isEmpty ||
+                    teacherLoginController.schoolPhotoPath.value.isEmpty ||
+                    teacherLoginController. nameController.value.text == "" ||
+                    teacherLoginController.sdwoController.value.text == "" ||
+                    teacherLoginController. emailController.value.text == "" ||
+                    teacherLoginController.mobileController.value.text == "" ||
+                    teacherLoginController.dob.value == "" ||
+                    teacherLoginController.addressController.value.text == "" ||
+                    teacherLoginController.passwordController.value.text == "" ||
+                    teacherLoginController.degreeController.value.text == "" ||
+                    teacherLoginController. passingYearController.value.text == "" ||
+                    teacherLoginController.totalMarksController.value.text == "" ||
+                    teacherLoginController.obtainedController.value.text == "" ||
+                    teacherLoginController.percentageController.value.text == "" ||
+                    teacherLoginController.schoolNameController.value.text == "" ||
+                    teacherLoginController.experienceController.value.text == "" ||
+                    schoolOrInstututionAddress == "" ||
+                    teacherLoginController.adharCardPath.value == "" ||
+                    teacherLoginController.photoPath.value == "" ||
+                    teacherLoginController.signaturePath.value == "" ||
+                    teacherLoginController.schoolPhotoPath.value == "") {
+                  Fluttertoast.showToast(
+                    msg: 'Please fill in all required fields',
+                    toastLength: Toast.LENGTH_LONG,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
+                }
+                else if(teacherLoginController.mobileController.value.text.length!=10)
+                  {
+                    Fluttertoast.showToast(
+                      msg: 'The mobile field must be 10 digits.',
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                  }
+                else if(teacherLoginController.isPasswordValid(teacherLoginController.passwordController.value.text)==false)
+                {
+                  Fluttertoast.showToast(
+                    msg: "The password field must be at least 10 characters.\nPassword should contain upper case, lower case, numbers and special characters",
+                    toastLength: Toast.LENGTH_LONG,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
+                }
+                else{
+                  await teacherLoginController.submitTeacherDetails();
+                  Get.off(() => const LoginScreen());
+                }
               },
-              child: Text(
+              child: Obx(()=>teacherLoginController.submitting.value?
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Image.asset("images/img.gif"),
+              ):
+              Text(
                 'SIGN UP',
                 style: TextStyle(color: Colors.white, fontSize: 18.h),
-              ),
+              ),)
             ),
           ),
           SizedBox(
