@@ -145,7 +145,7 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
   final List<String> _dropdownOptions = ['Education', 'Option 2', 'Option 3'];
   String _selectedOption = 'Education';
 
-  List<Map<String, String>> _educationDetails = [];
+
   TeacherLoginController teacherLoginController = Get.put(TeacherLoginController());
   void _submitEducationDetails() {
     Map<String, String> educationData = {
@@ -157,7 +157,7 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
     };
     // print("Captured Education Data: ${educationData}");
     setState(() {
-      _educationDetails.add(educationData);
+      teacherLoginController.educationDetails.add(educationData);
     });
     print("Captured Education Data: ${educationData}");
     Navigator.of(context).pop();
@@ -275,7 +275,32 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
                   Size(70.w, 30.h),
                 ),
               ),
-              onPressed: _submitEducationDetails,
+              onPressed: (){
+                if (teacherLoginController.degreeController.value.text.isEmpty ||
+                    teacherLoginController.passingYearController.value.text.isEmpty ||
+                    teacherLoginController.totalMarksController.value.text.isEmpty ||
+                    teacherLoginController.obtainedController.value.text.isEmpty ||
+                    teacherLoginController.percentageController.value.text.isEmpty ||
+
+                    teacherLoginController.degreeController.value.text == "" ||
+                    teacherLoginController.passingYearController.value.text == "" ||
+                    teacherLoginController.totalMarksController.value == "" ||
+                    teacherLoginController.obtainedController.value == "" ||
+                    teacherLoginController.percentageController.value == "" ) {
+                  Fluttertoast.showToast(
+                    msg: 'Please fill in all required fields',
+                    toastLength: Toast.LENGTH_LONG,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
+                }
+                else{
+                    _submitEducationDetails();
+                }
+              },
               child: Text(
                 'Submit',
                 textAlign: TextAlign.center,
@@ -504,7 +529,7 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
           ),
           const SizedBox(height: 16.0),
           Column(
-            children: _educationDetails.map((details) {
+            children: teacherLoginController.educationDetails.map((details) {
               return _buildEducationDetailsSection(details);
             }).toList(),
           ),
@@ -866,11 +891,9 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
                     teacherLoginController.dob.value.isEmpty ||
                     teacherLoginController.addressController.value.text.isEmpty ||
                     teacherLoginController.passwordController.value.text.isEmpty ||
-                    teacherLoginController.degreeController.value.text.isEmpty ||
-                    teacherLoginController.passingYearController.value.text.isEmpty ||
-                    teacherLoginController.totalMarksController.value.text.isEmpty ||
-                    teacherLoginController.obtainedController.value.text.isEmpty ||
-                    teacherLoginController. percentageController.value.text.isEmpty ||
+
+
+
                     teacherLoginController.schoolNameController.value.text.isEmpty ||
                     teacherLoginController.experienceController.value.text.isEmpty ||
                     teacherLoginController. adharCardPath.value.isEmpty ||
@@ -884,11 +907,8 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
                     teacherLoginController.dob.value == "" ||
                     teacherLoginController.addressController.value.text == "" ||
                     teacherLoginController.passwordController.value.text == "" ||
-                    teacherLoginController.degreeController.value.text == "" ||
-                    teacherLoginController. passingYearController.value.text == "" ||
-                    teacherLoginController.totalMarksController.value.text == "" ||
-                    teacherLoginController.obtainedController.value.text == "" ||
-                    teacherLoginController.percentageController.value.text == "" ||
+
+
                     teacherLoginController.schoolNameController.value.text == "" ||
                     teacherLoginController.experienceController.value.text == "" ||
                     schoolOrInstututionAddress == "" ||
@@ -922,6 +942,29 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
                 {
                   Fluttertoast.showToast(
                     msg: "The password field must be at least 10 characters.\nPassword should contain upper case, lower case, numbers and special characters",
+                    toastLength: Toast.LENGTH_LONG,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
+                }
+                else if(teacherLoginController.isEmailValid(teacherLoginController.emailController.value.text)==false){
+                  Fluttertoast.showToast(
+                    msg: 'Insert a valid email.',
+                    toastLength: Toast.LENGTH_LONG,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
+                }
+
+                else if(teacherLoginController.educationDetails.isEmpty){
+                  Fluttertoast.showToast(
+                    msg: 'Add educational details',
                     toastLength: Toast.LENGTH_LONG,
                     gravity: ToastGravity.BOTTOM,
                     timeInSecForIosWeb: 1,
@@ -975,7 +1018,7 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
   }
 
   Widget _buildEducationDetailsSection(Map<String, String> details) {
-    int index = _educationDetails.indexOf(details);
+    int index = teacherLoginController.educationDetails.indexOf(details);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1168,7 +1211,7 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
 
   void _removeEducationDetails(int index) {
     setState(() {
-      _educationDetails.removeAt(index);
+      teacherLoginController.educationDetails.removeAt(index);
     });
   }
 }

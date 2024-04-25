@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:rspsa_user/controller/school_login_controller.dart';
+import 'package:rspsa_user/screens/school_portal/controller/school_login_controller.dart';
 import 'package:rspsa_user/custom_widget.dart/cusotm_text_field.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 import 'package:rspsa_user/utils/space_helper.dart';

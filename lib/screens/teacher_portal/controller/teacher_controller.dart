@@ -36,6 +36,8 @@ class TeacherLoginController extends GetxController {
   var schoolPhotoPath = "".obs;
   var adharCardPath = "".obs;
 
+  List<Map<String, String>> educationDetails = [];
+
   File? adhar;
   File? photo;
   File? signature;
@@ -55,11 +57,11 @@ var submitting=false.obs;
         dob: dob.value,
         address: addressController.value.text,
         password: passwordController.value.text,
-        degree: degreeController.value.text,
-        passingYear: passingYearController.value.text,
-        totalMarks: totalMarksController.value.text,
-        obtainedMarks: obtainedController.value.text,
-        percentage: percentageController.value.text,
+        degree: educationDetails.map((map) => map['option']!).join(', '),
+        passingYear: educationDetails.map((map) => map['passingYear']!).join(', '),
+        totalMarks: educationDetails.map((map) => map['totalMarks']!).join(', '),
+        obtainedMarks: educationDetails.map((map) => map['obtainedMarks']!).join(', '),
+        percentage: educationDetails.map((map) => map['percentage']!).join(', '),
         teachingSchoolName: schoolNameController.value.text,
         experience: experienceController.value.text,
         teachingSchoolAddress: schoolOrInstututionAddress,
@@ -69,6 +71,18 @@ var submitting=false.obs;
         schoolPhotoPath: schoolPhotoPath.value,
       );
     submitting.value = false;
+  }
+  bool isEmailValid(String email) {
+    // Regular expression pattern for validating email addresses
+    // This pattern checks for basic email format but doesn't guarantee the email exists or is valid
+    final RegExp emailRegex = RegExp(
+      r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+      caseSensitive: false,
+      multiLine: false,
+    );
+
+    // Check if the email matches the regular expression pattern
+    return emailRegex.hasMatch(email);
   }
   Future<String?> pickImageFromGallery() async {
     final ImagePicker _picker = ImagePicker();
