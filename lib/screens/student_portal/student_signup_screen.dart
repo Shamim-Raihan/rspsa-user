@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:rspsa_user/controller/login_controller.dart';
@@ -726,7 +727,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
               controller: studentSignupController.bankNameController.value,
-              levelText: "bank Name",
+              levelText: "Bank Name",
               suffixIcon: Icons.balance),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
@@ -983,46 +984,265 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                 ),
               ),
               onPressed: () {
+                if (_selectedProgram == null) {
+                  var sn = const SnackBar(
+                    content: Text('Select a program'),
+                    duration: Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(sn);
+                  return;
+                }
+                if (_selectedTalentDetails == null) {
+                  var sn = const SnackBar(
+                    content: Text('Please select "Registration for" option.'),
+                    duration: Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(sn);
+                  return;
+                }
+
+                if (studentSignupController.nameController.value.text.isEmpty) {
+                  var sn = const SnackBar(
+                    content: Text('Student Name required'),
+                    duration: Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(sn);
+                  return;
+                }
+
+                if (studentSignupController.sdcoController.value.text.isEmpty) {
+                  var sn = const SnackBar(
+                    content: Text('S/D/C/o required'),
+                    duration: Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(sn);
+                  return;
+                }
+
+                if (studentSignupController
+                    .emailController.value.text.isEmpty) {
+                  var sn = const SnackBar(
+                    content: Text('Email required'),
+                    duration: Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(sn);
+                  return;
+                }
+
+                final mobileNumber =
+                    studentSignupController.mobileController.value.text;
+                if (mobileNumber.isEmpty || mobileNumber.length != 10) {
+                  var sn = const SnackBar(
+                    content: Text('Mobile number must be exactly 10 digits.'),
+                    duration: Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(sn);
+                  return;
+                }
+
+                if (!isDateSelected) {
+                  var sn = const SnackBar(
+                    content: Text('Date of Birth required'),
+                    duration: Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(sn);
+                  return;
+                }
+
+                if (studentSignupController
+                    .addressController.value.text.isEmpty) {
+                  var sn = const SnackBar(
+                    content: Text('Full Address required'),
+                    duration: Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(sn);
+                  return;
+                }
+
+                final aadharNumber =
+                    studentSignupController.aadharController.value.text;
+                if (aadharNumber.isEmpty || aadharNumber.length != 12) {
+                  var sn = const SnackBar(
+                    content: Text('Aadhar Number must be exactly 12 digits.'),
+                    duration: Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(sn);
+                  return; // Exit the function if the Aadhar Number is invalid
+                }
+                final password =
+                    studentSignupController.passwordController.value.text;
+                final confirmPassword = studentSignupController
+                    .confirmPasswordController.value.text;
+                if (password != confirmPassword) {
+                  var sn = const SnackBar(
+                    content:
+                        Text('Password and confirm password do not match.'),
+                    duration: Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(sn);
+                  return; // Exit the function if the passwords do not match
+                }
+
+                if (studentSignupController
+                    .schoolNameController.value.text.isEmpty) {
+                  var sn = const SnackBar(
+                    content: Text('School/Institute Name required'),
+                    duration: Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(sn);
+                  return;
+                }
+
+                if (studentSignupController
+                    .schoolAddressController.value.text.isEmpty) {
+                  var sn = const SnackBar(
+                    content: Text('School/Institute Address required'),
+                    duration: Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(sn);
+                  return;
+                }
+
+                if (selectedAppearingClass == null) {
+                  var sn = const SnackBar(
+                    content: Text('Appearing Class required'),
+                    duration: Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(sn);
+                  return;
+                }
+
+                if (studentSignupController
+                    .bankNameController.value.text.isEmpty) {
+                  var sn = const SnackBar(
+                    content: Text('Bank Name required'),
+                    duration: Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(sn);
+                  return;
+                }
+
+                if (studentSignupController
+                    .accountHolderNameController.value.text.isEmpty) {
+                  var sn = const SnackBar(
+                    content: Text('Account Holder Name required'),
+                    duration: Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(sn);
+                  return;
+                }
+
+                if (studentSignupController
+                    .accountNumberController.value.text.isEmpty) {
+                  var sn = const SnackBar(
+                    content: Text('Account Number required'),
+                    duration: Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(sn);
+                  return;
+                }
+
+                if (studentSignupController
+                    .ifscCodeController.value.text.isEmpty) {
+                  var sn = const SnackBar(
+                    content: Text('IFSC Code required'),
+                    duration: Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(sn);
+                  return;
+                }
+                if (!agreeToTerms) {
+                  var sn = const SnackBar(
+                    content:
+                        Text('You must agree to the terms and conditions.'),
+                    duration: Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(sn);
+                  return; // Exit the function if the user has not agreed to the terms and conditions
+                }
+
                 studentSignupController.studentSignup(
-                    talentId: _selectedDatum!.id!.toString(),
-                    programId: _selectedProgram!.id!.toString(),
-                    talentDetailsId: _selectedTalentDetails!.id.toString(),
-                    name: studentSignupController.nameController.value.text,
-                    fatherName:
-                        studentSignupController.sdcoController.value.text,
-                    email: studentSignupController.emailController.value.text,
-                    mobile: studentSignupController.mobileController.value.text,
-                    dob: DateFormat('yyyy-MM-dd').format(_dateTime),
-                    password:
-                        studentSignupController.passwordController.value.text,
-                    address:
-                        studentSignupController.addressController.value.text,
-                    aadharNumber:
-                        studentSignupController.aadharController.value.text,
-                    schoolOrInstitutionName:
-                        studentSignupController.schoolNameController.value.text,
-                    schoolOrInstitutionAddress: studentSignupController
-                        .schoolAddressController.value.text,
-                    appearingClass: selectedAppearingClass!,
-                    bankName:
-                        studentSignupController.bankNameController.value.text,
-                    accountHolderName: studentSignupController
-                        .accountHolderNameController.value.text,
-                    accountNumber: studentSignupController
-                        .accountNumberController.value.text,
-                    ifscCode:
-                        studentSignupController.ifscCodeController.value.text,
-                    utrNo: studentSignupController.utrController.value.text,
-                    declaration: studentSignupController
-                        .declarationController.value.text,
-                    termsAndConditions: agreeToTerms ? "1" : "0",
-                    registrationFor: _selectedTalentDetails!.registrationFor!,
-                    currentEducationProof: currentEducationProof!,
-                    photo: photo!,
-                    signature: signature!,
-                    paymentProof: paymentProof!,
-                    aadharCard: aadharCard!);
+                  talentId: _selectedDatum!.id!.toString(),
+                  programId: _selectedProgram!.id!.toString(),
+                  talentDetailsId: _selectedTalentDetails!.id.toString(),
+                  name: studentSignupController.nameController.value.text,
+                  fatherName: studentSignupController.sdcoController.value.text,
+                  email: studentSignupController.emailController.value.text,
+                  mobile: studentSignupController.mobileController.value.text,
+                  dob: DateFormat('yyyy-MM-dd').format(_dateTime),
+                  password:
+                      studentSignupController.passwordController.value.text,
+                  address: studentSignupController.addressController.value.text,
+                  aadharNumber:
+                      studentSignupController.aadharController.value.text,
+                  schoolOrInstitutionName:
+                      studentSignupController.schoolNameController.value.text,
+                  schoolOrInstitutionAddress: studentSignupController
+                      .schoolAddressController.value.text,
+                  appearingClass: selectedAppearingClass!,
+                  bankName:
+                      studentSignupController.bankNameController.value.text,
+                  accountHolderName: studentSignupController
+                      .accountHolderNameController.value.text,
+                  accountNumber: studentSignupController
+                      .accountNumberController.value.text,
+                  ifscCode:
+                      studentSignupController.ifscCodeController.value.text,
+                  utrNo: studentSignupController.utrController.value.text,
+                  declaration:
+                      studentSignupController.declarationController.value.text,
+                  termsAndConditions: agreeToTerms ? "1" : "0",
+                  registrationFor: _selectedTalentDetails!.registrationFor!,
+                  currentEducationProof: currentEducationProof,
+                  photo: photo,
+                  signature: signature,
+                  paymentProof: paymentProof,
+                  aadharCard: aadharCard,
+                );
               },
+
+              // onPressed: () {
+              //   studentSignupController.studentSignup(
+              //       talentId: _selectedDatum!.id!.toString(),
+              //       programId: _selectedProgram!.id!.toString(),
+              //       talentDetailsId: _selectedTalentDetails!.id.toString(),
+              //       name: studentSignupController.nameController.value.text,
+              //       fatherName:
+              //           studentSignupController.sdcoController.value.text,
+              //       email: studentSignupController.emailController.value.text,
+              //       mobile: studentSignupController.mobileController.value.text,
+              //       dob: DateFormat('yyyy-MM-dd').format(_dateTime),
+              //       password:
+              //           studentSignupController.passwordController.value.text,
+              //       address:
+              //           studentSignupController.addressController.value.text,
+              //       aadharNumber:
+              //           studentSignupController.aadharController.value.text,
+              //       schoolOrInstitutionName:
+              //           studentSignupController.schoolNameController.value.text,
+              //       schoolOrInstitutionAddress: studentSignupController
+              //           .schoolAddressController.value.text,
+              //       appearingClass: selectedAppearingClass!,
+              //       bankName:
+              //           studentSignupController.bankNameController.value.text,
+              //       accountHolderName: studentSignupController
+              //           .accountHolderNameController.value.text,
+              //       accountNumber: studentSignupController
+              //           .accountNumberController.value.text,
+              //       ifscCode:
+              //           studentSignupController.ifscCodeController.value.text,
+              //       utrNo: studentSignupController.utrController.value.text,
+              //       declaration: studentSignupController
+              //           .declarationController.value.text,
+              //       termsAndConditions: agreeToTerms ? "1" : "0",
+              //       registrationFor: _selectedTalentDetails!.registrationFor!,
+              //       currentEducationProof: currentEducationProof!,
+              //       photo: photo!,
+              //       signature: signature!,
+              //       paymentProof: paymentProof!,
+              //       aadharCard: aadharCard!);
+              // },
+
               child: Text(
                 'SIGN UP',
                 style: TextStyle(color: Colors.white, fontSize: 18.h),

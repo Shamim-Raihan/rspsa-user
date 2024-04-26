@@ -43,18 +43,18 @@ class StudentSignupController extends GetxController {
   var talentDetailsList = [].obs;
 
   List<String> appearingClasss = [
-    '1st',
-    '2nd',
-    '3rd',
-    '4th',
-    '5th',
-    '6th',
-    '7th',
-    '8th',
-    '9th',
-    '10th',
-    '11th',
-    '12th'
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12'
   ];
 
   Future<void> getTalentList() async {
@@ -123,57 +123,57 @@ class StudentSignupController extends GetxController {
     required String declaration,
     required String termsAndConditions,
     required String registrationFor,
-    required String currentEducationProof,
-    required String photo,
-    required String signature,
-    required String paymentProof,
-    required String aadharCard,
+    required String? currentEducationProof,
+    required String? photo,
+    required String? signature,
+    required String? paymentProof,
+    required String? aadharCard,
   }) async {
-    try {
-      EasyLoading.show();
-      var response = await StudentSignupRepository().studentSignup(
-          talentId: talentId,
-          programId: programId,
-          talentDetailsId: talentDetailsId,
-          name: name,
-          fatherName: fatherName,
-          email: email,
-          mobile: mobile,
-          dob: dob,
-          password: password,
-          address: address,
-          aadharNumber: aadharNumber,
-          schoolOrInstitutionName: schoolOrInstitutionName,
-          schoolOrInstitutionAddress: schoolOrInstitutionAddress,
-          appearingClass: appearingClass,
-          bankName: bankName,
-          accountHolderName: accountHolderName,
-          accountNumber: accountNumber,
-          ifscCode: ifscCode,
-          utrNo: utrNo,
-          declaration: declaration,
-          termsAndConditions: termsAndConditions,
-          registrationFor: registrationFor,
-          currentEducationProof: currentEducationProof,
-          photo: photo,
-          signature: signature,
-          paymentProof: paymentProof,
-          aadharCard: aadharCard);
-      if (response!.status!) {
-        EasyLoading.dismiss();
-        EasyLoading.showToast('Signup Successfull',
-            duration: const Duration(seconds: 2));
-        Get.off(() => const LoginScreen());
-      } else {
-        EasyLoading.dismiss();
-        EasyLoading.showToast('Signup Failed',
-            duration: const Duration(seconds: 2));
-      }
-    } catch (e) {
+    // try {
+    EasyLoading.show();
+    var response = await StudentSignupRepository().studentSignup(
+        talentId: talentId,
+        programId: programId,
+        talentDetailsId: talentDetailsId,
+        name: name,
+        fatherName: fatherName,
+        email: email,
+        mobile: mobile,
+        dob: dob,
+        password: password,
+        address: address,
+        aadharNumber: aadharNumber,
+        schoolOrInstitutionName: schoolOrInstitutionName,
+        schoolOrInstitutionAddress: schoolOrInstitutionAddress,
+        appearingClass: appearingClass,
+        bankName: bankName,
+        accountHolderName: accountHolderName,
+        accountNumber: accountNumber,
+        ifscCode: ifscCode,
+        utrNo: utrNo,
+        declaration: declaration,
+        termsAndConditions: termsAndConditions,
+        registrationFor: registrationFor,
+        currentEducationProof: currentEducationProof,
+        photo: photo,
+        signature: signature,
+        paymentProof: paymentProof,
+        aadharCard: aadharCard);
+    if (response!.status!) {
       EasyLoading.dismiss();
-      EasyLoading.showToast('Something went wrong',
+      EasyLoading.showToast('Signup Successfull',
           duration: const Duration(seconds: 2));
-      log('Error from studentSignup: $e');
+      Get.off(() => const LoginScreen());
+    } else {
+      EasyLoading.dismiss();
+      EasyLoading.showToast('Signup Failed',
+          duration: const Duration(seconds: 2));
     }
+    // } catch (e) {
+    //   EasyLoading.dismiss();
+    //   EasyLoading.showToast('Something went wrong',
+    //       duration: const Duration(seconds: 2));
+    //   log('Error from studentSignup: $e');
+    // }
   }
 }

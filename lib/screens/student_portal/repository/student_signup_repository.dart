@@ -15,9 +15,7 @@ class StudentSignupRepository {
   }
 
   Future<ProgramListResponse> getProgramList({required String talentId}) async {
-    var headers = {   
-      'Accept': 'application/json'
-    };
+    var headers = {'Accept': 'application/json'};
 
     Uri uri =
         Uri.parse('${AppConfig.baseUrl}/api/programs?talent_id=$talentId');
@@ -59,11 +57,11 @@ class StudentSignupRepository {
     required String declaration,
     required String termsAndConditions,
     required String registrationFor,
-    required String currentEducationProof,
-    required String photo,
-    required String signature,
-    required String paymentProof,
-    required String aadharCard,
+    required String? currentEducationProof,
+    required String? photo,
+    required String? signature,
+    required String? paymentProof,
+    required String? aadharCard,
   }) async {
     var body = {
       'talent_id': talentId,
@@ -75,6 +73,7 @@ class StudentSignupRepository {
       'mobile': mobile,
       'dob': dob,
       'password': password,
+      'password_confirmation': password,
       'address': address,
       'aadhar_number': aadharNumber,
       'school_or_institute_name': schoolOrInstitutionName,
@@ -95,15 +94,27 @@ class StudentSignupRepository {
     var request = http.MultipartRequest('POST', url);
     request.fields.addAll(body);
 
-    request.files.add(await http.MultipartFile.fromPath(
-        'current_education_proof', currentEducationProof));
-    request.files.add(await http.MultipartFile.fromPath('photo', photo));
-    request.files
-        .add(await http.MultipartFile.fromPath('signature', signature));
-    request.files
-        .add(await http.MultipartFile.fromPath('payment_proof', paymentProof));
-    request.files
-        .add(await http.MultipartFile.fromPath('aadhar_card', aadharCard));
+    if (currentEducationProof != null) {
+      request.files.add(await http.MultipartFile.fromPath(
+          'current_education_proof', currentEducationProof));
+    }
+
+    if (photo != null) {
+      request.files.add(await http.MultipartFile.fromPath('photo', photo));
+    }
+    if (signature != null) {
+      request.files
+          .add(await http.MultipartFile.fromPath('signature', signature));
+    }
+
+    if (paymentProof != null) {
+      request.files.add(
+          await http.MultipartFile.fromPath('payment_proof', paymentProof));
+    }
+    if (aadharCard != null) {
+      request.files
+          .add(await http.MultipartFile.fromPath('aadhar_card', aadharCard));
+    }
 
     request.headers.addAll(headers);
 

@@ -96,11 +96,15 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                             child: CircleAvatar(
                               child:
                                   schoolHomeController.prfilePicture.value != ''
-                                      ? Image.network(
-                                          '${schoolHomeController.userFilePath.value}/${schoolHomeController.prfilePicture.value}',
-                                          width: 40.w,
-                                          height: 30.h,
-                                          fit: BoxFit.cover,
+                                      ? ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(100.r),
+                                          child: Image.network(
+                                            '${schoolHomeController.userFilePath.value}/${schoolHomeController.prfilePicture.value}',
+                                            width: 40.w,
+                                            height: 30.h,
+                                            fit: BoxFit.cover,
+                                          ),
                                         )
                                       : const Icon(Icons.person),
                             ),
@@ -154,17 +158,24 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                               title: 'Programs',
                             ),
                           ),
+                          CommonCard(
+                            icon: Icons.payments_outlined,
+                            title: 'My Payout',
+                          ),
                         ],
                       ),
                       SizedBox(
                         height: 10.h,
                       ),
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          CommonCard(
-                            icon: Icons.payments_outlined,
-                            title: 'My Payout',
+                          InkWell(
+                            onTap: () {},
+                            child: const CommonCard(
+                              icon: Icons.pin_outlined,
+                              title: 'My Referral',
+                            ),
                           ),
                           CommonCard(
                             icon: Icons.file_download_outlined,
@@ -204,13 +215,6 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          InkWell(
-                            onTap: () {},
-                            child: const CommonCard(
-                              icon: Icons.pin_outlined,
-                              title: 'My Referral',
-                            ),
-                          ),
                           InkWell(
                             onTap: () {},
                             child: const CommonCard(

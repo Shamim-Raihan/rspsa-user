@@ -99,11 +99,15 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                               child:
                                   teacherHomeController.prfilePicture.value !=
                                           ''
-                                      ? Image.network(
-                                          '${teacherHomeController.userFilePath.value}/${teacherHomeController.prfilePicture.value}',
-                                          width: 40.w,
-                                          height: 30.h,
-                                          fit: BoxFit.cover,
+                                      ? ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(100.r),
+                                          child: Image.network(
+                                            '${teacherHomeController.userFilePath.value}/${teacherHomeController.prfilePicture.value}',
+                                            width: 40.w,
+                                            height: 30.h,
+                                            fit: BoxFit.cover,
+                                          ),
                                         )
                                       : const Icon(Icons.person),
                             ),
