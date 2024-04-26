@@ -7,7 +7,7 @@ import 'package:rspsa_user/screens/student_portal/contact_us_page.dart';
 import 'package:rspsa_user/screens/student_portal/controller/student_home_controller.dart';
 import 'package:rspsa_user/screens/student_portal/edit_profile_screen.dart';
 import 'package:rspsa_user/screens/student_portal/gallery_screen.dart';
-import 'package:rspsa_user/screens/student_portal/programdetails_screen.dart';
+import 'package:rspsa_user/screens/student_portal/program_screen.dart';
 import 'package:rspsa_user/screens/student_portal/support_screen.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 
@@ -92,10 +92,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(3.0),
+                          child: Padding(
+                            padding: const EdgeInsets.all(3.0),
                             child: CircleAvatar(
-                              child: Icon(Icons.person),
+                              child:
+                                  studentHomeController.prfilePicture.value !=
+                                          ''
+                                      ? Image.network(
+                                          '${studentHomeController.userFilePath.value}/${studentHomeController.prfilePicture.value}',
+                                          width: 40.w,
+                                          height: 30.h,
+                                          fit: BoxFit.cover,
+                                        )
+                                      : const Icon(Icons.person),
                             ),
                           ),
                         ),
@@ -141,7 +150,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.to(const ProgramDetailsScreen());
+                            studentHomeController.getProgramList();
+                            studentHomeController.getMyProgramList();
+                            Get.to(const ProgramScreen());
                           },
                           child: const CommonCard(
                             icon: Icons.menu,

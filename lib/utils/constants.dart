@@ -31,5 +31,6 @@ const signature = 'signature';
 const paymentProof = 'paymentProof';
 
 const isLogedIn = 'isLogedIn';
+const filePath = 'filePath';
 
 

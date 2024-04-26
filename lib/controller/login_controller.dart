@@ -54,6 +54,12 @@ class LoginController extends GetxController {
       if (userRole! == "student") {
         Get.offAll(() => const HomeScreen());
       }
+      if (userRole == "school") {
+        Get.offAll(() => const SchoolHomeScreen());
+      }
+      if (userRole == "teacher") {
+        Get.offAll(() => const TeacherHomeScreen());
+      }
     }
   }
 
@@ -76,10 +82,12 @@ class LoginController extends GetxController {
             response.data!.user!.role! == 'student') {
           Get.offAll(() => const HomeScreen());
         }
-        if (selectedOption.value == 2) {
+        if (selectedOption.value == 2 &&
+            response.data!.user!.role! == 'teacher') {
           Get.offAll(() => const TeacherHomeScreen());
         }
-        if (selectedOption.value == 3) {
+        if (selectedOption.value == 3 &&
+            response.data!.user!.role! == 'school') {
           Get.offAll(() => const SchoolHomeScreen());
         }
         if (selectedOption.value == 4) {
@@ -126,8 +134,8 @@ class LoginController extends GetxController {
         .setString(key: tokenType, value: loginResponse.data!.tokenType ?? '');
     await SharedPreferenceHelper().setString(
         key: uniqueCode, value: loginResponse.data!.user!.uniqueCode ?? '');
-    await SharedPreferenceHelper()
-        .setString(key: email, value: loginResponse.data!.user!.details!.email ?? '');
+    await SharedPreferenceHelper().setString(
+        key: email, value: loginResponse.data!.user!.details!.email ?? '');
     await SharedPreferenceHelper().setString(
         key: mobile, value: loginResponse.data!.user!.details!.mobile ?? '');
     await SharedPreferenceHelper().setString(
@@ -192,5 +200,7 @@ class LoginController extends GetxController {
     await SharedPreferenceHelper().setString(
         key: paymentProof,
         value: loginResponse.data!.user!.details!.paymentProof ?? '');
+    await SharedPreferenceHelper()
+        .setString(key: filePath, value: loginResponse.data!.filePath ?? '');
   }
 }

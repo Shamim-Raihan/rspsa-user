@@ -6,7 +6,7 @@ import 'package:rspsa_user/screens/employee_portal/employee_profile_screen.dart'
 import 'package:rspsa_user/screens/employee_portal/employee_signup_screen.dart';
 import 'package:rspsa_user/screens/student_portal/contact_us_page.dart';
 import 'package:rspsa_user/screens/student_portal/edit_profile_screen.dart';
-import 'package:rspsa_user/screens/student_portal/programdetails_screen.dart';
+import 'package:rspsa_user/screens/student_portal/program_screen.dart';
 import 'package:rspsa_user/screens/student_portal/support_screen.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 
@@ -137,7 +137,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.to(const ProgramDetailsScreen());
+                            Get.to(const ProgramScreen());
                           },
                           child: const CommonCard(
                             icon: Icons.menu,

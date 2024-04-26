@@ -1,13 +1,6 @@
-import 'dart:convert';
-import 'dart:developer';
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:rspsa_user/models/student_signup_response.dart';
 import 'package:rspsa_user/models/talent_details_response.dart';
 import 'package:rspsa_user/models/talent_list_response.dart';
-
 import '../../../models/program_list_response.dart';
 import '../../../utils/app_config.dart';
 import 'package:http/http.dart' as http;
@@ -16,16 +9,14 @@ class StudentSignupRepository {
   Future<TalentResponse> getTalentList() async {
     var headers = {'Accept': 'application/json'};
 
-    Uri uri = Uri.parse('${AppConfig.baseUrl}/api/program-talents');
+    Uri uri = Uri.parse('${AppConfig.baseUrl}/api/program-categories');
     final response = await http.get(uri, headers: headers);
     return talentResponseFromJson(response.body);
   }
 
   Future<ProgramListResponse> getProgramList({required String talentId}) async {
-    var headers = {
-      'Accept': 'application/json',
-      'Authorization':
-          'Bearer 32|jZ7trTvgaVTUlzX1U7ITkRuV9gBuR2F5pTK3K19M26e9943d'
+    var headers = {   
+      'Accept': 'application/json'
     };
 
     Uri uri =
@@ -40,7 +31,7 @@ class StudentSignupRepository {
       'Accept': 'application/json',
     };
 
-    Uri uri = Uri.parse('${AppConfig.baseUrl}/api/talent-details/$talentId');
+    Uri uri = Uri.parse('${AppConfig.baseUrl}/api/category-details/$talentId');
     final response = await http.get(uri, headers: headers);
     return talentDetailsResponseFromJson(response.body);
   }
@@ -106,14 +97,13 @@ class StudentSignupRepository {
 
     request.files.add(await http.MultipartFile.fromPath(
         'current_education_proof', currentEducationProof));
+    request.files.add(await http.MultipartFile.fromPath('photo', photo));
     request.files
-        .add(await http.MultipartFile.fromPath('photo', photo));
-    request.files.add(await http.MultipartFile.fromPath(
-        'signature', signature));
-    request.files.add(await http.MultipartFile.fromPath(
-        'payment_proof', paymentProof));
-    request.files.add(await http.MultipartFile.fromPath(
-        'aadhar_card', aadharCard));
+        .add(await http.MultipartFile.fromPath('signature', signature));
+    request.files
+        .add(await http.MultipartFile.fromPath('payment_proof', paymentProof));
+    request.files
+        .add(await http.MultipartFile.fromPath('aadhar_card', aadharCard));
 
     request.headers.addAll(headers);
 
