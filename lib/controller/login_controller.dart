@@ -1,18 +1,26 @@
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:rspsa_user/controller/signup_controller.dart';
 import 'package:rspsa_user/models/login_response.dart';
 import 'package:rspsa_user/repository/login_repository.dart';
 import 'package:rspsa_user/screens/common/account_select_screen.dart';
+import 'package:rspsa_user/screens/common/login_screen.dart';
+import 'package:rspsa_user/screens/student_portal/controller/student_signup_controller.dart';
 import 'package:rspsa_user/utils/constants.dart';
 import 'package:rspsa_user/utils/shared_preference_helper.dart';
 
 import '../screens/employee_portal/employee_home_screen.dart';
+import '../screens/employee_portal/employee_signup_screen.dart';
 import '../screens/school_portal/school_home_screen.dart';
+import '../screens/school_portal/school_signup_screen.dart';
 import '../screens/student_portal/home_screen.dart';
+import '../screens/student_portal/student_signup_screen.dart';
 import '../screens/teacher_portal/teacher_home_screen.dart';
+import '../screens/teacher_portal/teacher_signup_screen.dart';
 
 class LoginController extends GetxController {
   var emailController = TextEditingController().obs;
@@ -60,6 +68,48 @@ class LoginController extends GetxController {
       if (userRole == "teacher") {
         Get.offAll(() => const TeacherHomeScreen());
       }
+      if (userRole == "employee") {
+        Get.offAll(() => const EmployeeHomeScreen());
+      }
+    } else {
+      Get.offAll(() => const LoginScreen());
+    }
+  }
+
+  firebaseLogin() {
+    try {
+      FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: emailController.value.text,
+              password: passwordController.value.text)
+          .then((value) {
+        Get.to(() => AccountSelectScreen());
+      });
+    } catch (e) {
+      EasyLoading.showToast('Something went wrong');
+    }
+  }
+
+  defineType() async {
+    SignupController signupController = Get.put(SignupController());
+    StudentSignupController studentSignupController =
+        Get.put(StudentSignupController());
+    if (signupController.isSignup.value) {
+      if (selectedOption.value == 1) {
+        await studentSignupController.getTalentList();
+        Get.off(() => const StudentSignupScreen());
+      }
+      if (selectedOption.value == 2) {
+        Get.off(() => const TeacherSignupScreen());
+      }
+      if (selectedOption.value == 3) {
+        Get.off(() => const SchoolSignUpScreen());
+      }
+      if (selectedOption.value == 4) {
+        Get.off(() => const EmployeeSignUpScreen());
+      }
+    } else {
+      login();
     }
   }
 
@@ -90,7 +140,8 @@ class LoginController extends GetxController {
             response.data!.user!.role! == 'school') {
           Get.offAll(() => const SchoolHomeScreen());
         }
-        if (selectedOption.value == 4) {
+        if (selectedOption.value == 4 &&
+            response.data!.user!.role! == 'employee') {
           Get.offAll(() => const EmployeeHomeScreen());
         }
       } else {

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:rspsa_user/controller/login_controller.dart';
+import 'package:rspsa_user/controller/signup_controller.dart';
+import 'package:rspsa_user/screens/common/signup_screen.dart';
 import 'package:rspsa_user/screens/employee_portal/employee_signup_screen.dart';
 import 'package:rspsa_user/screens/school_portal/school_signup_screen.dart';
 import 'package:rspsa_user/screens/student_portal/controller/student_signup_controller.dart';
@@ -20,7 +22,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   LoginController loginController = Get.put(LoginController());
-  StudentSignupController studentSignupController = Get.put(StudentSignupController());
+  StudentSignupController studentSignupController =
+      Get.put(StudentSignupController());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -171,7 +174,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               onPressed: () {
-                loginController.login();
+                SignupController signupController = Get.put(SignupController());
+                signupController.isSignup.value = false;
+                loginController.firebaseLogin();
               },
               child: Text(
                 'SIGN IN',
@@ -213,20 +218,8 @@ class _LoginScreenState extends State<LoginScreen> {
               SpaceHelper().horizoantalSpace5,
               InkWell(
                 onTap: () async {
-                  if (loginController.selectedOption.value == 1) {
-                    
-                    await studentSignupController.getTalentList();
-                    Get.off(() => const StudentSignupScreen());
-                  }
-                  if (loginController.selectedOption.value == 2) {
-                    Get.off(() => const TeacherSignupScreen());
-                  }
-                  if (loginController.selectedOption.value == 3) {
-                    Get.off(() => const SchoolSignUpScreen());
-                  }
-                  if (loginController.selectedOption.value == 4) {
-                    Get.off(() => const EmployeeSignUpScreen());
-                  }
+                  
+                  Get.off(() => const SignupScreen());
                 },
                 child: Text(
                   'Sign Up',

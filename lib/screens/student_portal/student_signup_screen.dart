@@ -9,6 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:rspsa_user/controller/login_controller.dart';
+import 'package:rspsa_user/controller/signup_controller.dart';
 import 'package:rspsa_user/custom_widget.dart/cusotm_text_field.dart';
 import 'package:rspsa_user/screens/common/login_screen.dart';
 import 'package:rspsa_user/screens/student_portal/controller/student_signup_controller.dart';
@@ -34,6 +35,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
   bool agreeToTerms = false;
   File? _file;
   PlatformFile? _platformFile;
+  SignupController signupController = Get.find();
 
   selectFile() async {
     final file = await FilePicker.platform.pickFiles(
@@ -165,6 +167,10 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    studentSignupController.nameController.value.text =
+        signupController.nameController.value.text;
+    studentSignupController.emailController.value.text =
+        signupController.emailController.value.text;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -515,7 +521,8 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
           CustomTextField().textField(
               controller: studentSignupController.nameController.value,
               levelText: "Student Name",
-              suffixIcon: Icons.person_2_outlined),
+              suffixIcon: Icons.person_2_outlined,
+              enabled: false),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
               controller: studentSignupController.sdcoController.value,
@@ -525,7 +532,8 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
           CustomTextField().textField(
               controller: studentSignupController.emailController.value,
               levelText: "Email",
-              suffixIcon: Icons.mail_outline),
+              suffixIcon: Icons.mail_outline,
+              enabled: false),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
               controller: studentSignupController.mobileController.value,
@@ -576,99 +584,101 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
               controller: studentSignupController.aadharController.value,
               levelText: "Aadhar Number",
               suffixIcon: Icons.numbers),
-          SpaceHelper().verticalSpace10,
-          SizedBox(
-            height: 50.h,
-            child: TextFormField(
-              controller: studentSignupController.passwordController.value,
-              obscureText: !studentSignupController.visiblePass.value,
-              decoration: InputDecoration(
-                  focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: ColorHelper.primaryColor, width: 1.2)),
-                  enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.grey.shade300, width: 1.2)),
-                  border: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 1.2)),
-                  suffixIcon: studentSignupController.visiblePass.value
-                      ? IconButton(
-                          onPressed: () {
-                            setState(() {
-                              studentSignupController.visiblePass.value
-                                  ? studentSignupController.visiblePass.value =
-                                      false
-                                  : studentSignupController.visiblePass.value =
-                                      true;
-                            });
-                          },
-                          icon: const Icon(Icons.visibility,
-                              color: ColorHelper.primaryColor))
-                      : IconButton(
-                          onPressed: () {
-                            setState(() {
-                              studentSignupController.visiblePass.value
-                                  ? studentSignupController.visiblePass.value =
-                                      false
-                                  : studentSignupController.visiblePass.value =
-                                      true;
-                            });
-                          },
-                          icon: const Icon(
-                            Icons.visibility_off,
-                            color: ColorHelper.primaryColor,
-                          )),
-                  labelText: 'Password',
-                  labelStyle: const TextStyle(color: Colors.black)),
-            ),
-          ),
-          SpaceHelper().verticalSpace10,
-          SizedBox(
-            height: 50.h,
-            child: TextFormField(
-              controller:
-                  studentSignupController.confirmPasswordController.value,
-              obscureText: !studentSignupController.visibleConfirmPass.value,
-              decoration: InputDecoration(
-                  focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: ColorHelper.primaryColor, width: 1.2)),
-                  enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.grey.shade300, width: 1.2)),
-                  border: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 1.2)),
-                  suffixIcon: studentSignupController.visibleConfirmPass.value
-                      ? IconButton(
-                          onPressed: () {
-                            setState(() {
-                              studentSignupController.visibleConfirmPass.value
-                                  ? studentSignupController
-                                      .visibleConfirmPass.value = false
-                                  : studentSignupController
-                                      .visibleConfirmPass.value = true;
-                            });
-                          },
-                          icon: const Icon(Icons.visibility,
-                              color: ColorHelper.primaryColor))
-                      : IconButton(
-                          onPressed: () {
-                            setState(() {
-                              studentSignupController.visibleConfirmPass.value
-                                  ? studentSignupController
-                                      .visibleConfirmPass.value = false
-                                  : studentSignupController
-                                      .visibleConfirmPass.value = true;
-                            });
-                          },
-                          icon: const Icon(
-                            Icons.visibility_off,
-                            color: ColorHelper.primaryColor,
-                          )),
-                  labelText: 'Confirm Password',
-                  labelStyle: const TextStyle(color: Colors.black)),
-            ),
-          ),
+          // SpaceHelper().verticalSpace10,
+          // SizedBox(
+          //   height: 50.h,
+          //   child: TextFormField(
+          //     controller: studentSignupController.passwordController.value,
+          //     obscureText: !studentSignupController.visiblePass.value,
+          //     decoration: InputDecoration(
+          //         focusedBorder: const OutlineInputBorder(
+          //             borderSide: BorderSide(
+          //                 color: ColorHelper.primaryColor, width: 1.2)),
+          //         enabledBorder: OutlineInputBorder(
+          //             borderSide:
+          //                 BorderSide(color: Colors.grey.shade300, width: 1.2)),
+          //         border: const OutlineInputBorder(
+          //             borderSide: BorderSide(color: Colors.black, width: 1.2)),
+          //         suffixIcon: studentSignupController.visiblePass.value
+          //             ? IconButton(
+          //                 onPressed: () {
+          //                   setState(() {
+          //                     studentSignupController.visiblePass.value
+          //                         ? studentSignupController.visiblePass.value =
+          //                             false
+          //                         : studentSignupController.visiblePass.value =
+          //                             true;
+          //                   });
+          //                 },
+          //                 icon: const Icon(Icons.visibility,
+          //                     color: ColorHelper.primaryColor))
+          //             : IconButton(
+          //                 onPressed: () {
+          //                   setState(() {
+          //                     studentSignupController.visiblePass.value
+          //                         ? studentSignupController.visiblePass.value =
+          //                             false
+          //                         : studentSignupController.visiblePass.value =
+          //                             true;
+          //                   });
+          //                 },
+          //                 icon: const Icon(
+          //                   Icons.visibility_off,
+          //                   color: ColorHelper.primaryColor,
+          //                 )),
+          //         labelText: 'Password',
+          //         labelStyle: const TextStyle(color: Colors.black)),
+          //   ),
+          // ),
+          
+          // SpaceHelper().verticalSpace10,
+          // SizedBox(
+          //   height: 50.h,
+          //   child: TextFormField(
+          //     controller:
+          //         studentSignupController.confirmPasswordController.value,
+          //     obscureText: !studentSignupController.visibleConfirmPass.value,
+          //     decoration: InputDecoration(
+          //         focusedBorder: const OutlineInputBorder(
+          //             borderSide: BorderSide(
+          //                 color: ColorHelper.primaryColor, width: 1.2)),
+          //         enabledBorder: OutlineInputBorder(
+          //             borderSide:
+          //                 BorderSide(color: Colors.grey.shade300, width: 1.2)),
+          //         border: const OutlineInputBorder(
+          //             borderSide: BorderSide(color: Colors.black, width: 1.2)),
+          //         suffixIcon: studentSignupController.visibleConfirmPass.value
+          //             ? IconButton(
+          //                 onPressed: () {
+          //                   setState(() {
+          //                     studentSignupController.visibleConfirmPass.value
+          //                         ? studentSignupController
+          //                             .visibleConfirmPass.value = false
+          //                         : studentSignupController
+          //                             .visibleConfirmPass.value = true;
+          //                   });
+          //                 },
+          //                 icon: const Icon(Icons.visibility,
+          //                     color: ColorHelper.primaryColor))
+          //             : IconButton(
+          //                 onPressed: () {
+          //                   setState(() {
+          //                     studentSignupController.visibleConfirmPass.value
+          //                         ? studentSignupController
+          //                             .visibleConfirmPass.value = false
+          //                         : studentSignupController
+          //                             .visibleConfirmPass.value = true;
+          //                   });
+          //                 },
+          //                 icon: const Icon(
+          //                   Icons.visibility_off,
+          //                   color: ColorHelper.primaryColor,
+          //                 )),
+          //         labelText: 'Confirm Password',
+          //         labelStyle: const TextStyle(color: Colors.black)),
+          //   ),
+          // ),
+          
           SpaceHelper().verticalSpace10,
           Text(
             'Education Details',
@@ -1171,7 +1181,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                   mobile: studentSignupController.mobileController.value.text,
                   dob: DateFormat('yyyy-MM-dd').format(_dateTime),
                   password:
-                      studentSignupController.passwordController.value.text,
+                      signupController.passwordController.value.text,
                   address: studentSignupController.addressController.value.text,
                   aadharNumber:
                       studentSignupController.aadharController.value.text,
@@ -1244,7 +1254,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
               // },
 
               child: Text(
-                'SIGN UP',
+                'Update Profile',
                 style: TextStyle(color: Colors.white, fontSize: 18.h),
               ),
             ),
@@ -1255,22 +1265,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
           SizedBox(
             height: 30.h,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('Already have an account'),
-              SpaceHelper().horizoantalSpace5,
-              InkWell(
-                onTap: () {
-                  Get.off(() => const LoginScreen());
-                },
-                child: Text(
-                  'Sign In',
-                  style: FontStyles().normalTextRed,
-                ),
-              )
-            ],
-          ),
+
           SizedBox(
             height: 20.h,
           ),

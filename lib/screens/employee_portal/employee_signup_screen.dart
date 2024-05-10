@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:rspsa_user/controller/signup_controller.dart';
 import 'package:rspsa_user/screens/employee_portal/controller/employee_controller.dart';
 import 'package:rspsa_user/custom_widget.dart/cusotm_text_field.dart';
 import 'package:rspsa_user/screens/employee_portal/models/block_model.dart';
@@ -27,21 +28,20 @@ class EmployeeSignUpScreen extends StatefulWidget {
   @override
   State<EmployeeSignUpScreen> createState() => _EmployeeSignUpScreenState();
 }
-EmployeeController employeeController = Get.put(EmployeeController());
-class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
 
+EmployeeController employeeController = Get.put(EmployeeController());
+
+class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
   final sDateFormate = "dd/MM/yyyy";
   DateTime _dateTime = DateTime.now();
   bool isDateSelected = false;
   File? _file;
   PlatformFile? _platformFile;
 
-
   bool showDropdown2 = false; // Control visibility of second dropdown
   bool showDropdown3 = false; // Control visibility of third dropdown
 
   // Options for the dropdowns
-
 
   selectFile() async {
     final file = await FilePicker.platform.pickFiles(
@@ -113,7 +113,8 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
                   minimumDate: DateTime(1900),
                   maximumDate: DateTime(2025),
                   onDateTimeChanged: (DateTime newDate) {
-                    employeeController.dob.value=_formatDate(_dateTime).toString();
+                    employeeController.dob.value =
+                        _formatDate(_dateTime).toString();
                     setState(() {
                       _dateTime = newDate;
 
@@ -136,7 +137,6 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
 
   final List<String> _dropdownOptions = ['Education', 'Option 2', 'Option 3'];
   String selectedOption = 'Education';
-
 
   void _submitEducationDetails() {
     Map<String, String> educationData = {
@@ -262,18 +262,20 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
                   Size(70.w, 30.h),
                 ),
               ),
-              onPressed:(){
-                if (employeeController.selectedOption.value=="Education" ||
-                    employeeController.passingYearController.value.text.isEmpty ||
-                    employeeController.totalMarksController.value.text.isEmpty ||
+              onPressed: () {
+                if (employeeController.selectedOption.value == "Education" ||
+                    employeeController
+                        .passingYearController.value.text.isEmpty ||
+                    employeeController
+                        .totalMarksController.value.text.isEmpty ||
                     employeeController.obtainedController.value.text.isEmpty ||
-                    employeeController.percentageController.value.text.isEmpty ||
-
+                    employeeController
+                        .percentageController.value.text.isEmpty ||
                     employeeController.selectedOption.value == "" ||
                     employeeController.passingYearController.value.text == "" ||
                     employeeController.totalMarksController.value == "" ||
                     employeeController.obtainedController.value == "" ||
-                    employeeController.percentageController.value == "" ) {
+                    employeeController.percentageController.value == "") {
                   Fluttertoast.showToast(
                     msg: 'Please fill in all required fields',
                     toastLength: Toast.LENGTH_LONG,
@@ -283,11 +285,9 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
                     textColor: Colors.white,
                     fontSize: 16.0,
                   );
-                }
-                else{
+                } else {
                   _submitEducationDetails();
                 }
-
               },
               child: Text(
                 'Submit',
@@ -327,6 +327,11 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
   @override
   Widget build(BuildContext context) {
     EmployeeController employeeController = Get.put(EmployeeController());
+    SignupController signupController = Get.find();
+    employeeController.nameController.value.text =
+        signupController.nameController.value.text;
+    employeeController.emailController.value.text =
+        signupController.emailController.value.text;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -390,7 +395,7 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
           CustomTextField().textField(
               controller: employeeController.nameController.value,
               levelText: "Employee Name",
-              suffixIcon: Icons.person_2_outlined),
+              suffixIcon: Icons.person_2_outlined, enabled: false),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
               controller: employeeController.father_nameController.value,
@@ -405,7 +410,7 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
           CustomTextField().textField(
               controller: employeeController.emailController.value,
               levelText: "Email ID",
-              suffixIcon: Icons.mail_outline),
+              suffixIcon: Icons.mail_outline, enabled: false),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
               controller: employeeController.mobileController.value,
@@ -415,7 +420,7 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
           Padding(
             padding: EdgeInsets.only(top: 5.h),
             child: Obx(
-                  () => Container(
+              () => Container(
                 height: 50.h,
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
@@ -427,9 +432,9 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
                   hint: employeeController.selectedDesignation == null
                       ? const Text('Select Designation')
                       : Text(
-                    employeeController.selectedDesignation!.designation!,
-                    style: FontStyles().normalTextBlack,
-                  ),
+                          employeeController.selectedDesignation!.designation!,
+                          style: FontStyles().normalTextBlack,
+                        ),
                   isExpanded: true,
                   iconSize: 30.0,
                   style: const TextStyle(color: Colors.blue),
@@ -444,7 +449,8 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
                   }).toList(),
                   onChanged: (selectedDesignation) {
                     setState(() {
-                      employeeController.selectedDesignation = selectedDesignation;
+                      employeeController.selectedDesignation =
+                          selectedDesignation;
                     });
                   },
                 ),
@@ -455,7 +461,7 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
           Padding(
             padding: EdgeInsets.only(top: 5.h),
             child: Obx(
-                  () => Container(
+              () => Container(
                 height: 50.h,
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
@@ -467,9 +473,9 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
                   hint: employeeController.selectedState == null
                       ? const Text('Select State')
                       : Text(
-                    employeeController.selectedState!.state!,
-                    style: FontStyles().normalTextBlack,
-                  ),
+                          employeeController.selectedState!.state!,
+                          style: FontStyles().normalTextBlack,
+                        ),
                   isExpanded: true,
                   iconSize: 30.0,
                   style: const TextStyle(color: Colors.blue),
@@ -497,130 +503,140 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
           Padding(
             padding: EdgeInsets.only(top: 5.h),
             child: Obx(
-                  () =>  employeeController.districtList.isEmpty || employeeController.selectedState==null ?
-                      SizedBox():
-                  Container(
-                height: 50.h,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.grey.shade300),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: DropdownButton<District>(
-                  underline: const SizedBox(),
-                  hint: employeeController.selectedDistrict == null
-                      ? const Text('Select District')
-                      : Text(
-                    employeeController.selectedDistrict!.district!,
-                    style: FontStyles().normalTextBlack,
-                  ),
-                  isExpanded: true,
-                  iconSize: 30.0,
-                  style: const TextStyle(color: Colors.blue),
-                  items: employeeController.districtList.map((district) {
-                    return DropdownMenuItem<District>(
-                      value: district,
-                      child: Text(
-                        district.district!,
-                        style: FontStyles().normalTextBlack,
+              () => employeeController.districtList.isEmpty ||
+                      employeeController.selectedState == null
+                  ? SizedBox()
+                  : Container(
+                      height: 50.h,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(width: 1, color: Colors.grey.shade300),
+                        borderRadius: BorderRadius.circular(5),
                       ),
-                    );
-                  }).toList(),
-                  onChanged: (selectedDistrict) {
-                    setState(() {
-                      employeeController.selectedDistrict = selectedDistrict;
-                      employeeController.blockList.clear();
-                      employeeController.getBlockList();
-                    });
-                  },
-                ),
-              ),
+                      child: DropdownButton<District>(
+                        underline: const SizedBox(),
+                        hint: employeeController.selectedDistrict == null
+                            ? const Text('Select District')
+                            : Text(
+                                employeeController.selectedDistrict!.district!,
+                                style: FontStyles().normalTextBlack,
+                              ),
+                        isExpanded: true,
+                        iconSize: 30.0,
+                        style: const TextStyle(color: Colors.blue),
+                        items: employeeController.districtList.map((district) {
+                          return DropdownMenuItem<District>(
+                            value: district,
+                            child: Text(
+                              district.district!,
+                              style: FontStyles().normalTextBlack,
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (selectedDistrict) {
+                          setState(() {
+                            employeeController.selectedDistrict =
+                                selectedDistrict;
+                            employeeController.blockList.clear();
+                            employeeController.getBlockList();
+                          });
+                        },
+                      ),
+                    ),
             ),
           ),
           SpaceHelper().verticalSpace10,
           Padding(
             padding: EdgeInsets.only(top: 5.h),
             child: Obx(
-                  () =>  employeeController.blockList.isEmpty || employeeController.selectedDistrict==null ?
-              SizedBox():
-              Container(
-                height: 50.h,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.grey.shade300),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: DropdownButton<Block>(
-                  underline: const SizedBox(),
-                  hint: employeeController.selectedBlock == null
-                      ? const Text('Select Block')
-                      : Text(
-                    employeeController.selectedBlock!.block!,
-                    style: FontStyles().normalTextBlack,
-                  ),
-                  isExpanded: true,
-                  iconSize: 30.0,
-                  style: const TextStyle(color: Colors.blue),
-                  items: employeeController.blockList.map((block) {
-                    return DropdownMenuItem<Block>(
-                      value: block,
-                      child: Text(
-                        block.block!,
-                        style: FontStyles().normalTextBlack,
+              () => employeeController.blockList.isEmpty ||
+                      employeeController.selectedDistrict == null
+                  ? SizedBox()
+                  : Container(
+                      height: 50.h,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(width: 1, color: Colors.grey.shade300),
+                        borderRadius: BorderRadius.circular(5),
                       ),
-                    );
-                  }).toList(),
-                  onChanged: (selectedBlock) {
-                    setState(() {
-                      employeeController.selectedBlock = selectedBlock;
-                      employeeController.panchayetList.clear();
-                      employeeController.getPanchayetList();
-                    });
-                  },
-                ),
-              ),
+                      child: DropdownButton<Block>(
+                        underline: const SizedBox(),
+                        hint: employeeController.selectedBlock == null
+                            ? const Text('Select Block')
+                            : Text(
+                                employeeController.selectedBlock!.block!,
+                                style: FontStyles().normalTextBlack,
+                              ),
+                        isExpanded: true,
+                        iconSize: 30.0,
+                        style: const TextStyle(color: Colors.blue),
+                        items: employeeController.blockList.map((block) {
+                          return DropdownMenuItem<Block>(
+                            value: block,
+                            child: Text(
+                              block.block!,
+                              style: FontStyles().normalTextBlack,
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (selectedBlock) {
+                          setState(() {
+                            employeeController.selectedBlock = selectedBlock;
+                            employeeController.panchayetList.clear();
+                            employeeController.getPanchayetList();
+                          });
+                        },
+                      ),
+                    ),
             ),
           ),
           SpaceHelper().verticalSpace10,
           Padding(
             padding: EdgeInsets.only(top: 5.h),
             child: Obx(
-                  () =>  employeeController.blockList.isEmpty || employeeController.selectedDistrict==null ?
-              SizedBox():
-              Container(
-                height: 50.h,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.grey.shade300),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: DropdownButton<Panchayet>(
-                  underline: const SizedBox(),
-                  hint: employeeController.selectedBlock == null
-                      ? const Text('Select Panchayet')
-                      : Text(
-                    employeeController.selectedPanchayet!.panchayat!,
-                    style: FontStyles().normalTextBlack,
-                  ),
-                  isExpanded: true,
-                  iconSize: 30.0,
-                  style: const TextStyle(color: Colors.blue),
-                  items: employeeController.panchayetList.map((panchayet) {
-                    return DropdownMenuItem<Panchayet>(
-                      value: panchayet,
-                      child: Text(
-                        panchayet.panchayet!,
-                        style: FontStyles().normalTextBlack,
+              () => employeeController.blockList.isEmpty ||
+                      employeeController.selectedDistrict == null
+                  ? SizedBox()
+                  : Container(
+                      height: 50.h,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(width: 1, color: Colors.grey.shade300),
+                        borderRadius: BorderRadius.circular(5),
                       ),
-                    );
-                  }).toList(),
-                  onChanged: (selectedPanchayet) {
-                    setState(() {
-                      employeeController.selectedPanchayet = selectedPanchayet;
-                    });
-                  },
-                ),
-              ),
+                      child: DropdownButton<Panchayet>(
+                        underline: const SizedBox(),
+                        hint: employeeController.selectedBlock == null
+                            ? const Text('Select Panchayet')
+                            : Text(
+                                employeeController
+                                    .selectedPanchayet!.panchayat!,
+                                style: FontStyles().normalTextBlack,
+                              ),
+                        isExpanded: true,
+                        iconSize: 30.0,
+                        style: const TextStyle(color: Colors.blue),
+                        items:
+                            employeeController.panchayetList.map((panchayet) {
+                          return DropdownMenuItem<Panchayet>(
+                            value: panchayet,
+                            child: Text(
+                              panchayet.panchayet!,
+                              style: FontStyles().normalTextBlack,
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (selectedPanchayet) {
+                          setState(() {
+                            employeeController.selectedPanchayet =
+                                selectedPanchayet;
+                          });
+                        },
+                      ),
+                    ),
             ),
           ),
 
@@ -674,90 +690,94 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
               controller: employeeController.referelController.value,
               levelText: "Refer Code",
               suffixIcon: Icons.numbers),
-          SpaceHelper().verticalSpace10,
-          SizedBox(
-            height: 50.h,
-            child: TextFormField(
-              controller: employeeController.passwordController.value,
-              obscureText: !employeeController.visiblepass.value,
-              decoration: InputDecoration(
-                  focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: ColorHelper.primaryColor, width: 1.2)),
-                  enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.grey.shade300, width: 1.2)),
-                  border: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 1.2)),
-                  suffixIcon: employeeController.visiblepass.value
-                      ? IconButton(
-                          onPressed: () {
-                            setState(() {
-                              employeeController.visiblepass.value
-                                  ? employeeController.visiblepass.value = false
-                                  : employeeController.visiblepass.value = true;
-                            });
-                          },
-                          icon: const Icon(Icons.visibility,
-                              color: ColorHelper.primaryColor))
-                      : IconButton(
-                          onPressed: () {
-                            setState(() {
-                              employeeController.visiblepass.value
-                                  ? employeeController.visiblepass.value = false
-                                  : employeeController.visiblepass.value = true;
-                            });
-                          },
-                          icon: const Icon(
-                            Icons.visibility_off,
-                            color: ColorHelper.primaryColor,
-                          )),
-                  labelText: 'Password',
-                  labelStyle: const TextStyle(color: Colors.black)),
-            ),
-          ),
-          SpaceHelper().verticalSpace10,
-          SizedBox(
-            height: 50.h,
-            child: TextFormField(
-              controller: employeeController.conpasswordController.value,
-              obscureText: !employeeController.convisiblepass.value,
-              decoration: InputDecoration(
-                  focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: ColorHelper.primaryColor, width: 1.2)),
-                  enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: Colors.grey.shade300, width: 1.2)),
-                  border: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 1.2)),
-                  suffixIcon: employeeController.convisiblepass.value
-                      ? IconButton(
-                      onPressed: () {
-                        setState(() {
-                          employeeController.convisiblepass.value
-                              ? employeeController.convisiblepass.value = false
-                              : employeeController.convisiblepass.value = true;
-                        });
-                      },
-                      icon: const Icon(Icons.visibility,
-                          color: ColorHelper.primaryColor))
-                      : IconButton(
-                      onPressed: () {
-                        setState(() {
-                          employeeController.convisiblepass.value
-                              ? employeeController.convisiblepass.value = false
-                              : employeeController.convisiblepass.value = true;
-                        });
-                      },
-                      icon: const Icon(
-                        Icons.visibility_off,
-                        color: ColorHelper.primaryColor,
-                      )),
-                  labelText: 'Confirm Password',
-                  labelStyle: const TextStyle(color: Colors.black)),
-            ),
-          ),
+          // SpaceHelper().verticalSpace10,
+          // SizedBox(
+          //   height: 50.h,
+          //   child: TextFormField(
+          //     controller: employeeController.passwordController.value,
+          //     obscureText: !employeeController.visiblepass.value,
+          //     decoration: InputDecoration(
+          //         focusedBorder: const OutlineInputBorder(
+          //             borderSide: BorderSide(
+          //                 color: ColorHelper.primaryColor, width: 1.2)),
+          //         enabledBorder: OutlineInputBorder(
+          //             borderSide:
+          //                 BorderSide(color: Colors.grey.shade300, width: 1.2)),
+          //         border: const OutlineInputBorder(
+          //             borderSide: BorderSide(color: Colors.black, width: 1.2)),
+          //         suffixIcon: employeeController.visiblepass.value
+          //             ? IconButton(
+          //                 onPressed: () {
+          //                   setState(() {
+          //                     employeeController.visiblepass.value
+          //                         ? employeeController.visiblepass.value = false
+          //                         : employeeController.visiblepass.value = true;
+          //                   });
+          //                 },
+          //                 icon: const Icon(Icons.visibility,
+          //                     color: ColorHelper.primaryColor))
+          //             : IconButton(
+          //                 onPressed: () {
+          //                   setState(() {
+          //                     employeeController.visiblepass.value
+          //                         ? employeeController.visiblepass.value = false
+          //                         : employeeController.visiblepass.value = true;
+          //                   });
+          //                 },
+          //                 icon: const Icon(
+          //                   Icons.visibility_off,
+          //                   color: ColorHelper.primaryColor,
+          //                 )),
+          //         labelText: 'Password',
+          //         labelStyle: const TextStyle(color: Colors.black)),
+          //   ),
+          // ),
+          // SpaceHelper().verticalSpace10,
+          // SizedBox(
+          //   height: 50.h,
+          //   child: TextFormField(
+          //     controller: employeeController.conpasswordController.value,
+          //     obscureText: !employeeController.convisiblepass.value,
+          //     decoration: InputDecoration(
+          //         focusedBorder: const OutlineInputBorder(
+          //             borderSide: BorderSide(
+          //                 color: ColorHelper.primaryColor, width: 1.2)),
+          //         enabledBorder: OutlineInputBorder(
+          //             borderSide:
+          //                 BorderSide(color: Colors.grey.shade300, width: 1.2)),
+          //         border: const OutlineInputBorder(
+          //             borderSide: BorderSide(color: Colors.black, width: 1.2)),
+          //         suffixIcon: employeeController.convisiblepass.value
+          //             ? IconButton(
+          //                 onPressed: () {
+          //                   setState(() {
+          //                     employeeController.convisiblepass.value
+          //                         ? employeeController.convisiblepass.value =
+          //                             false
+          //                         : employeeController.convisiblepass.value =
+          //                             true;
+          //                   });
+          //                 },
+          //                 icon: const Icon(Icons.visibility,
+          //                     color: ColorHelper.primaryColor))
+          //             : IconButton(
+          //                 onPressed: () {
+          //                   setState(() {
+          //                     employeeController.convisiblepass.value
+          //                         ? employeeController.convisiblepass.value =
+          //                             false
+          //                         : employeeController.convisiblepass.value =
+          //                             true;
+          //                   });
+          //                 },
+          //                 icon: const Icon(
+          //                   Icons.visibility_off,
+          //                   color: ColorHelper.primaryColor,
+          //                 )),
+          //         labelText: 'Confirm Password',
+          //         labelStyle: const TextStyle(color: Colors.black)),
+          //   ),
+          // ),
           SpaceHelper().verticalSpace10,
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -833,38 +853,37 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
           ),
           SpaceHelper().verticalSpace10,
           Container(
-    height: 50.h,
-    padding: EdgeInsets.only(top: 4.h, left: 16.w, bottom: 4.h),
-    decoration: ShapeDecoration(
-    shape: RoundedRectangleBorder(
-    side: BorderSide(color: Colors.grey.shade300, width: 1.2),
-    borderRadius: BorderRadius.circular(4.r),
-    ),
-    ),
-    child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-    employeeController.aadharcardPath.value==""?
-    const Text('Aadhar'):
-    Image.file(
-    File(employeeController.aadharcardPath.value),
-    width: 60.w, // Adjust as needed
-    height: 35.h, // Adjust as needed
-    fit: BoxFit.cover,
-    ),
-
-    Padding(
-    padding: EdgeInsets.only(right: 3.w),
-    child: ElevatedButton(
-    onPressed:(){
-    openFileExplorer("adhar");
-    },
-    child: const Text('Upload File'),
-    ),
-    ),
-    ],
-    ),
-    ),
+            height: 50.h,
+            padding: EdgeInsets.only(top: 4.h, left: 16.w, bottom: 4.h),
+            decoration: ShapeDecoration(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.grey.shade300, width: 1.2),
+                borderRadius: BorderRadius.circular(4.r),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                employeeController.aadharcardPath.value == ""
+                    ? const Text('Aadhar')
+                    : Image.file(
+                        File(employeeController.aadharcardPath.value),
+                        width: 60.w, // Adjust as needed
+                        height: 35.h, // Adjust as needed
+                        fit: BoxFit.cover,
+                      ),
+                Padding(
+                  padding: EdgeInsets.only(right: 3.w),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      openFileExplorer("adhar");
+                    },
+                    child: const Text('Upload File'),
+                  ),
+                ),
+              ],
+            ),
+          ),
           SpaceHelper().verticalSpace10,
           Container(
             height: 50.h,
@@ -878,19 +897,18 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                employeeController.photoPath.value==""?
-                const Text('Photo'):
-                Image.file(
-                  File(employeeController.photoPath.value),
-                  width: 60.w, // Adjust as needed
-                  height: 35.h, // Adjust as needed
-                  fit: BoxFit.cover,
-                ),
-
+                employeeController.photoPath.value == ""
+                    ? const Text('Photo')
+                    : Image.file(
+                        File(employeeController.photoPath.value),
+                        width: 60.w, // Adjust as needed
+                        height: 35.h, // Adjust as needed
+                        fit: BoxFit.cover,
+                      ),
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
-                    onPressed:(){
+                    onPressed: () {
                       openFileExplorer("photo");
                     },
                     child: const Text('Upload File'),
@@ -912,19 +930,18 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                employeeController.signaturePath.value==""?
-                const Text('Signature'):
-                Image.file(
-                  File(employeeController.signaturePath.value),
-                  width: 60.w, // Adjust as needed
-                  height: 35.h, // Adjust as needed
-                  fit: BoxFit.cover,
-                ),
-
+                employeeController.signaturePath.value == ""
+                    ? const Text('Signature')
+                    : Image.file(
+                        File(employeeController.signaturePath.value),
+                        width: 60.w, // Adjust as needed
+                        height: 35.h, // Adjust as needed
+                        fit: BoxFit.cover,
+                      ),
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
-                    onPressed:(){
+                    onPressed: () {
                       openFileExplorer("signature");
                     },
                     child: const Text('Upload File'),
@@ -946,19 +963,18 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                employeeController.resumePath.value==""?
-                const Text('Resume'):
-                Image.file(
-                  File(employeeController.resumePath.value),
-                  width: 60.w, // Adjust as needed
-                  height: 35.h, // Adjust as needed
-                  fit: BoxFit.cover,
-                ),
-
+                employeeController.resumePath.value == ""
+                    ? const Text('Resume')
+                    : Image.file(
+                        File(employeeController.resumePath.value),
+                        width: 60.w, // Adjust as needed
+                        height: 35.h, // Adjust as needed
+                        fit: BoxFit.cover,
+                      ),
                 Padding(
                   padding: EdgeInsets.only(right: 3.w),
                   child: ElevatedButton(
-                    onPressed:(){
+                    onPressed: () {
                       openFileExplorer("resume");
                     },
                     child: const Text('Upload File'),
@@ -974,118 +990,122 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
             width: MediaQuery.of(context).size.width,
             height: 40.h,
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: ColorHelper.primaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100), // <-- Radius
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ColorHelper.primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100), // <-- Radius
+                  ),
                 ),
-              ),
-              onPressed: () async{
-                if (employeeController.nameController.value.text.isEmpty ||
-                    employeeController.father_nameController.value.text.isEmpty ||
-                    employeeController.emailController.value.text.isEmpty ||
-                    employeeController.mobileController.value.text.isEmpty ||
-                    employeeController.dob.value.isEmpty ||
-                    employeeController.addressController.value.text.isEmpty ||
-                    employeeController.passwordController.value.text.isEmpty ||
-                    employeeController.conpasswordController.value.text.isEmpty ||
-                    employeeController.aadharController.value.text.isEmpty ||
-                    employeeController.bankNameController.value.text.isEmpty ||
-                    employeeController.accountNumberController.value.text.isEmpty ||
-                    employeeController.accountNameController.value.text.isEmpty ||
-                    employeeController.ifscCodeController.value.text.isEmpty ||
-
-                employeeController.resumePath.value==''||
-                employeeController.photoPath.value==''||
-                employeeController.aadharcardPath.value==''||
-                employeeController.signaturePath.value==''||
-                employeeController.selectedState==null||
-                employeeController.selectedDesignation==null
-                ) {
-                  Fluttertoast.showToast(
-                    msg: 'Please fill in all required fields',
-                    toastLength: Toast.LENGTH_LONG,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0,
-                  );
-                }
-                else if(employeeController.mobileController.value.text.length<10)
-                {
-                  Fluttertoast.showToast(
-                    msg: 'The mobile field must be 10 digits.',
-                    toastLength: Toast.LENGTH_LONG,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0,
-                  );
-                }
-                else if(employeeController.isPasswordValid(employeeController.passwordController.value.text)==false)
-                {
-                  Fluttertoast.showToast(
-                    msg: "The password field must be at least 10 characters.\nPassword should contain upper case, lower case, numbers and special characters",
-                    toastLength: Toast.LENGTH_LONG,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0,
-                  );
-                }
-                else if(employeeController.isEmailValid(employeeController.emailController.value.text)==false){
-                  Fluttertoast.showToast(
-                    msg: 'Insert a valid email.',
-                    toastLength: Toast.LENGTH_LONG,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0,
-                  );
-                }
-
-                else if(employeeController.passwordController.value.text!=employeeController.conpasswordController.value.text){
-                  Fluttertoast.showToast(
-                    msg: 'Please make sure your password match .',
-                    toastLength: Toast.LENGTH_LONG,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0,
-                  );
-                }
-
-                else if(employeeController.educationDetails.isEmpty){
-                  Fluttertoast.showToast(
-                    msg: 'Add educational details',
-                    toastLength: Toast.LENGTH_LONG,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0,
-                  );
-                }
-               else{
-                  await employeeController.createEmploye();
-                  Get.off(() => const LoginScreen());
-                }
-              },
-              child:Obx(()=>employeeController.creatingAccount.value?
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Image.asset("images/img.gif"),
-              ):
-              Text(
-                'SIGN UP',
-                style: TextStyle(color: Colors.white, fontSize: 18.h),
-              ),)
-            ),
+                onPressed: () async {
+                  if (employeeController.nameController.value.text.isEmpty ||
+                      employeeController
+                          .father_nameController.value.text.isEmpty ||
+                      employeeController.emailController.value.text.isEmpty ||
+                      employeeController.mobileController.value.text.isEmpty ||
+                      employeeController.dob.value.isEmpty ||
+                      employeeController.addressController.value.text.isEmpty ||
+                      employeeController
+                          .passwordController.value.text.isEmpty ||
+                      employeeController
+                          .conpasswordController.value.text.isEmpty ||
+                      employeeController.aadharController.value.text.isEmpty ||
+                      employeeController
+                          .bankNameController.value.text.isEmpty ||
+                      employeeController
+                          .accountNumberController.value.text.isEmpty ||
+                      employeeController
+                          .accountNameController.value.text.isEmpty ||
+                      employeeController
+                          .ifscCodeController.value.text.isEmpty ||
+                      employeeController.resumePath.value == '' ||
+                      employeeController.photoPath.value == '' ||
+                      employeeController.aadharcardPath.value == '' ||
+                      employeeController.signaturePath.value == '' ||
+                      employeeController.selectedState == null ||
+                      employeeController.selectedDesignation == null) {
+                    Fluttertoast.showToast(
+                      msg: 'Please fill in all required fields',
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                  } else if (employeeController
+                          .mobileController.value.text.length <
+                      10) {
+                    Fluttertoast.showToast(
+                      msg: 'The mobile field must be 10 digits.',
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                  } else if (employeeController.isPasswordValid(
+                          employeeController.passwordController.value.text) ==
+                      false) {
+                    Fluttertoast.showToast(
+                      msg:
+                          "The password field must be at least 10 characters.\nPassword should contain upper case, lower case, numbers and special characters",
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                  } else if (employeeController.isEmailValid(
+                          employeeController.emailController.value.text) ==
+                      false) {
+                    Fluttertoast.showToast(
+                      msg: 'Insert a valid email.',
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                  } else if (employeeController.passwordController.value.text !=
+                      employeeController.conpasswordController.value.text) {
+                    Fluttertoast.showToast(
+                      msg: 'Please make sure your password match .',
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                  } else if (employeeController.educationDetails.isEmpty) {
+                    Fluttertoast.showToast(
+                      msg: 'Add educational details',
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                  } else {
+                    await employeeController.createEmploye();
+                    Get.off(() => const LoginScreen());
+                  }
+                },
+                child: Obx(
+                  () => employeeController.creatingAccount.value
+                      ? Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Image.asset("images/img.gif"),
+                        )
+                      : Text(
+                          'Update Profile',
+                          style: TextStyle(color: Colors.white, fontSize: 18.h),
+                        ),
+                )),
           ),
           SizedBox(
             height: 20.h,
@@ -1093,20 +1113,7 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
           SizedBox(
             height: 30.h,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('Already have an account'),
-              SpaceHelper().horizoantalSpace5,
-              InkWell(
-                onTap: () {},
-                child: Text(
-                  'Sign In',
-                  style: FontStyles().normalTextRed,
-                ),
-              )
-            ],
-          ),
+
           SizedBox(
             height: 20.h,
           ),
@@ -1312,6 +1319,7 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
       employeeController.educationDetails.removeAt(index);
     });
   }
+
   void openFileExplorer(String type) async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -1322,22 +1330,15 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
             _filePath = filePath;
             print(_filePath.toString());
 
-            if(type=="adhar")
-            {
-              employeeController.aadharcardPath.value=_filePath!;
-            }
-            else if(type=="photo") {
+            if (type == "adhar") {
+              employeeController.aadharcardPath.value = _filePath!;
+            } else if (type == "photo") {
               employeeController.photoPath.value = _filePath.toString();
+            } else if (type == "signature") {
+              employeeController.signaturePath.value = _filePath.toString();
+            } else if (type == "resume") {
+              employeeController.resumePath.value = _filePath.toString();
             }
-            else if(type=="signature")
-            {
-              employeeController.signaturePath.value=_filePath.toString();
-            }
-            else if(type=="resume")
-            {
-              employeeController.resumePath.value=_filePath.toString();
-            }
-
           });
         } else {
           if (kDebugMode) {

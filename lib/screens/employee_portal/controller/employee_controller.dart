@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
+import 'package:rspsa_user/controller/signup_controller.dart';
 import 'package:rspsa_user/screens/employee_portal/models/block_model.dart';
 import 'package:rspsa_user/screens/employee_portal/models/designation_model.dart';
 import 'package:rspsa_user/screens/employee_portal/models/district_model.dart';
@@ -93,6 +95,7 @@ class EmployeeController extends GetxController {
 
   Future<void> createEmploye() async{
     creatingAccount.value=true;
+    SignupController signupController = Get.find();
     await EmployeRepository().submitEmployeDetails(
         name: nameController.value.text,
         father_name: father_nameController.value.text,
@@ -101,8 +104,8 @@ class EmployeeController extends GetxController {
         dob: dob.value,
         aadhar_number: aadharController.value.text,
         address: address,
-        password: passwordController.value.text,
-        password_confirmation: passwordController.value.text,
+        password: signupController.passwordController.value.text,
+        password_confirmation: signupController.passwordController.value.text,
         degree: educationDetails.map((map) => map['option']!).join(', '),
         passingYear: educationDetails.map((map) => map['passingYear']!).join(', '),
         totalMarks: educationDetails.map((map) => map['totalMarks']!).join(', '),

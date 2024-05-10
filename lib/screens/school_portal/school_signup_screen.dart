@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:rspsa_user/controller/signup_controller.dart';
 import 'package:rspsa_user/screens/common/login_screen.dart';
 import 'package:rspsa_user/screens/school_portal/controller/school_login_controller.dart';
 import 'package:rspsa_user/custom_widget.dart/cusotm_text_field.dart';
@@ -23,6 +24,11 @@ class _SchoolSignUpScreenState extends State<SchoolSignUpScreen> {
   Widget build(BuildContext context) {
     SchoolLoginController schoolLoginController =
         Get.put(SchoolLoginController());
+    SignupController signupController = Get.find();
+    schoolLoginController.schoolNameController.value.text =
+        signupController.nameController.value.text;
+    schoolLoginController.schoolEmailIdController.value.text =
+        signupController.emailController.value.text;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -86,7 +92,8 @@ class _SchoolSignUpScreenState extends State<SchoolSignUpScreen> {
           CustomTextField().textField(
               controller: schoolLoginController.schoolNameController.value,
               levelText: "School Name",
-              suffixIcon: Icons.person_2_outlined),
+              suffixIcon: Icons.person_2_outlined,
+              enabled: false),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
               controller: schoolLoginController
@@ -97,7 +104,8 @@ class _SchoolSignUpScreenState extends State<SchoolSignUpScreen> {
           CustomTextField().textField(
               controller: schoolLoginController.schoolEmailIdController.value,
               levelText: "School Email ID",
-              suffixIcon: Icons.mail_outline),
+              suffixIcon: Icons.mail_outline,
+              enabled: false),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
               controller: schoolLoginController.schoolMobileController.value,
@@ -167,36 +175,36 @@ class _SchoolSignUpScreenState extends State<SchoolSignUpScreen> {
                           color: ColorHelper.primaryColor, width: 1.2)),
                   enabledBorder: OutlineInputBorder(
                       borderSide:
-                      BorderSide(color: Colors.grey.shade300, width: 1.2)),
+                          BorderSide(color: Colors.grey.shade300, width: 1.2)),
                   border: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black, width: 1.2)),
                   suffixIcon: schoolLoginController.convisiblepass.value
                       ? IconButton(
-                      onPressed: () {
-                        setState(() {
-                          schoolLoginController.convisiblepass.value
-                              ? schoolLoginController.convisiblepass.value =
-                          false
-                              : schoolLoginController.convisiblepass.value =
-                          true;
-                        });
-                      },
-                      icon: const Icon(Icons.visibility,
-                          color: ColorHelper.primaryColor))
+                          onPressed: () {
+                            setState(() {
+                              schoolLoginController.convisiblepass.value
+                                  ? schoolLoginController.convisiblepass.value =
+                                      false
+                                  : schoolLoginController.convisiblepass.value =
+                                      true;
+                            });
+                          },
+                          icon: const Icon(Icons.visibility,
+                              color: ColorHelper.primaryColor))
                       : IconButton(
-                      onPressed: () {
-                        setState(() {
-                          schoolLoginController.convisiblepass.value
-                              ? schoolLoginController.convisiblepass.value =
-                          false
-                              : schoolLoginController.convisiblepass.value =
-                          true;
-                        });
-                      },
-                      icon: const Icon(
-                        Icons.visibility_off,
-                        color: ColorHelper.primaryColor,
-                      )),
+                          onPressed: () {
+                            setState(() {
+                              schoolLoginController.convisiblepass.value
+                                  ? schoolLoginController.convisiblepass.value =
+                                      false
+                                  : schoolLoginController.convisiblepass.value =
+                                      true;
+                            });
+                          },
+                          icon: const Icon(
+                            Icons.visibility_off,
+                            color: ColorHelper.primaryColor,
+                          )),
                   labelText: 'Confirm Password',
                   labelStyle: const TextStyle(color: Colors.black)),
             ),
@@ -232,46 +240,65 @@ class _SchoolSignUpScreenState extends State<SchoolSignUpScreen> {
             width: MediaQuery.of(context).size.width,
             height: 40.h,
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: ColorHelper.primaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100), // <-- Radius
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ColorHelper.primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100), // <-- Radius
+                  ),
                 ),
-              ),
-              onPressed: () async{
-                if (schoolLoginController.schoolNameController.value.text.isEmpty ||
-                    schoolLoginController.schoolRegistrationNumberController.value.text.isEmpty ||
-                    schoolLoginController.schoolEmailIdController.value.text.isEmpty ||
-                    schoolLoginController.schoolMobileController.value.text.isEmpty ||
-                    schoolLoginController.passwordController.value.text.isEmpty ||
-                    schoolLoginController.schooladdressController.value.text.isEmpty ||
-                    schoolLoginController.schooldireactorNameController.value.text.isEmpty ||
-                    schoolLoginController.direactorContactNumberController.value.text.isEmpty ||
-                    schoolLoginController.totalStudentController.value.text.isEmpty ||
-                    schoolLoginController.totalTeacherController.value.text.isEmpty ||
-                    schoolLoginController.schoolNameController.value.text == "" ||
-                    schoolLoginController.schoolRegistrationNumberController.value.text == "" ||
-                    schoolLoginController.schoolEmailIdController.value.text == "" ||
-                    schoolLoginController.schoolMobileController.value.text == "" ||
-                    schoolLoginController.passwordController.value.text == "" ||
-                    schoolLoginController.schooladdressController.value.text == "" ||
-                    schoolLoginController.schooldireactorNameController.value.text == "" ||
-                    schoolLoginController.direactorContactNumberController.value.text == "" ||
-                    schoolLoginController.totalStudentController.value.text == "" ||
-                    schoolLoginController.totalTeacherController.value.text == "") {
-                  Fluttertoast.showToast(
-                    msg: 'Please fill in all required fields',
-                    toastLength: Toast.LENGTH_LONG,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0,
-                  );
-                }
-
-                else if(schoolLoginController.schoolMobileController.value.text.length<10 || schoolLoginController.direactorContactNumberController.value.text.length<10)
-                  {
+                onPressed: () async {
+                  if (schoolLoginController.schoolNameController.value.text.isEmpty ||
+                      schoolLoginController
+                          .schoolRegistrationNumberController.value.text.isEmpty ||
+                      schoolLoginController
+                          .schoolEmailIdController.value.text.isEmpty ||
+                      schoolLoginController
+                          .schoolMobileController.value.text.isEmpty ||
+                      schoolLoginController
+                          .passwordController.value.text.isEmpty ||
+                      schoolLoginController
+                          .schooladdressController.value.text.isEmpty ||
+                      schoolLoginController
+                          .schooldireactorNameController.value.text.isEmpty ||
+                      schoolLoginController
+                          .direactorContactNumberController.value.text.isEmpty ||
+                      schoolLoginController
+                          .totalStudentController.value.text.isEmpty ||
+                      schoolLoginController
+                          .totalTeacherController.value.text.isEmpty ||
+                      schoolLoginController.schoolNameController.value.text ==
+                          "" ||
+                      schoolLoginController.schoolRegistrationNumberController.value.text ==
+                          "" ||
+                      schoolLoginController.schoolEmailIdController.value.text ==
+                          "" ||
+                      schoolLoginController.schoolMobileController.value.text ==
+                          "" ||
+                      schoolLoginController.passwordController.value.text ==
+                          "" ||
+                      schoolLoginController.schooladdressController.value.text ==
+                          "" ||
+                      schoolLoginController.schooldireactorNameController.value.text ==
+                          "" ||
+                      schoolLoginController.direactorContactNumberController.value.text ==
+                          "" ||
+                      schoolLoginController.totalStudentController.value.text ==
+                          "" ||
+                      schoolLoginController.totalTeacherController.value.text ==
+                          "") {
+                    Fluttertoast.showToast(
+                      msg: 'Please fill in all required fields',
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                  } else if (schoolLoginController.schoolMobileController.value.text.length < 10 ||
+                      schoolLoginController.direactorContactNumberController
+                              .value.text.length <
+                          10) {
                     Fluttertoast.showToast(
                       msg: 'The mobile field must be 10 digits.',
                       toastLength: Toast.LENGTH_LONG,
@@ -281,60 +308,58 @@ class _SchoolSignUpScreenState extends State<SchoolSignUpScreen> {
                       textColor: Colors.white,
                       fontSize: 16.0,
                     );
+                  } else if (schoolLoginController.isPasswordValid(schoolLoginController
+                          .passwordController.value.text) ==
+                      false) {
+                    Fluttertoast.showToast(
+                      msg:
+                          "The password field must be at least 10 characters.\nPassword should contain upper case, lower case, numbers and special characters",
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                  } else if (schoolLoginController.isEmailValid(schoolLoginController
+                          .schoolEmailIdController.value.text) ==
+                      false) {
+                    Fluttertoast.showToast(
+                      msg: 'Insert a valid email.',
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                  } else if (schoolLoginController.passwordController.value.text !=
+                      schoolLoginController.conpasswordController.value.text) {
+                    Fluttertoast.showToast(
+                      msg: 'Please make sure your password match .',
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                  } else {
+                    await schoolLoginController.createSchool();
+                    Get.offAll(() => LoginScreen());
                   }
-                else if(schoolLoginController.isPasswordValid(schoolLoginController.passwordController.value.text)==false)
-                {
-                  Fluttertoast.showToast(
-                    msg: "The password field must be at least 10 characters.\nPassword should contain upper case, lower case, numbers and special characters",
-                    toastLength: Toast.LENGTH_LONG,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0,
-                  );
-                }
-
-                else if(schoolLoginController.isEmailValid(schoolLoginController.schoolEmailIdController.value.text)==false){
-                  Fluttertoast.showToast(
-                    msg: 'Insert a valid email.',
-                    toastLength: Toast.LENGTH_LONG,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0,
-                  );
-                }
-
-                else if(schoolLoginController.passwordController.value.text!=schoolLoginController.conpasswordController.value.text){
-                  Fluttertoast.showToast(
-                    msg: 'Please make sure your password match .',
-                    toastLength: Toast.LENGTH_LONG,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0,
-                  );
-                }
-
-                else{
-                  await schoolLoginController.createSchool();
-                   Get.offAll(() => LoginScreen());
-                }
-
-              },
-              child: Obx(()=>schoolLoginController.submitting.value?
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Image.asset("images/img.gif"),
-              ):
-              Text(
-                'SIGN UP',
-                style: TextStyle(color: Colors.white, fontSize: 18.h),
-              ),)
-            ),
+                },
+                child: Obx(
+                  () => schoolLoginController.submitting.value
+                      ? Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Image.asset("images/img.gif"),
+                        )
+                      : Text(
+                          'Update Profile',
+                          style: TextStyle(color: Colors.white, fontSize: 18.h),
+                        ),
+                )),
           ),
           SizedBox(
             height: 20.h,
@@ -342,20 +367,7 @@ class _SchoolSignUpScreenState extends State<SchoolSignUpScreen> {
           SizedBox(
             height: 30.h,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('Already have an account'),
-              SpaceHelper().horizoantalSpace5,
-              InkWell(
-                onTap: () {},
-                child: Text(
-                  'Sign In',
-                  style: FontStyles().normalTextRed,
-                ),
-              )
-            ],
-          ),
+
           SizedBox(
             height: 20.h,
           ),

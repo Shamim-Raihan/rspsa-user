@@ -7,10 +7,11 @@ class CustomTextField {
   Widget textField(
       {required TextEditingController controller,
       required String levelText,
-      required IconData suffixIcon}) {
+      required IconData suffixIcon, bool enabled = true}) {
     return SizedBox(
       height: 50.h,
       child: TextField(
+        enabled: enabled,
         controller: controller,
         decoration: InputDecoration(
           focusedBorder: const OutlineInputBorder(

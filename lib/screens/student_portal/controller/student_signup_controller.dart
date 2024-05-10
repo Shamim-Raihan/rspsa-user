@@ -129,7 +129,7 @@ class StudentSignupController extends GetxController {
     required String? paymentProof,
     required String? aadharCard,
   }) async {
-    // try {
+    try {
     EasyLoading.show();
     var response = await StudentSignupRepository().studentSignup(
         talentId: talentId,
@@ -169,11 +169,11 @@ class StudentSignupController extends GetxController {
       EasyLoading.showToast('Signup Failed',
           duration: const Duration(seconds: 2));
     }
-    // } catch (e) {
-    //   EasyLoading.dismiss();
-    //   EasyLoading.showToast('Something went wrong',
-    //       duration: const Duration(seconds: 2));
-    //   log('Error from studentSignup: $e');
-    // }
+    } catch (e) {
+      EasyLoading.dismiss();
+      EasyLoading.showToast('Something went wrong',
+          duration: const Duration(seconds: 2));
+      log('Error from studentSignup: $e');
+    }
   }
 }

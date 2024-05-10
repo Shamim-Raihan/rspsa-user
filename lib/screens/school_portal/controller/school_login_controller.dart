@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
+import 'package:rspsa_user/controller/signup_controller.dart';
 
 import '../repository/school_repository.dart';
 
@@ -22,12 +24,13 @@ class SchoolLoginController extends GetxController {
   var submitting=false.obs;
   Future<void> createSchool() async{
     submitting.value=true;
+    SignupController signupController = Get.find();
     await SchoolRepository().submitSchoolDetails(
         schoolName: schoolNameController.value.text,
         schoolRegistrationNumber: schoolRegistrationNumberController.value.text,
         email: schoolEmailIdController.value.text,
         mobile: schoolMobileController.value.text,
-        password: passwordController.value.text,
+        password: signupController.passwordController.value.text,
         schoolAddress: schooladdressController.value.text,
         schoolDirectorName: schooldireactorNameController.value.text,
         directorContactNumber: direactorContactNumberController.value.text,
