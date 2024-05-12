@@ -395,7 +395,8 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
           CustomTextField().textField(
               controller: employeeController.nameController.value,
               levelText: "Employee Name",
-              suffixIcon: Icons.person_2_outlined, enabled: false),
+              suffixIcon: Icons.person_2_outlined,
+              enabled: false),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
               controller: employeeController.father_nameController.value,
@@ -410,7 +411,8 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
           CustomTextField().textField(
               controller: employeeController.emailController.value,
               levelText: "Email ID",
-              suffixIcon: Icons.mail_outline, enabled: false),
+              suffixIcon: Icons.mail_outline,
+              enabled: false),
           SpaceHelper().verticalSpace10,
           CustomTextField().textField(
               controller: employeeController.mobileController.value,
@@ -1004,10 +1006,8 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
                       employeeController.mobileController.value.text.isEmpty ||
                       employeeController.dob.value.isEmpty ||
                       employeeController.addressController.value.text.isEmpty ||
-                      employeeController
-                          .passwordController.value.text.isEmpty ||
-                      employeeController
-                          .conpasswordController.value.text.isEmpty ||
+                      // employeeController
+                      //     .conpasswordController.value.text.isEmpty ||
                       employeeController.aadharController.value.text.isEmpty ||
                       employeeController
                           .bankNameController.value.text.isEmpty ||
@@ -1044,35 +1044,26 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
                       textColor: Colors.white,
                       fontSize: 16.0,
                     );
-                  } else if (employeeController.isPasswordValid(
-                          employeeController.passwordController.value.text) ==
-                      false) {
-                    Fluttertoast.showToast(
-                      msg:
-                          "The password field must be at least 10 characters.\nPassword should contain upper case, lower case, numbers and special characters",
-                      toastLength: Toast.LENGTH_LONG,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.red,
-                      textColor: Colors.white,
-                      fontSize: 16.0,
-                    );
-                  } else if (employeeController.isEmailValid(
+                  }
+                  // else if (employeeController.isPasswordValid(
+                  //         employeeController.passwordController.value.text) ==
+                  //     false) {
+                  //   Fluttertoast.showToast(
+                  //     msg:
+                  //         "The password field must be at least 10 characters.\nPassword should contain upper case, lower case, numbers and special characters",
+                  //     toastLength: Toast.LENGTH_LONG,
+                  //     gravity: ToastGravity.BOTTOM,
+                  //     timeInSecForIosWeb: 1,
+                  //     backgroundColor: Colors.red,
+                  //     textColor: Colors.white,
+                  //     fontSize: 16.0,
+                  //   );
+                  // }
+                  else if (employeeController.isEmailValid(
                           employeeController.emailController.value.text) ==
                       false) {
                     Fluttertoast.showToast(
                       msg: 'Insert a valid email.',
-                      toastLength: Toast.LENGTH_LONG,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.red,
-                      textColor: Colors.white,
-                      fontSize: 16.0,
-                    );
-                  } else if (employeeController.passwordController.value.text !=
-                      employeeController.conpasswordController.value.text) {
-                    Fluttertoast.showToast(
-                      msg: 'Please make sure your password match .',
                       toastLength: Toast.LENGTH_LONG,
                       gravity: ToastGravity.BOTTOM,
                       timeInSecForIosWeb: 1,

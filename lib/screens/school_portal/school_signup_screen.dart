@@ -118,98 +118,98 @@ class _SchoolSignUpScreenState extends State<SchoolSignUpScreen> {
               levelText: "School Address",
               suffixIcon: Icons.location_on),
           SpaceHelper().verticalSpace10,
-          SizedBox(
-            height: 50.h,
-            child: TextFormField(
-              controller: schoolLoginController.passwordController.value,
-              obscureText: !schoolLoginController.visiblepass.value,
-              decoration: InputDecoration(
-                  focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: ColorHelper.primaryColor, width: 1.2)),
-                  enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.grey.shade300, width: 1.2)),
-                  border: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 1.2)),
-                  suffixIcon: schoolLoginController.visiblepass.value
-                      ? IconButton(
-                          onPressed: () {
-                            setState(() {
-                              schoolLoginController.visiblepass.value
-                                  ? schoolLoginController.visiblepass.value =
-                                      false
-                                  : schoolLoginController.visiblepass.value =
-                                      true;
-                            });
-                          },
-                          icon: const Icon(Icons.visibility,
-                              color: ColorHelper.primaryColor))
-                      : IconButton(
-                          onPressed: () {
-                            setState(() {
-                              schoolLoginController.visiblepass.value
-                                  ? schoolLoginController.visiblepass.value =
-                                      false
-                                  : schoolLoginController.visiblepass.value =
-                                      true;
-                            });
-                          },
-                          icon: const Icon(
-                            Icons.visibility_off,
-                            color: ColorHelper.primaryColor,
-                          )),
-                  labelText: 'Password',
-                  labelStyle: const TextStyle(color: Colors.black)),
-            ),
-          ),
-          SpaceHelper().verticalSpace10,
-          SizedBox(
-            height: 50.h,
-            child: TextFormField(
-              controller: schoolLoginController.conpasswordController.value,
-              obscureText: !schoolLoginController.convisiblepass.value,
-              decoration: InputDecoration(
-                  focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: ColorHelper.primaryColor, width: 1.2)),
-                  enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.grey.shade300, width: 1.2)),
-                  border: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 1.2)),
-                  suffixIcon: schoolLoginController.convisiblepass.value
-                      ? IconButton(
-                          onPressed: () {
-                            setState(() {
-                              schoolLoginController.convisiblepass.value
-                                  ? schoolLoginController.convisiblepass.value =
-                                      false
-                                  : schoolLoginController.convisiblepass.value =
-                                      true;
-                            });
-                          },
-                          icon: const Icon(Icons.visibility,
-                              color: ColorHelper.primaryColor))
-                      : IconButton(
-                          onPressed: () {
-                            setState(() {
-                              schoolLoginController.convisiblepass.value
-                                  ? schoolLoginController.convisiblepass.value =
-                                      false
-                                  : schoolLoginController.convisiblepass.value =
-                                      true;
-                            });
-                          },
-                          icon: const Icon(
-                            Icons.visibility_off,
-                            color: ColorHelper.primaryColor,
-                          )),
-                  labelText: 'Confirm Password',
-                  labelStyle: const TextStyle(color: Colors.black)),
-            ),
-          ),
-          SpaceHelper().verticalSpace10,
+          // SizedBox(
+          //   height: 50.h,
+          //   child: TextFormField(
+          //     controller: schoolLoginController.passwordController.value,
+          //     obscureText: !schoolLoginController.visiblepass.value,
+          //     decoration: InputDecoration(
+          //         focusedBorder: const OutlineInputBorder(
+          //             borderSide: BorderSide(
+          //                 color: ColorHelper.primaryColor, width: 1.2)),
+          //         enabledBorder: OutlineInputBorder(
+          //             borderSide:
+          //                 BorderSide(color: Colors.grey.shade300, width: 1.2)),
+          //         border: const OutlineInputBorder(
+          //             borderSide: BorderSide(color: Colors.black, width: 1.2)),
+          //         suffixIcon: schoolLoginController.visiblepass.value
+          //             ? IconButton(
+          //                 onPressed: () {
+          //                   setState(() {
+          //                     schoolLoginController.visiblepass.value
+          //                         ? schoolLoginController.visiblepass.value =
+          //                             false
+          //                         : schoolLoginController.visiblepass.value =
+          //                             true;
+          //                   });
+          //                 },
+          //                 icon: const Icon(Icons.visibility,
+          //                     color: ColorHelper.primaryColor))
+          //             : IconButton(
+          //                 onPressed: () {
+          //                   setState(() {
+          //                     schoolLoginController.visiblepass.value
+          //                         ? schoolLoginController.visiblepass.value =
+          //                             false
+          //                         : schoolLoginController.visiblepass.value =
+          //                             true;
+          //                   });
+          //                 },
+          //                 icon: const Icon(
+          //                   Icons.visibility_off,
+          //                   color: ColorHelper.primaryColor,
+          //                 )),
+          //         labelText: 'Password',
+          //         labelStyle: const TextStyle(color: Colors.black)),
+          //   ),
+          // ),
+          // SpaceHelper().verticalSpace10,
+          // // SizedBox(
+          // //   height: 50.h,
+          // //   child: TextFormField(
+          // //     controller: schoolLoginController.conpasswordController.value,
+          // //     obscureText: !schoolLoginController.convisiblepass.value,
+          // //     decoration: InputDecoration(
+          // //         focusedBorder: const OutlineInputBorder(
+          // //             borderSide: BorderSide(
+          // //                 color: ColorHelper.primaryColor, width: 1.2)),
+          // //         enabledBorder: OutlineInputBorder(
+          // //             borderSide:
+          // //                 BorderSide(color: Colors.grey.shade300, width: 1.2)),
+          // //         border: const OutlineInputBorder(
+          // //             borderSide: BorderSide(color: Colors.black, width: 1.2)),
+          // //         suffixIcon: schoolLoginController.convisiblepass.value
+          // //             ? IconButton(
+          // //                 onPressed: () {
+          // //                   setState(() {
+          // //                     schoolLoginController.convisiblepass.value
+          // //                         ? schoolLoginController.convisiblepass.value =
+          // //                             false
+          // //                         : schoolLoginController.convisiblepass.value =
+          // //                             true;
+          // //                   });
+          // //                 },
+          // //                 icon: const Icon(Icons.visibility,
+          // //                     color: ColorHelper.primaryColor))
+          // //             : IconButton(
+          // //                 onPressed: () {
+          // //                   setState(() {
+          // //                     schoolLoginController.convisiblepass.value
+          // //                         ? schoolLoginController.convisiblepass.value =
+          // //                             false
+          // //                         : schoolLoginController.convisiblepass.value =
+          // //                             true;
+          // //                   });
+          // //                 },
+          // //                 icon: const Icon(
+          // //                   Icons.visibility_off,
+          // //                   color: ColorHelper.primaryColor,
+          // //                 )),
+          // //         labelText: 'Confirm Password',
+          // //         labelStyle: const TextStyle(color: Colors.black)),
+          // //   ),
+          // // ),
+          // // SpaceHelper().verticalSpace10,
 
           CustomTextField().textField(
               controller:
@@ -248,39 +248,38 @@ class _SchoolSignUpScreenState extends State<SchoolSignUpScreen> {
                 ),
                 onPressed: () async {
                   if (schoolLoginController.schoolNameController.value.text.isEmpty ||
-                      schoolLoginController
-                          .schoolRegistrationNumberController.value.text.isEmpty ||
+                      schoolLoginController.schoolRegistrationNumberController
+                          .value.text.isEmpty ||
                       schoolLoginController
                           .schoolEmailIdController.value.text.isEmpty ||
                       schoolLoginController
                           .schoolMobileController.value.text.isEmpty ||
                       schoolLoginController
-                          .passwordController.value.text.isEmpty ||
-                      schoolLoginController
                           .schooladdressController.value.text.isEmpty ||
                       schoolLoginController
                           .schooldireactorNameController.value.text.isEmpty ||
-                      schoolLoginController
-                          .direactorContactNumberController.value.text.isEmpty ||
+                      schoolLoginController.direactorContactNumberController
+                          .value.text.isEmpty ||
                       schoolLoginController
                           .totalStudentController.value.text.isEmpty ||
                       schoolLoginController
                           .totalTeacherController.value.text.isEmpty ||
                       schoolLoginController.schoolNameController.value.text ==
                           "" ||
-                      schoolLoginController.schoolRegistrationNumberController.value.text ==
+                      schoolLoginController
+                              .schoolRegistrationNumberController.value.text ==
                           "" ||
                       schoolLoginController.schoolEmailIdController.value.text ==
                           "" ||
                       schoolLoginController.schoolMobileController.value.text ==
                           "" ||
-                      schoolLoginController.passwordController.value.text ==
-                          "" ||
                       schoolLoginController.schooladdressController.value.text ==
                           "" ||
-                      schoolLoginController.schooldireactorNameController.value.text ==
+                      schoolLoginController
+                              .schooldireactorNameController.value.text ==
                           "" ||
-                      schoolLoginController.direactorContactNumberController.value.text ==
+                      schoolLoginController
+                              .direactorContactNumberController.value.text ==
                           "" ||
                       schoolLoginController.totalStudentController.value.text ==
                           "" ||
@@ -295,7 +294,9 @@ class _SchoolSignUpScreenState extends State<SchoolSignUpScreen> {
                       textColor: Colors.white,
                       fontSize: 16.0,
                     );
-                  } else if (schoolLoginController.schoolMobileController.value.text.length < 10 ||
+                  } else if (schoolLoginController
+                              .schoolMobileController.value.text.length <
+                          10 ||
                       schoolLoginController.direactorContactNumberController
                               .value.text.length <
                           10) {
@@ -308,35 +309,12 @@ class _SchoolSignUpScreenState extends State<SchoolSignUpScreen> {
                       textColor: Colors.white,
                       fontSize: 16.0,
                     );
-                  } else if (schoolLoginController.isPasswordValid(schoolLoginController
-                          .passwordController.value.text) ==
-                      false) {
-                    Fluttertoast.showToast(
-                      msg:
-                          "The password field must be at least 10 characters.\nPassword should contain upper case, lower case, numbers and special characters",
-                      toastLength: Toast.LENGTH_LONG,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.red,
-                      textColor: Colors.white,
-                      fontSize: 16.0,
-                    );
-                  } else if (schoolLoginController.isEmailValid(schoolLoginController
-                          .schoolEmailIdController.value.text) ==
+                  } else if (schoolLoginController.isEmailValid(
+                          schoolLoginController
+                              .schoolEmailIdController.value.text) ==
                       false) {
                     Fluttertoast.showToast(
                       msg: 'Insert a valid email.',
-                      toastLength: Toast.LENGTH_LONG,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.red,
-                      textColor: Colors.white,
-                      fontSize: 16.0,
-                    );
-                  } else if (schoolLoginController.passwordController.value.text !=
-                      schoolLoginController.conpasswordController.value.text) {
-                    Fluttertoast.showToast(
-                      msg: 'Please make sure your password match .',
                       toastLength: Toast.LENGTH_LONG,
                       gravity: ToastGravity.BOTTOM,
                       timeInSecForIosWeb: 1,

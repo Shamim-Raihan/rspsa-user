@@ -50,7 +50,7 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    checkUserLoginStatus();
+    // checkUserLoginStatus();
     super.onInit();
   }
 

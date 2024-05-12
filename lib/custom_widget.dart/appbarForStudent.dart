@@ -71,8 +71,9 @@ class MyCircleAvatar extends StatelessWidget {
             // Handle Change Password option
             break;
           case 3:
-            LoginController loginController = Get.find();
-            loginController.logout();
+            // LoginController loginController = Get.find();
+            // loginController.logout();
+            Get.offAll(LoginScreen());
             break;
         }
       },

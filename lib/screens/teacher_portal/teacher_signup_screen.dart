@@ -954,8 +954,6 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
                       teacherLoginController
                           .addressController.value.text.isEmpty ||
                       teacherLoginController
-                          .passwordController.value.text.isEmpty ||
-                      teacherLoginController
                           .schoolNameController.value.text.isEmpty ||
                       teacherLoginController
                           .experienceController.value.text.isEmpty ||
@@ -970,8 +968,6 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
                           "" ||
                       teacherLoginController.dob.value == "" ||
                       teacherLoginController.addressController.value.text ==
-                          "" ||
-                      teacherLoginController.passwordController.value.text ==
                           "" ||
                       teacherLoginController.schoolNameController.value.text ==
                           "" ||
@@ -1003,37 +999,11 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
                       textColor: Colors.white,
                       fontSize: 16.0,
                     );
-                  } else if (teacherLoginController.isPasswordValid(
-                          teacherLoginController
-                              .passwordController.value.text) ==
-                      false) {
-                    Fluttertoast.showToast(
-                      msg:
-                          "The password field must be at least 10 characters.\nPassword should contain upper case, lower case, numbers and special characters",
-                      toastLength: Toast.LENGTH_LONG,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.red,
-                      textColor: Colors.white,
-                      fontSize: 16.0,
-                    );
                   } else if (teacherLoginController.isEmailValid(
                           teacherLoginController.emailController.value.text) ==
                       false) {
                     Fluttertoast.showToast(
                       msg: 'Insert a valid email.',
-                      toastLength: Toast.LENGTH_LONG,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.red,
-                      textColor: Colors.white,
-                      fontSize: 16.0,
-                    );
-                  } else if (teacherLoginController
-                          .passwordController.value.text !=
-                      teacherLoginController.conpasswordController.value.text) {
-                    Fluttertoast.showToast(
-                      msg: 'Please make sure your password match .',
                       toastLength: Toast.LENGTH_LONG,
                       gravity: ToastGravity.BOTTOM,
                       timeInSecForIosWeb: 1,

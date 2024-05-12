@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:rspsa_user/controller/signup_controller.dart';
 import 'package:rspsa_user/screens/common/login_screen.dart';
@@ -229,20 +230,38 @@ class _SignupScreenState extends State<SignupScreen> {
                   // signupController.login();
                   if (signupController.nameController.value.text == '') {
                     EasyLoading.showToast('Enter Name');
+                    return;
                   }
                   if (signupController.emailController.value.text == '') {
                     EasyLoading.showToast('Enter Email');
+                    return;
                   }
                   if (signupController.passwordController.value.text == '') {
                     EasyLoading.showToast('Enter Password');
+                    return;
                   }
                   if (signupController.passwordController.value.text.length <
-                      6) {
-                    EasyLoading.showToast('Password length should be 6');
+                      10) {
+                    Fluttertoast.showToast(
+                      msg:
+                          "The password field must be at least 10 characters.\nPassword should contain upper case, lower case, numbers and special characters",
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                    return;
                   }
+                  // if (signupController.passwordController.value.text.length <
+                  //     6) {
+                  //   EasyLoading.showToast('Password length should be 6');
+                  // }
                   if (signupController.passwordController.value.text !=
                       signupController.confirmPasswordController.value.text) {
-                    EasyLoading.showToast('Password does not match'); 
+                    EasyLoading.showToast('Password does not match');
+                    return;
                   } else {
                     signupController.isSignup.value = true;
                     signupController.singup();

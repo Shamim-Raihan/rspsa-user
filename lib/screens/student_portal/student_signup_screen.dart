@@ -171,6 +171,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
         signupController.nameController.value.text;
     studentSignupController.emailController.value.text =
         signupController.emailController.value.text;
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -630,7 +631,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
           //         labelStyle: const TextStyle(color: Colors.black)),
           //   ),
           // ),
-          
+
           // SpaceHelper().verticalSpace10,
           // SizedBox(
           //   height: 50.h,
@@ -678,7 +679,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
           //         labelStyle: const TextStyle(color: Colors.black)),
           //   ),
           // ),
-          
+
           SpaceHelper().verticalSpace10,
           Text(
             'Education Details',
@@ -1180,8 +1181,7 @@ class _StudentSignupScreenState extends State<StudentSignupScreen> {
                   email: studentSignupController.emailController.value.text,
                   mobile: studentSignupController.mobileController.value.text,
                   dob: DateFormat('yyyy-MM-dd').format(_dateTime),
-                  password:
-                      signupController.passwordController.value.text,
+                  password: signupController.passwordController.value.text,
                   address: studentSignupController.addressController.value.text,
                   aadharNumber:
                       studentSignupController.aadharController.value.text,
