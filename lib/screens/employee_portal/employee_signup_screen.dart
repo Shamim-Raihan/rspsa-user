@@ -598,8 +598,8 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
           Padding(
             padding: EdgeInsets.only(top: 5.h),
             child: Obx(
-              () => employeeController.blockList.isEmpty ||
-                      employeeController.selectedDistrict == null
+              () => employeeController.panchayetList.isEmpty ||
+                      employeeController.selectedBlock == null
                   ? SizedBox()
                   : Container(
                       height: 50.h,
@@ -611,7 +611,7 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
                       ),
                       child: DropdownButton<Panchayet>(
                         underline: const SizedBox(),
-                        hint: employeeController.selectedBlock == null
+                        hint: employeeController.selectedPanchayet == null
                             ? const Text('Select Panchayet')
                             : Text(
                                 employeeController
@@ -626,7 +626,7 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
                           return DropdownMenuItem<Panchayet>(
                             value: panchayet,
                             child: Text(
-                              panchayet.panchayet!,
+                              panchayet.panchayat!,
                               style: FontStyles().normalTextBlack,
                             ),
                           );
@@ -641,7 +641,7 @@ class _EmployeeSignUpScreenState extends State<EmployeeSignUpScreen> {
                     ),
             ),
           ),
-
+          SpaceHelper().verticalSpace10,
           // Conditionally render the second dropdown
           GestureDetector(
             onTap: _showCupertinoDatePicker,
