@@ -1281,3 +1281,4 @@ class _TeacherSignupScreenState extends State<TeacherSignupScreen> {
     });
   }
 }
+
