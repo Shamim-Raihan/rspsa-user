@@ -8,6 +8,7 @@ import 'package:rspsa_user/screens/common/account_select_screen.dart';
 
 class SignupController extends GetxController {
   var nameController = TextEditingController().obs;
+  var mobileController = TextEditingController().obs;
   var emailController = TextEditingController().obs;
   var passwordController = TextEditingController().obs;
   var confirmPasswordController = TextEditingController().obs;
@@ -16,6 +17,12 @@ class SignupController extends GetxController {
   var confirmPasswordObscure = false.obs;
 
   var isSignup = false.obs;
+  Rx<String?> selectedCountry = Rx<String?>(null);
+  List<String> countries = ['Student', 'Teacher', 'Employee', 'School'];
+
+  void updateSelectedCountry(String? value) {
+    selectedCountry.value = value;
+  }
 
   singup() async {
     try {

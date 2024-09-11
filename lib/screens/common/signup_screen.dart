@@ -92,13 +92,48 @@ class _SignupScreenState extends State<SignupScreen> {
           children: [
             SizedBox(
               height: 50.h,
+              child: Obx(() => DropdownButtonFormField<String>(
+                    value: signupController.selectedCountry.value,
+                    items: signupController.countries
+                        .map((type) => DropdownMenuItem(
+                              value: type,
+                              child: Text(type),
+                            ))
+                        .toList(),
+                    onChanged: (value) {
+                      signupController.updateSelectedCountry(value);
+                    },
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: ColorHelper.primaryColor,
+                    ),
+                    decoration: InputDecoration(
+                      focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: ColorHelper.primaryColor, width: 1.2)),
+                      labelText: 'Select type',
+                      labelStyle: const TextStyle(color: Colors.black),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.grey.shade300, width: 1.2)),
+                      border: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.black, width: 1.2)),
+                    ),
+                  )),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            SizedBox(
+              height: 50.h,
               child: TextField(
                 controller: signupController.nameController.value,
                 decoration: InputDecoration(
                   focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                           color: ColorHelper.primaryColor, width: 1.2)),
-                  suffixIcon: const Icon(Icons.mail_outline,
+                  suffixIcon: const Icon(Icons.person_outline,
                       color: ColorHelper.primaryColor),
                   labelText: 'Name',
                   labelStyle: const TextStyle(color: Colors.black),
@@ -111,7 +146,30 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
             SizedBox(
-              height: 20.h,
+              height: 10.h,
+            ),
+            SizedBox(
+              height: 50.h,
+              child: TextField(
+                controller: signupController.mobileController.value,
+                decoration: InputDecoration(
+                  focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: ColorHelper.primaryColor, width: 1.2)),
+                  suffixIcon: const Icon(Icons.phone_android_outlined,
+                      color: ColorHelper.primaryColor),
+                  labelText: 'Mobile',
+                  labelStyle: const TextStyle(color: Colors.black),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.grey.shade300, width: 1.2)),
+                  border: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 1.2)),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
             ),
             SizedBox(
               height: 50.h,
@@ -134,7 +192,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
             SizedBox(
-              height: 20.h,
+              height: 10.h,
             ),
             SizedBox(
               height: 50.h,
@@ -173,7 +231,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
             SizedBox(
-              height: 20.h,
+              height: 10.h,
             ),
             SizedBox(
               height: 50.h,
@@ -214,7 +272,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
             SizedBox(
-              height: 20.h,
+              height: 10.h,
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width,
@@ -228,8 +286,16 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 onPressed: () {
                   // signupController.login();
+                  if (signupController.selectedCountry.value == null) {
+                    EasyLoading.showToast('Select a type');
+                    return;
+                  }
                   if (signupController.nameController.value.text == '') {
                     EasyLoading.showToast('Enter Name');
+                    return;
+                  }
+                  if (signupController.mobileController.value.text == '') {
+                    EasyLoading.showToast('Enter Mobile');
                     return;
                   }
                   if (signupController.emailController.value.text == '') {
@@ -276,30 +342,30 @@ class _SignupScreenState extends State<SignupScreen> {
             SizedBox(
               height: 20.h,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () {},
-                  child: Text(
-                    'Forgot password?',
-                    style: TextStyle(
-                      color: ColorHelper.primaryColor,
-                      decoration: TextDecoration.underline,
-                      decorationColor: Colors.blue,
-                      decorationThickness: 1,
-                      decorationStyle: TextDecorationStyle.solid,
-                      fontSize: 14.sp,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 30.h,
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     GestureDetector(
+            //       onTap: () {},
+            //       child: Text(
+            //         'Forgot password?',
+            //         style: TextStyle(
+            //           color: ColorHelper.primaryColor,
+            //           decoration: TextDecoration.underline,
+            //           decorationColor: Colors.blue,
+            //           decorationThickness: 1,
+            //           decorationStyle: TextDecorationStyle.solid,
+            //           fontSize: 14.sp,
+            //           fontFamily: 'Inter',
+            //           fontWeight: FontWeight.w400,
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            // SizedBox(
+            //   height: 30.h,
+            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

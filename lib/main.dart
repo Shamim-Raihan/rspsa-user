@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/route_manager.dart';
 import 'package:rspsa_user/screens/common/login_screen.dart';
+import 'package:rspsa_user/screens/common/signup_screen.dart';
 import 'screens/common/launcher_screen.dart';
 
 void main() async {
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         builder: EasyLoading.init(),
-        home: LoginScreen(),
+        home: SignupScreen(),
       ),
     );
   }
