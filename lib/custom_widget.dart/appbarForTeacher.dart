@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rspsa_user/screens/common/login_screen.dart';
+import 'package:rspsa_user/screens/auth/views/login_screen.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 
 AppBar appBarTeacher() {

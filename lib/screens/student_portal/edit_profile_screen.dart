@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:rspsa_user/custom_widget.dart/cusotm_text_field.dart';
-import 'package:rspsa_user/screens/common/login_screen.dart';
+import 'package:rspsa_user/screens/auth/views/login_screen.dart';
 import 'package:rspsa_user/screens/student_portal/controller/student_controller.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 import 'package:rspsa_user/utils/space_helper.dart';

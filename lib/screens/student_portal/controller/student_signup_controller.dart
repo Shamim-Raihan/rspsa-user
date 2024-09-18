@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:rspsa_user/screens/common/login_screen.dart';
+import 'package:rspsa_user/screens/auth/views/login_screen.dart';
 import 'package:rspsa_user/screens/student_portal/repository/student_signup_repository.dart';
 
 class StudentSignupController extends GetxController {

@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:rspsa_user/controller/login_controller.dart';
 import 'package:rspsa_user/screens/common/account_select_screen.dart';
-import 'package:rspsa_user/screens/common/login_screen.dart';
+import 'package:rspsa_user/screens/auth/views/login_screen.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
 
 AppBar appBar({required String title}) {
@@ -71,8 +71,9 @@ class MyCircleAvatar extends StatelessWidget {
             // Handle Change Password option
             break;
           case 3:
-            LoginController loginController = Get.find();
-            loginController.logout();
+            // LoginController loginController = Get.find();
+            // loginController.logout();
+            Get.offAll(LoginScreen());
             break;
         }
       },

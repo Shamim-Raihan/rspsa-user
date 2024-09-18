@@ -8,7 +8,7 @@ import 'package:rspsa_user/controller/signup_controller.dart';
 import 'package:rspsa_user/models/login_response.dart';
 import 'package:rspsa_user/repository/login_repository.dart';
 import 'package:rspsa_user/screens/common/account_select_screen.dart';
-import 'package:rspsa_user/screens/common/login_screen.dart';
+import 'package:rspsa_user/screens/auth/views/login_screen.dart';
 import 'package:rspsa_user/screens/student_portal/controller/student_signup_controller.dart';
 import 'package:rspsa_user/utils/constants.dart';
 import 'package:rspsa_user/utils/shared_preference_helper.dart';
@@ -50,7 +50,7 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    checkUserLoginStatus();
+    // checkUserLoginStatus();
     super.onInit();
   }
 

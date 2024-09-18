@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:rspsa_user/controller/signup_controller.dart';
-import 'package:rspsa_user/screens/common/login_screen.dart';
+import 'package:rspsa_user/screens/auth/controller/auth_controller.dart';
+import 'package:rspsa_user/screens/auth/views/login_screen.dart';
 
-import '../../utils/color_helper.dart';
-import '../../utils/space_helper.dart';
-import '../../utils/text_style.dart';
+import '../../../utils/color_helper.dart';
+import '../../../utils/space_helper.dart';
+import '../../../utils/text_style.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -17,7 +18,8 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  SignupController signupController = Get.put(SignupController());
+  // authController authController = Get.put(authController());
+  final AuthController authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -91,13 +93,48 @@ class _SignupScreenState extends State<SignupScreen> {
           children: [
             SizedBox(
               height: 50.h,
+              child: Obx(() => DropdownButtonFormField<String>(
+                    value: authController.selectedRole.value,
+                    items: authController.role
+                        .map((type) => DropdownMenuItem(
+                              value: type,
+                              child: Text(type),
+                            ))
+                        .toList(),
+                    onChanged: (value) {
+                      authController.updateSelectedCountry(value);
+                    },
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: ColorHelper.primaryColor,
+                    ),
+                    decoration: InputDecoration(
+                      focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: ColorHelper.primaryColor, width: 1.2)),
+                      labelText: 'Select type',
+                      labelStyle: const TextStyle(color: Colors.black),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.grey.shade300, width: 1.2)),
+                      border: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.black, width: 1.2)),
+                    ),
+                  )),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            SizedBox(
+              height: 50.h,
               child: TextField(
-                controller: signupController.nameController.value,
+                controller: authController.nameController.value,
                 decoration: InputDecoration(
                   focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                           color: ColorHelper.primaryColor, width: 1.2)),
-                  suffixIcon: const Icon(Icons.mail_outline,
+                  suffixIcon: const Icon(Icons.person_outline,
                       color: ColorHelper.primaryColor),
                   labelText: 'Name',
                   labelStyle: const TextStyle(color: Colors.black),
@@ -110,12 +147,35 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
             SizedBox(
-              height: 20.h,
+              height: 10.h,
             ),
             SizedBox(
               height: 50.h,
               child: TextField(
-                controller: signupController.emailController.value,
+                controller: authController.mobileController.value,
+                decoration: InputDecoration(
+                  focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: ColorHelper.primaryColor, width: 1.2)),
+                  suffixIcon: const Icon(Icons.phone_android_outlined,
+                      color: ColorHelper.primaryColor),
+                  labelText: 'Mobile',
+                  labelStyle: const TextStyle(color: Colors.black),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.grey.shade300, width: 1.2)),
+                  border: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 1.2)),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            SizedBox(
+              height: 50.h,
+              child: TextField(
+                controller: authController.emailController.value,
                 decoration: InputDecoration(
                   focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
@@ -133,13 +193,13 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
             SizedBox(
-              height: 20.h,
+              height: 10.h,
             ),
             SizedBox(
               height: 50.h,
               child: TextFormField(
-                controller: signupController.passwordController.value,
-                obscureText: signupController.passwordObscure.value,
+                controller: authController.passwordController.value,
+                obscureText: authController.passwordObscure.value,
                 decoration: InputDecoration(
                     focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
@@ -150,18 +210,18 @@ class _SignupScreenState extends State<SignupScreen> {
                     border: const OutlineInputBorder(
                         borderSide:
                             BorderSide(color: Colors.black, width: 1.2)),
-                    suffixIcon: signupController.passwordObscure.value
+                    suffixIcon: authController.passwordObscure.value
                         ? IconButton(
                             onPressed: () {
-                              signupController.passwordObscure.value =
-                                  !signupController.passwordObscure.value;
+                              authController.passwordObscure.value =
+                                  !authController.passwordObscure.value;
                             },
                             icon: const Icon(Icons.visibility,
                                 color: ColorHelper.primaryColor))
                         : IconButton(
                             onPressed: () {
-                              signupController.passwordObscure.value =
-                                  !signupController.passwordObscure.value;
+                              authController.passwordObscure.value =
+                                  !authController.passwordObscure.value;
                             },
                             icon: const Icon(
                               Icons.visibility_off,
@@ -172,13 +232,13 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
             SizedBox(
-              height: 20.h,
+              height: 10.h,
             ),
             SizedBox(
               height: 50.h,
               child: TextFormField(
-                controller: signupController.confirmPasswordController.value,
-                obscureText: signupController.confirmPasswordObscure.value,
+                controller: authController.confirmPasswordController.value,
+                obscureText: authController.confirmPasswordObscure.value,
                 decoration: InputDecoration(
                     focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
@@ -189,20 +249,18 @@ class _SignupScreenState extends State<SignupScreen> {
                     border: const OutlineInputBorder(
                         borderSide:
                             BorderSide(color: Colors.black, width: 1.2)),
-                    suffixIcon: signupController.confirmPasswordObscure.value
+                    suffixIcon: authController.confirmPasswordObscure.value
                         ? IconButton(
                             onPressed: () {
-                              signupController.confirmPasswordObscure.value =
-                                  !signupController
-                                      .confirmPasswordObscure.value;
+                              authController.confirmPasswordObscure.value =
+                                  !authController.confirmPasswordObscure.value;
                             },
                             icon: const Icon(Icons.visibility,
                                 color: ColorHelper.primaryColor))
                         : IconButton(
                             onPressed: () {
-                              signupController.confirmPasswordObscure.value =
-                                  !signupController
-                                      .confirmPasswordObscure.value;
+                              authController.confirmPasswordObscure.value =
+                                  !authController.confirmPasswordObscure.value;
                             },
                             icon: const Icon(
                               Icons.visibility_off,
@@ -213,7 +271,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
             SizedBox(
-              height: 20.h,
+              height: 10.h,
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width,
@@ -226,26 +284,34 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
                 onPressed: () {
-                  // signupController.login();
-                  if (signupController.nameController.value.text == '') {
+                  if (authController.selectedRole.value == null) {
+                    EasyLoading.showToast('Select a type');
+                    return;
+                  }
+                  if (authController.nameController.value.text == '') {
                     EasyLoading.showToast('Enter Name');
+                    return;
                   }
-                  if (signupController.emailController.value.text == '') {
+                  if (authController.mobileController.value.text == '') {
+                    EasyLoading.showToast('Enter Mobile');
+                    return;
+                  }
+                  if (authController.emailController.value.text == '') {
                     EasyLoading.showToast('Enter Email');
+                    return;
                   }
-                  if (signupController.passwordController.value.text == '') {
+                  if (authController.passwordController.value.text == '') {
                     EasyLoading.showToast('Enter Password');
+                    return;
                   }
-                  if (signupController.passwordController.value.text.length <
-                      6) {
-                    EasyLoading.showToast('Password length should be 6');
-                  }
-                  if (signupController.passwordController.value.text !=
-                      signupController.confirmPasswordController.value.text) {
-                    EasyLoading.showToast('Password does not match'); 
+
+                  if (authController.passwordController.value.text !=
+                      authController.confirmPasswordController.value.text) {
+                    EasyLoading.showToast('Password does not match');
+                    return;
                   } else {
-                    signupController.isSignup.value = true;
-                    signupController.singup();
+                    authController.isSignup.value = true;
+                    authController.signup();
                   }
                 },
                 child: Text(
@@ -256,30 +322,6 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
             SizedBox(
               height: 20.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () {},
-                  child: Text(
-                    'Forgot password?',
-                    style: TextStyle(
-                      color: ColorHelper.primaryColor,
-                      decoration: TextDecoration.underline,
-                      decorationColor: Colors.blue,
-                      decorationThickness: 1,
-                      decorationStyle: TextDecorationStyle.solid,
-                      fontSize: 14.sp,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 30.h,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
