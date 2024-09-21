@@ -47,6 +47,8 @@ dependencies:
   fluttertoast:
   firebase_auth:
   firebase_core:
+  pinput: ^4.0.0
+  google_fonts:
 
 
 dev_dependencies:

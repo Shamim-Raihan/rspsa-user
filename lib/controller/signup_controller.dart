@@ -32,7 +32,7 @@ class SignupController extends GetxController {
               password: passwordController.value.text)
           .then((value) {
         isSignup.value = true;
-        Get.to(() => AccountSelectScreen());
+        // Get.to(() => AccountSelectScreen());
       });
     } catch (e) {
       log(e.toString());

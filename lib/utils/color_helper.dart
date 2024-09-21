@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 class ColorHelper {
   static const primaryColor = Color(0XFFfebd59);
+  static const whiteColor = Color.fromARGB(255, 255, 255, 255);
+  static const blackColor = Color.fromARGB(255, 0, 0, 0);
   static const cardColor1 = Color(0xffA8CD9F);
   static const cardColor2 = Color(0xffEFBC9B);
   static const cardColor3 = Color(0xff41C9E2);

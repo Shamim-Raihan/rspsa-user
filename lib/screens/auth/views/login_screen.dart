@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:rspsa_user/controller/login_controller.dart';
 import 'package:rspsa_user/controller/signup_controller.dart';
+import 'package:rspsa_user/screens/auth/controller/auth_controller.dart';
 import 'package:rspsa_user/screens/auth/views/signup_screen.dart';
 import 'package:rspsa_user/screens/student_portal/controller/student_signup_controller.dart';
 import 'package:rspsa_user/utils/color_helper.dart';
@@ -18,6 +19,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   LoginController loginController = Get.put(LoginController());
+  AuthController _authController = Get.put(AuthController());
   StudentSignupController studentSignupController =
       Get.put(StudentSignupController());
   @override
@@ -169,10 +171,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   borderRadius: BorderRadius.circular(100), // <-- Radius
                 ),
               ),
-              onPressed: () {
+              onPressed: () async {
                 SignupController signupController = Get.put(SignupController());
                 signupController.isSignup.value = false;
-                loginController.firebaseLogin();
+                // loginController.firebaseLogin();
+                await _authController.login(
+                    email: loginController.emailController.value.text.trim(),
+                    password:
+                        loginController.passwordController.value.text.trim());
               },
               child: Text(
                 'SIGN IN',
@@ -214,7 +220,6 @@ class _LoginScreenState extends State<LoginScreen> {
               SpaceHelper().horizoantalSpace5,
               InkWell(
                 onTap: () async {
-                  
                   Get.off(() => const SignupScreen());
                 },
                 child: Text(
